@@ -116,12 +116,40 @@ function questionnaireDAL(spec) {
         return result;
     }
 
+    async function getExpiredQuestionnaires() {
+        const questionnaires = [];
+        let results;
+        try {
+            results = await db.query(
+                `SELECT id FROM questionnaire WHERE (modified < NOW() - INTERVAL '15 minutes' AND submission_status = 'NOT_STARTED') OR (created < NOW() - INTERVAL '7 days' AND submission_status != 'FAILED');`
+            );
+            results.rows.forEach(row => {
+                questionnaires.push(row.id);
+            });
+            return questionnaires;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async function deleteQuestionnaire(questionnaireId) {
+        try {
+            await db.query(`DELETE FROM questionnaire WHERE id = $1;`, [questionnaireId]);
+        } catch (err) {
+            throw err;
+        }
+
+        return true;
+    }
+
     return Object.freeze({
         createQuestionnaire,
         updateQuestionnaire,
         getQuestionnaire,
         getQuestionnaireSubmissionStatus,
-        updateQuestionnaireSubmissionStatus
+        updateQuestionnaireSubmissionStatus,
+        getExpiredQuestionnaires,
+        deleteQuestionnaire
     });
 }
 

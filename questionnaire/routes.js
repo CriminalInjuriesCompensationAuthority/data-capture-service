@@ -12,31 +12,51 @@ const rxTemplateName = /^[a-zA-Z0-9-]{1,30}$/;
 // Ensure JWT is valid
 router.use(validateJWT({secret: process.env.DCS_JWT_SECRET}));
 
-router.route('/').post(permissions('create:questionnaires'), async (req, res, next) => {
-    try {
-        if (
-            req.body.data &&
-            req.body.data.attributes &&
-            req.body.data.attributes.templateId &&
-            !rxTemplateName.test(req.body.data.attributes.templateName)
-        ) {
-            const err = Error(`Bad request`);
-            err.name = 'HTTPError';
-            err.statusCode = 400;
-            err.error = '400 Bad Request';
-            throw err;
+router
+    .route('/')
+    .post(permissions('create:questionnaires'), async (req, res, next) => {
+        try {
+            if (
+                req.body.data &&
+                req.body.data.attributes &&
+                req.body.data.attributes.templateId &&
+                !rxTemplateName.test(req.body.data.attributes.templateName)
+            ) {
+                const err = Error(`Bad request`);
+                err.name = 'HTTPError';
+                err.statusCode = 400;
+                err.error = '400 Bad Request';
+                throw err;
+            }
+
+            const {templateName} = req.body.data.attributes;
+
+            const questionnaireService = createQuestionnaireService({logger: req.log});
+            const response = await questionnaireService.createQuestionnaire(templateName);
+
+            res.status(201).json(response);
+        } catch (err) {
+            next(err);
         }
+    })
+    .delete(permissions('delete:questionnaires'), async (req, res, next) => {
+        try {
+            const questionnaireService = createQuestionnaireService({logger: req.log});
 
-        const {templateName} = req.body.data.attributes;
+            // Query database, SELECT id FROM questionnaire WHERE questionnaire_expired;
+            const questionnairesToBeDeleted = await questionnaireService.getExpiredQuestionnaires();
 
-        const questionnaireService = createQuestionnaireService({logger: req.log});
-        const response = await questionnaireService.createQuestionnaire(templateName);
+            // forEach id => send DELETE to http://q-uploader/:id
+            // forEach id => DELETE FROM questionnaire WHERE id = :id
+            questionnairesToBeDeleted.ids.forEach(async questionnaireId => {
+                await questionnaireService.deleteQuestionnaire(questionnaireId);
+            });
 
-        res.status(201).json(response);
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({message: 'OK'});
+        } catch (err) {
+            next(err);
+        }
+    });
 
 router
     .route('/:questionnaireId/sections/answers')

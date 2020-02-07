@@ -45,10 +45,25 @@ function createRequestService() {
         return got(options.url, opts);
     }
 
+    function deleteRequest(options) {
+        let opts = {
+            method: 'DELETE',
+            headers: {
+                accept: 'application/vnd.api+json',
+                'Content-Type': 'application/vnd.api+json'
+            },
+            json: true,
+            body: {}
+        };
+        opts = merge(opts, options);
+        return got(options.url, opts);
+    }
+
     return Object.freeze({
         post,
         get,
-        patch
+        patch,
+        deleteRequest
     });
 }
 

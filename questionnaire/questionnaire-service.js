@@ -10,6 +10,7 @@ const templates = require('./templates');
 const createQuestionnaireDAL = require('./questionnaire-dal');
 const createMessageBusCaller = require('../services/message-bus');
 const replaceJsonPointers = require('../services/replace-json-pointer');
+const createRequestService = require('../services/request');
 
 function createQuestionnaireService(spec) {
     const {logger} = spec;
@@ -533,6 +534,47 @@ function createQuestionnaireService(spec) {
         };
     }
 
+    async function getExpiredQuestionnaires() {
+        const questionnaireIds = await db.getExpiredQuestionnaires();
+
+        return {
+            data: {
+                type: 'questionnaires',
+                ids: questionnaireIds
+            }
+        };
+    }
+
+    async function deleteQuestionnaire(questionnaireId) {
+        const requestService = createRequestService();
+        const result = await db.deleteQuestionnaire(questionnaireId);
+
+        const deletedDocs = await requestService.deleteRequest({
+            url: `${process.env.Q_UPLOADER_URL}/${questionnaireId}`
+        });
+
+        if (result.message !== 'deleted') {
+            throw new VError({
+                name: 'ClearDownDeletionError',
+                info: {
+                    questionnaireId,
+                    message: 'An attempt was made to delete this questionnaire, but it failed'
+                }
+            });
+        }
+        if (!deletedDocs.allUploadsDeleted) {
+            throw new VError({
+                name: 'ClearDownDeletionError',
+                info: {
+                    questionnaireId,
+                    message:
+                        'An attempt was made to delete uploaded documents associated with this questionnaire, but it failed'
+                }
+            });
+        }
+        return true;
+    }
+
     return Object.freeze({
         createQuestionnaire,
         createAnswers,
@@ -541,7 +583,9 @@ function createQuestionnaireService(spec) {
         getSubmissionResponseData,
         validateAllAnswers,
         getAnswers,
-        getProgressEntries
+        getProgressEntries,
+        getExpiredQuestionnaires,
+        deleteQuestionnaire
     });
 }
 
