@@ -39,7 +39,6 @@ function createQuestionnaireService(spec) {
         const questionnaire = templates[templateName](uuidV4);
 
         await db.createQuestionnaire(uuidV4, questionnaire);
-
         return {
             data: {
                 type: 'questionnaires',
