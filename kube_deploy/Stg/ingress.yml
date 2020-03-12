@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/whitelist-source-range: 37.143.143.174/32,37.143.143.162/32,37.143.143.10/32
+  name: dcs-ingress-stg
+  namespace: claim-criminal-injuries-compensation-staging
+spec:
+  tls:
+    - hosts:
+        - data-capture-service.staging.claim-criminal-injuries-compensation.apps.live-1.cloud-platform.service.justice.gov.uk
+    - hosts:
+        - data-capture-service.staging.claim-criminal-injuries-compensation.service.justice.gov.uk
+      secretName: data-capture-service-cert-secret-staging
+  rules:
+    - host: data-capture-service.staging.claim-criminal-injuries-compensation.apps.live-1.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: dcs-service-stg
+              servicePort: 80
+    - host: data-capture-service.staging.claim-criminal-injuries-compensation.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: dcs-service-stg
+              servicePort: 80
