@@ -73,7 +73,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" ==  "stagingsetup" ]; then
             docker tag cica/cica-repo-stg:latest ${ECR_REPOSITORY}/cica/cica-repo-stg:${CIRCLE_SHA1}
             docker push ${ECR_REPOSITORY}/cica/cica-repo-Stg:${CIRCLE_SHA1}
-         fi
+            fi
   deploy_to_dev:
     executor: docker-publisher
     steps:
