@@ -168,8 +168,8 @@ workflows:
           filters:
             branches:
               only:
-                -dcs-deploy
-                -stagingsetup
+                - dcs-deploy
+                - stagingsetup
       - deploy_to_staging:
           requires:
             - push_image
