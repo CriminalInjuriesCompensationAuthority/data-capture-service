@@ -102,7 +102,7 @@ jobs:
           name: Kubectl deployment
           command: |
             setup-kube-auth
-            kubectl config use-context stg
+            kubectl config use-context staging
       - setup_remote_docker
       - deploy:
           name: Deploy to the cluster
