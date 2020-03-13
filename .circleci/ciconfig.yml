@@ -70,6 +70,10 @@ jobs:
                docker tag cica/cica-repo-dev:latest ${ECR_REPOSITORY}/cica/cica-repo-dev:${CIRCLE_SHA1}
                docker push ${ECR_REPOSITORY}/cica/cica-repo-dev:${CIRCLE_SHA1}
             fi
+            if [ "${CIRCLE_BRANCH}" ==  "stagingsetup" ]; then
+            docker tag cica/cica-repo-stg:latest ${ECR_REPOSITORY}/cica/cica-repo-stg:${CIRCLE_SHA1}
+            docker push ${ECR_REPOSITORY}/cica/cica-repo-Stg:${CIRCLE_SHA1}
+         fi
   deploy_to_dev:
     executor: docker-publisher
     steps:
@@ -152,8 +156,8 @@ jobs:
                 -f kube_deploy/Production/cert.yml
 workflows:
   version: 2
-  build-test-push-deploystg-deploydev-deploytouatapproval-deployuat-deploytoprodapproval-deployprod:
-    jobs:
+  ? build-test-push-deploystg-deploydev-deploytouatapproval-deployuat-deploytoprodapproval-deployprod
+  : jobs:
       - build
       - publish_latest:
           requires:
@@ -163,8 +167,7 @@ workflows:
             - publish_latest
           filters:
             branches:
-              only:
-                -dcs-deploy
+              only: -dcs-deploy
                 -stagingsetup
       - deploy_to_staging:
           requires:
