@@ -26,17 +26,17 @@ spec:
                 secretKeyRef:
                   name: shared-secrets
                   key: database_url_with_credentials
-            - name: DCS_LOG_LEVEL
-              value: 'info'
-            - name: MESSAGE_BUS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: shared-secrets
-                  key: message_bus_url
-            - name: MESSAGE_BUS_CREDENTIALS
-              valueFrom:
-                secretKeyRef:
-                  name: shared-secrets
-                  key: message_bus_credentials
-            - name: DCS_URL
-              value: 'https://data-capture-service.staging.claim-criminal-injuries-compensation.service.justice.gov.uk'
+          #  - name: DCS_LOG_LEVEL
+           #   value: 'info'
+            #- name: MESSAGE_BUS_URL
+             # valueFrom:
+              #  secretKeyRef:
+               #   name: shared-secrets
+                #  key: message_bus_url
+           # - name: MESSAGE_BUS_CREDENTIALS
+            #  valueFrom:
+             #   secretKeyRef:
+              #    name: shared-secrets
+               #   key: message_bus_credentials
+            #- name: DCS_URL
+             # value: 'https://data-capture-service.staging.claim-criminal-injuries-compensation.service.justice.gov.uk'

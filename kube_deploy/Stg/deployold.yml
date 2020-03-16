@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dcs-app-stg
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: dcs-app-stg
+    spec:
+      containers:
+        - name: data-capture-service
+          image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cica/cica-repo-dev:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3100
+          env:
+            - name: DCS_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: data-capture-service-secrets
+                  key: dcs_jwt_secret
+            - name: DATABASE_URL_WITH_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: shared-secrets
+                  key: database_url_with_credentials
+            - name: DCS_LOG_LEVEL
+              value: 'info'
+            - name: MESSAGE_BUS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: shared-secrets
+                  key: message_bus_url
+            - name: MESSAGE_BUS_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: shared-secrets
+                  key: message_bus_credentials
+            - name: DCS_URL
+              value: 'https://data-capture-service.staging.claim-criminal-injuries-compensation.service.justice.gov.uk'
