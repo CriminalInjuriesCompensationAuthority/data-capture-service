@@ -55,7 +55,7 @@
         "nodemon": "^1.18.9",
         "pino-pretty": "^3.2.0",
         "prettier": "^1.19.1",
-        "q-base-config": "github:CriminalInjuriesCompensationAuthority/q-base-config#semver:<1.0.0",
+        "q-base-config": "github:CriminalInjuriesCompensationAuthority/q-base-config#v0.8.0",
         "speccy": "github:wework/speccy#740d19d88935db7735250c16abc2ad09256b5854",
         "supertest": "^4.0.2",
         "uuidv4": "^4.0.0",
