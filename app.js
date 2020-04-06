@@ -9,6 +9,7 @@ const pino = require('pino-http');
 const errorHandler = require('./middleware/error-handler');
 const docsRouter = require('./docs/routes');
 const questionnaireRouter = require('./questionnaire/routes');
+const routesRouter = require('./routes/routes');
 
 const app = express();
 const logger = pino({
@@ -85,6 +86,7 @@ new OpenApiValidator({
 }).install(app);
 
 app.use('/api/v1/questionnaires', questionnaireRouter);
+app.use('/', routesRouter);
 
 // Express doesn't treat 404s as errors. If the following handler has been reached then nothing else matched e.g. a 404
 // https://expressjs.com/en/starter/faq.html#how-do-i-handle-404-responses
