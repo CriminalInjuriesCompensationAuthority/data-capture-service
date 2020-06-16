@@ -4,7 +4,7 @@ module.exports = {
     'sexual-assault': id => ({
         id,
         type: 'apply-for-compensation',
-        version: '1.1.0',
+        version: '1.3.0',
         sections: {
             'p-applicant-declaration': {
                 $schema: 'http://json-schema.org/draft-07/schema#',
@@ -2798,7 +2798,7 @@ module.exports = {
                 errorMessage: {
                     required: {
                         'q-applicant-are-you-claiming-for-loe':
-                            'Select yes if you sare claiming for loss of earnings'
+                            'Select yes if you are claiming for loss of earnings'
                     }
                 },
                 examples: [
@@ -2857,6 +2857,149 @@ module.exports = {
                     transition: {
                         description:
                             '<p class="govuk-body">You\'ll be taken to another website to continue your claim.</p>{{ govukButton({text: "Continue",href: "https://www.cica.gov.uk/OAS/Account/create",isStartButton: true}) }}'
+                    }
+                },
+                examples: [{}],
+                invalidExamples: [{foo: 'bar'}]
+            },
+            'p-applicant-have-you-returned-to-work': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-have-you-returned-to-work'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-have-you-returned-to-work': {
+                        type: 'boolean',
+                        title: 'Have you returned to work?'
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-have-you-returned-to-work':
+                            'Select yes if you have returned to work'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-have-you-returned-to-work': true
+                    },
+                    {
+                        'q-applicant-have-you-returned-to-work': false
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-have-you-returned-to-work': 'foo'
+                    }
+                ]
+            },
+            'p-applicant-work-details-option': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-work-details-option'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-work-details-option': {
+                        title: 'Select the option that applies to you',
+                        type: 'string',
+                        oneOf: [
+                            {
+                                title: 'I had a job when the crime happened',
+                                const: 'employed'
+                            },
+                            {
+                                title: 'I had a job for at least 3 years before the crime',
+                                const: 'employed-long-term'
+                            },
+                            {
+                                title: 'I was too young to work',
+                                const: 'underage-for-work'
+                            },
+                            {
+                                title: 'I was in full-time education',
+                                const: 'education'
+                            },
+                            {
+                                title: 'I had temporarily stopped working to care for someone',
+                                const: 'care'
+                            }
+                        ]
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-work-details-option':
+                            'Select the option that applies to you'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-work-details-option': 'employed'
+                    },
+                    {
+                        'q-applicant-work-details-option': 'employed-long-term'
+                    },
+                    {
+                        'q-applicant-work-details-option': 'underage-for-work'
+                    },
+                    {
+                        'q-applicant-work-details-option': 'education'
+                    },
+                    {
+                        'q-applicant-work-details-option': 'care'
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-work-details-option': 1234
+                    }
+                ]
+            },
+            'p-applicant-return-to-work-date': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-return-to-work-date'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-return-to-work-date': {
+                        type: 'string',
+                        format: 'date-time',
+                        title: 'When did you return to work?',
+                        description: 'For example, 31 3 2020.',
+                        errorMessage: {
+                            format: 'Enter the date you returned to work and include a day, month and year'
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-return-to-work-date':
+                            'Enter the date you returned to work and include a day, month and year'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-return-to-work-date': '2019-01-01T00:00:00.000Z'
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-return-to-work-date': 12345
+                    },
+                    {
+                        'q-applicant-return-to-work-date': 'not a date'
+                    }
+                ]
+            },
+            'p--context-money': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                title: 'Your money',
+                additionalProperties: false,
+                properties: {
+                    'money-context': {
+                        description:
+                            '<p class="govuk-body">We\'re going to ask if the crime has cost you money.</p><p class="govuk-body">This helps us decide if you\'ll get a payment for expenses or loss of earnings.</p>'
                     }
                 },
                 examples: [{}],
@@ -3606,7 +3749,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-loe',
+                                target: 'p--context-applicant-details',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-are-you-claiming-for-payments.q-applicant-are-you-claiming-for-payments',
@@ -3628,19 +3771,20 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
+                                target: 'p-applicant-have-you-returned-to-work',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe',
+                                    true
+                                ]
+
+                            },
+                            {
                                 target: 'p-applicant-are-you-claiming-for-expenses',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe',
                                     false
-                                ]
-                            },
-                            {
-                                target: 'p--transition',
-                                cond: [
-                                    '==',
-                                    '$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe',
-                                    true
                                 ]
                             }
                         ]
@@ -3650,20 +3794,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-applicant-details',
-                                cond: [
-                                    '==',
-                                    '$.answers.p-applicant-are-you-claiming-for-expenses.q-applicant-are-you-claiming-for-expenses',
-                                    false
-                                ]
-                            },
-                            {
-                                target: 'p--transition',
-                                cond: [
-                                    '==',
-                                    '$.answers.p-applicant-are-you-claiming-for-expenses.q-applicant-are-you-claiming-for-expenses',
-                                    true
-                                ]
+                                target: 'p--context-compensation'
                             }
                         ]
                     }
@@ -3681,20 +3812,15 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-compensation',
-                                cond: [
-                                    '==',
-                                    '$.answers.p-applicant-do-you-have-disabling-mental-injury.q-applicant-do-you-have-disabling-mental-injury',
-                                    false
-                                ]
-                            },
-                            {
                                 target: 'p-applicant-mental-injury-duration',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-do-you-have-disabling-mental-injury.q-applicant-do-you-have-disabling-mental-injury',
                                     true
                                 ]
+                            },
+                            {
+                                target: 'p--context-money'
                             }
                         ]
                     }
@@ -3773,7 +3899,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p--context-compensation'
+                                target: 'p--context-money'
                             }
                         ]
                     }
@@ -3782,7 +3908,51 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-compensation'
+                                target: 'p--context-money'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-have-you-returned-to-work': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-return-to-work-date',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-have-you-returned-to-work.q-applicant-have-you-returned-to-work',
+                                    true
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-work-details-option'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-return-to-work-date': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-work-details-option'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-work-details-option': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-are-you-claiming-for-expenses'
+                            }
+                        ]
+                    }
+                },
+                'p--context-money': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-are-you-claiming-for-loe'
                             }
                         ]
                     }
