@@ -2928,8 +2928,7 @@ module.exports = {
                 },
                 errorMessage: {
                     required: {
-                        'q-applicant-work-details-option':
-                            'Select the option that applies to you'
+                        'q-applicant-work-details-option': 'Select the option that applies to you'
                     }
                 },
                 examples: [
@@ -2967,7 +2966,8 @@ module.exports = {
                         title: 'When did you return to work?',
                         description: 'For example, 31 3 2020.',
                         errorMessage: {
-                            format: 'Enter the date you returned to work and include a day, month and year'
+                            format:
+                                'Enter the date you returned to work and include a day, month and year'
                         }
                     }
                 },
@@ -3777,7 +3777,6 @@ module.exports = {
                                     '$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe',
                                     true
                                 ]
-
                             },
                             {
                                 target: 'p-applicant-are-you-claiming-for-expenses',
