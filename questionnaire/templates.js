@@ -6,6 +6,176 @@ module.exports = {
         type: 'apply-for-compensation',
         version: '1.1.0',
         sections: {
+            'p-applicant-injury-locations-general': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-injury-locations'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-injury-locations': {
+                        title: 'What was injured?',
+                        type: 'array',
+                        maxItems: 4,
+                        uniqueItems: true,
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Head, face or neck',
+                                    const: 'head-face-neck'
+                                },
+                                {
+                                    title: 'Torso',
+                                    const: 'torso'
+                                },
+                                {
+                                    title: 'Arms or hands',
+                                    const: 'arms'
+                                },
+                                {
+                                    title: 'Legs or feet',
+                                    const: 'legs'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-injury-locations': 'An injury location is required'
+                    }
+                }
+            },
+            'p-applicant-injury-head-face-neck-general': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-injury-head-face-neck-general'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-injury-head-face-neck-general': {
+                        title: 'What parts of your head, face or neck were injured?',
+                        type: 'array',
+                        maxItems: 4,
+                        uniqueItems: true,
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Head or brain',
+                                    const: 'head-or-brain'
+                                },
+                                {
+                                    title: 'Face or jaw',
+                                    const: 'face-or-jaw'
+                                },
+                                {
+                                    title: 'Eye or eyesight',
+                                    const: 'arms'
+                                },
+                                {
+                                    title: '...',
+                                    const: 'foo'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-injury-head-face-neck-general':
+                            'An injury location is required'
+                    }
+                }
+            },
+            'p-applicant-injury-head-face-neck-local': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-injury-head-face-neck-local'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-injury-head-face-neck-local': {
+                        title: 'Select any injuries to your head or brain',
+                        type: 'array',
+                        maxItems: 4,
+                        uniqueItems: true,
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Brain damage',
+                                    const: 'brain-damage'
+                                },
+                                {
+                                    title: 'Fractured skull',
+                                    const: 'fractured-skull'
+                                },
+                                {
+                                    title: 'Epilepsy',
+                                    const: 'epilepsy'
+                                },
+                                {
+                                    title: '...',
+                                    const: 'foo'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-injury-head-face-neck-local': 'An injury location is required'
+                    }
+                }
+            },
+            'p-applicant-injury-torso-general': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-injury-torso-general'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-injury-torso-general': {
+                        title: 'What parts of your torso were injured?',
+                        type: 'array',
+                        maxItems: 4,
+                        uniqueItems: true,
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Shoulder',
+                                    const: 'shoulder'
+                                },
+                                {
+                                    title: 'Chest',
+                                    const: 'chest'
+                                },
+                                {
+                                    title: 'Abdomen',
+                                    const: 'abdomen'
+                                },
+                                {
+                                    title: '...',
+                                    const: 'foo'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-injury-torso-general': 'An injury location is required'
+                    }
+                }
+            },
+            'p-end': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                title: 'End',
+                additionalProperties: false,
+                properties: {
+                    'applicant-declaration': {
+                        description: '...'
+                    }
+                },
+                examples: [{}],
+                invalidExamples: [{foo: 'bar'}]
+            },
             'p-applicant-declaration': {
                 $schema: 'http://json-schema.org/draft-07/schema#',
                 type: 'object',
@@ -2892,11 +3062,82 @@ module.exports = {
             }
         },
         routes: {
-            initial: 'p-applicant-who-are-you-applying-for',
+            initial: 'p-applicant-injury-locations-general',
             referrer: 'https://www.gov.uk/claim-compensation-criminal-injury/make-claim',
             summary: 'p-applicant-declaration',
             confirmation: 'p--confirmation',
             states: {
+                'p-applicant-injury-locations-general': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-injury-head-face-neck-general',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-injury-locations-general.q-applicant-injury-locations',
+                                    'head-face-neck'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-injury-torso-general',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-injury-locations-general.q-applicant-injury-locations',
+                                    'torso'
+                                ]
+                            },
+                            {
+                                target: 'p-end'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-injury-head-face-neck-general': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-injury-head-face-neck-local',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-injury-head-face-neck-general.q-applicant-injury-head-face-neck-general',
+                                    'head-or-brain'
+                                ]
+                            },
+                            {
+                                target: 'p-end'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-injury-head-face-neck-local': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-injury-torso-general',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-injury-locations-general.q-applicant-injury-locations',
+                                    'torso'
+                                ]
+                            },
+                            {
+                                target: 'p-end'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-injury-torso-general': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-end'
+                            }
+                        ]
+                    }
+                },
+                'p-end': {
+                    type: 'final'
+                },
                 'p-applicant-declaration': {
                     on: {
                         ANSWER: [
@@ -3793,7 +4034,7 @@ module.exports = {
             }
         },
         answers: {},
-        progress: ['p-applicant-who-are-you-applying-for'],
+        progress: ['p-applicant-injury-locations-general'],
         meta: {
             questionnaireDocumentVersion: '1.0.0',
             onComplete: {
