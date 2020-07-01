@@ -4,7 +4,7 @@ module.exports = {
     'sexual-assault': id => ({
         id,
         type: 'apply-for-compensation',
-        version: '1.1.0',
+        version: '1.4.0-prerelease+build',
         sections: {
             'p-applicant-declaration': {
                 $schema: 'http://json-schema.org/draft-07/schema#',
@@ -2900,24 +2900,24 @@ module.exports = {
                 },
                 examples: [
                     {
-                        'q-applicant-what-was-injured': 'upper'
+                        'q-applicant-what-was-injured': ['upper']
                     },
                     {
-                        'q-applicant-what-was-injured': 'torso'
+                        'q-applicant-what-was-injured': ['torso']
                     },
                     {
-                        'q-applicant-what-was-injured': 'arms'
+                        'q-applicant-what-was-injured': ['arms']
                     },
                     {
-                        'q-applicant-what-was-injured': 'legs'
+                        'q-applicant-what-was-injured': ['legs']
                     }
                 ],
                 invalidExamples: [
                     {
-                        'q-applicant-what-was-injured': 999999999
+                        'q-applicant-what-was-injured': ['not-a-key']
                     },
                     {
-                        'q-applicant-what-was-injured': 'not-a-key'
+                        'q-applicant-what-was-injured': 'not-an-array'
                     }
                 ]
             },
@@ -2975,16 +2975,16 @@ module.exports = {
                 },
                 examples: [
                     {
-                        'q-applicant-what-was-injured-upper': 'head'
+                        'q-applicant-what-was-injured-upper': ['head']
                     },
                     {
-                        'q-applicant-what-was-injured-upper': 'neck'
+                        'q-applicant-what-was-injured-upper': ['neck']
                     },
                     {
-                        'q-applicant-what-was-injured-upper': 'face'
+                        'q-applicant-what-was-injured-upper': ['face']
                     },
                     {
-                        'q-applicant-what-was-injured-upper': 'eye'
+                        'q-applicant-what-was-injured-upper': ['eye']
                     }
                 ],
                 invalidExamples: [
@@ -2992,7 +2992,10 @@ module.exports = {
                         'q-applicant-what-was-injured-upper': 999999999
                     },
                     {
-                        'q-applicant-what-was-injured-upper': 'not-a-key'
+                        'q-applicant-what-was-injured-upper': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['not-a-key']
                     }
                 ]
             },
@@ -3034,7 +3037,7 @@ module.exports = {
                 },
                 examples: [
                     {
-                        'q-applicant-select-head-injuries': 'phyinj-042'
+                        'q-applicant-select-head-injuries': ['phyinj-042']
                     }
                 ],
                 invalidExamples: [
@@ -3042,7 +3045,10 @@ module.exports = {
                         'q-applicant-select-head-injuries': 999999999
                     },
                     {
-                        'q-applicant-select-head-injuries': 'not-a-key'
+                        'q-applicant-select-head-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-head-injuries': ['not-a-key']
                     }
                 ]
             },
@@ -3092,7 +3098,7 @@ module.exports = {
                 },
                 examples: [
                     {
-                        'q-applicant-select-face-injuries': 'phyinj-030'
+                        'q-applicant-select-face-injuries': ['phyinj-030']
                     }
                 ],
                 invalidExamples: [
@@ -3100,7 +3106,10 @@ module.exports = {
                         'q-applicant-select-face-injuries': 999999999
                     },
                     {
-                        'q-applicant-select-face-injuries': 'not-a-key'
+                        'q-applicant-select-face-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-face-injuries': ['not-a-key']
                     }
                 ]
             },
@@ -3134,7 +3143,7 @@ module.exports = {
                 },
                 examples: [
                     {
-                        'q-applicant-select-neck-injuries': 'phyinj-039'
+                        'q-applicant-select-neck-injuries': ['phyinj-039']
                     }
                 ],
                 invalidExamples: [
@@ -3142,7 +3151,10 @@ module.exports = {
                         'q-applicant-select-neck-injuries': 999999999
                     },
                     {
-                        'q-applicant-select-neck-injuries': 'not-a-key'
+                        'q-applicant-select-neck-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-neck-injuries': ['not-a-key']
                     }
                 ]
             },
@@ -3299,7 +3311,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-physical-injuries',
+                                target: 'p-applicant-are-you-claiming-for-payments',
                                 cond: [
                                     '==',
                                     '$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police',
@@ -3548,7 +3560,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details',
+                                target: 'p-applicant-are-you-claiming-for-physical-injuries',
                                 cond: [
                                     '==',
                                     '$.answers.p-offender-do-you-know-the-name-of-the-offender.q-offender-do-you-know-the-name-of-the-offender',
@@ -3579,7 +3591,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details',
+                                target: 'p-applicant-are-you-claiming-for-physical-injuries',
                                 cond: [
                                     '==',
                                     '$.answers.p-offender-do-you-have-contact-with-offender.q-offender-do-you-have-contact-with-offender',
@@ -3601,7 +3613,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details'
+                                target: 'p-applicant-are-you-claiming-for-physical-injuries'
                             }
                         ]
                     }
@@ -3827,7 +3839,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-physical-injuries'
+                                target: 'p-applicant-are-you-claiming-for-payments'
                             }
                         ]
                     }
@@ -3868,7 +3880,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments',
+                                target: 'p--context-dmi-details',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-are-you-claiming-for-physical-injuries.q-applicant-are-you-claiming-for-physical-injuries',
@@ -4083,7 +4095,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments'
+                                target: 'p--context-dmi-details'
                             }
                         ]
                     }
@@ -4116,7 +4128,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments'
+                                target: 'p--context-dmi-details'
                             }
                         ]
                     }
@@ -4141,7 +4153,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments'
+                                target: 'p--context-dmi-details'
                             }
                         ]
                     }
@@ -4158,7 +4170,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments'
+                                target: 'p--context-dmi-details'
                             }
                         ]
                     }
@@ -4167,7 +4179,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments'
+                                target: 'p--context-dmi-details'
                             }
                         ]
                     }
