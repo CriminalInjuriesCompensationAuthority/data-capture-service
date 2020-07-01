@@ -34,7 +34,7 @@
         "pg": "^7.11.0",
         "pino": "^5.12.6",
         "pino-http": "^4.2.0",
-        "q-router": "github:CriminalInjuriesCompensationAuthority/q-router#v2.4.0",
+        "q-router": "github:CriminalInjuriesCompensationAuthority/q-router#v2.5.0",
         "swagger-ui-express": "^4.0.2",
         "uuid": "^3.3.2",
         "verror": "^1.10.0"
