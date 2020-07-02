@@ -2937,12 +2937,8 @@ module.exports = {
                                     const: 'head'
                                 },
                                 {
-                                    title: 'Face',
+                                    title: 'Face or jaw',
                                     const: 'face'
-                                },
-                                {
-                                    title: 'Neck',
-                                    const: 'neck'
                                 },
                                 {
                                     title: 'Eye or eyesight',
@@ -2957,12 +2953,20 @@ module.exports = {
                                     const: 'nose'
                                 },
                                 {
-                                    title: 'Teeth',
-                                    const: 'teeth'
+                                    title: 'Mouth',
+                                    const: 'mouth'
                                 },
                                 {
-                                    title: 'Tongue',
-                                    const: 'tongue'
+                                    title: 'Neck',
+                                    const: 'neck'
+                                },
+                                {
+                                    title: 'Skin',
+                                    const: 'skin'
+                                },
+                                {
+                                    title: 'Muscle, ligament or tendon',
+                                    const: 'muscle'
                                 }
                             ]
                         }
@@ -2978,13 +2982,28 @@ module.exports = {
                         'q-applicant-what-was-injured-upper': ['head']
                     },
                     {
-                        'q-applicant-what-was-injured-upper': ['neck']
-                    },
-                    {
                         'q-applicant-what-was-injured-upper': ['face']
                     },
                     {
                         'q-applicant-what-was-injured-upper': ['eye']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['ear']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['nose']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['mouth']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['neck']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['skin']
+                    },
+                    {
+                        'q-applicant-what-was-injured-upper': ['muscle']
                     }
                 ],
                 invalidExamples: [
@@ -3155,6 +3174,291 @@ module.exports = {
                     },
                     {
                         'q-applicant-select-neck-injuries': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-select-eye-injuries': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your eye or eyesight',
+                type: 'object',
+                required: ['q-applicant-select-eye-injuries'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-select-eye-injuries': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken eye socket',
+                                    const: 'phyinj-013'
+                                },
+                                {
+                                    title: 'Temporary blurred vision',
+                                    const: 'phyinj-014'
+                                },
+                                {
+                                    title: 'Permanent blurred vision',
+                                    const: 'phyinj-015'
+                                },
+                                {
+                                    title: 'Black eye',
+                                    const: 'phyinj-051'
+                                },
+                                {
+                                    title: 'Scratched eye',
+                                    const: 'phyinj-017'
+                                },
+                                {
+                                    title: 'Bleeding in eye',
+                                    const: 'phyinj-021'
+                                },
+                                {
+                                    title: 'Blindness',
+                                    const: 'phyinj-023'
+                                },
+                                {
+                                    title: 'Sight loss',
+                                    const: 'phyinj-024'
+                                },
+                                {
+                                    title: 'Damaged or detached retina',
+                                    const: 'phyinj-026'
+                                },
+                                {
+                                    title: 'Object in eye',
+                                    const: 'phyinj-027'
+                                },
+                                {
+                                    title: 'Cataract',
+                                    const: 'phyinj-016'
+                                },
+                                {
+                                    title: 'Dislocated lens',
+                                    const: 'phyinj-019'
+                                },
+                                {
+                                    title: 'Glaucoma',
+                                    const: 'phyinj-020'
+                                },
+                                {
+                                    title: 'Loss of eye',
+                                    const: 'phyinj-022'
+                                },
+                                {
+                                    title: 'Floater',
+                                    const: 'phyinj-025'
+                                },
+                                {
+                                    title: 'Damaged eye drain',
+                                    const: 'phyinj-028'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-select-eye-injuries': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-select-eye-injuries': ['phyinj-028']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-select-eye-injuries': 999999999
+                    },
+                    {
+                        'q-applicant-select-eye-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-eye-injuries': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-select-ear-injuries': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your ear or hearing',
+                type: 'object',
+                required: ['q-applicant-select-ear-injuries'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-select-ear-injuries': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken ear bone',
+                                    const: 'phyinj-006'
+                                },
+                                {
+                                    title: 'Hearing loss',
+                                    const: 'phyinj-007'
+                                },
+                                {
+                                    title: 'Loss of ear',
+                                    const: 'phyinj-008'
+                                },
+                                {
+                                    title: '1 perforated eardrum',
+                                    const: 'phyinj-009'
+                                },
+                                {
+                                    title: '2 perforated eardrums',
+                                    const: 'phyinj-010'
+                                },
+                                {
+                                    title: 'Ringing in ears',
+                                    const: 'phyinj-011'
+                                },
+                                {
+                                    title: 'Dizziness',
+                                    const: 'phyinj-012'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-select-ear-injuries': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-select-ear-injuries': ['phyinj-012']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-select-ear-injuries': 999999999
+                    },
+                    {
+                        'q-applicant-select-ear-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-ear-injuries': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-select-nose-injuries': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your nose',
+                type: 'object',
+                required: ['q-applicant-select-nose-injuries'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-select-nose-injuries': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken nose',
+                                    const: 'phyinj-033'
+                                },
+                                {
+                                    title: 'Loss of smell or taste',
+                                    const: 'phyinj-040'
+                                },
+                                {
+                                    title: 'Loss of nose',
+                                    const: 'phyinj-041'
+                                },
+                                {
+                                    title: 'Broken ethmoid (bone at base of nose)',
+                                    const: 'phyinj-031'
+                                },
+                                {
+                                    title:
+                                        'Broken ethmoid (bone at base of nose) needing operation',
+                                    const: 'phyinj-032'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-select-nose-injuries': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-select-nose-injuries': ['phyinj-032']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-select-nose-injuries': 999999999
+                    },
+                    {
+                        'q-applicant-select-nose-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-nose-injuries': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-select-mouth-injuries': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your mouth',
+                type: 'object',
+                required: ['q-applicant-select-mouth-injuries'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-select-mouth-injuries': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Loose teeth',
+                                    const: 'phyinj-044'
+                                },
+                                {
+                                    title: 'Damaged or broken teeth',
+                                    const: 'phyinj-043'
+                                },
+                                {
+                                    title: 'Difficulty speaking',
+                                    const: 'phyinj-045'
+                                },
+                                {
+                                    title: 'Permanent loss of speech',
+                                    const: 'phyinj-046'
+                                },
+                                {
+                                    title: 'Loss of tongue',
+                                    const: 'phyinj-047'
+                                },
+                                {
+                                    title: 'Loss of smell or taste',
+                                    const: 'phyinj-040'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-select-mouth-injuries': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-select-mouth-injuries': ['phyinj-040']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-select-mouth-injuries': 999999999
+                    },
+                    {
+                        'q-applicant-select-mouth-injuries': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-select-mouth-injuries': ['not-a-key']
                     }
                 ]
             },
@@ -4128,6 +4432,38 @@ module.exports = {
                                 ]
                             },
                             {
+                                target: 'p-applicant-select-eye-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-ear-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
                                 target: 'p--context-dmi-details'
                             }
                         ]
@@ -4153,6 +4489,38 @@ module.exports = {
                                 ]
                             },
                             {
+                                target: 'p-applicant-select-eye-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-ear-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
                                 target: 'p--context-dmi-details'
                             }
                         ]
@@ -4170,12 +4538,160 @@ module.exports = {
                                 ]
                             },
                             {
+                                target: 'p-applicant-select-eye-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-ear-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
                                 target: 'p--context-dmi-details'
                             }
                         ]
                     }
                 },
                 'p-applicant-select-neck-injuries': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-select-eye-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-ear-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-select-eye-injuries': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-select-ear-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-select-ear-injuries': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-select-nose-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-select-nose-injuries': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-select-mouth-injuries',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-what-was-injured-upper.q-applicant-what-was-injured-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-select-mouth-injuries': {
                     on: {
                         ANSWER: [
                             {
