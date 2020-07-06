@@ -4,7 +4,7 @@ module.exports = {
     'sexual-assault': id => ({
         id,
         type: 'apply-for-compensation',
-        version: '1.1.0',
+        version: '1.4.0-prerelease+build',
         sections: {
             'p-applicant-declaration': {
                 $schema: 'http://json-schema.org/draft-07/schema#',
@@ -2862,6 +2862,1175 @@ module.exports = {
                 examples: [{}],
                 invalidExamples: [{foo: 'bar'}]
             },
+            'p--context-physical-injuries': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                title: 'About your injuries',
+                additionalProperties: false,
+                properties: {
+                    'details-context': {
+                        description:
+                            '<p class="govuk-body">We’re going to ask about any physical injuries caused by the crime.</p><p class="govuk-body">This helps us decide if you\'ll get a payment for physical injuries.</p>'
+                    }
+                },
+                examples: [{}],
+                invalidExamples: [{foo: 'bar'}]
+            },
+            'p-applicant-physical-injury': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'What was injured?',
+                type: 'object',
+                required: ['q-applicant-physical-injury'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Head, face or neck',
+                                    const: 'upper'
+                                },
+                                {
+                                    title: 'Torso',
+                                    const: 'torso'
+                                },
+                                {
+                                    title: 'Arms or hands',
+                                    const: 'arms'
+                                },
+                                {
+                                    title: 'Legs or feet',
+                                    const: 'legs'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {'q-applicant-physical-injury': ['legs']},
+                    {'q-applicant-physical-injury': ['arms']},
+                    {'q-applicant-physical-injury': ['arms', 'legs']},
+                    {'q-applicant-physical-injury': ['torso']},
+                    {'q-applicant-physical-injury': ['torso', 'legs']},
+                    {'q-applicant-physical-injury': ['torso', 'arms']},
+                    {'q-applicant-physical-injury': ['torso', 'arms', 'legs']},
+                    {'q-applicant-physical-injury': ['upper']},
+                    {'q-applicant-physical-injury': ['upper', 'legs']},
+                    {'q-applicant-physical-injury': ['upper', 'arms']},
+                    {'q-applicant-physical-injury': ['upper', 'arms', 'legs']},
+                    {'q-applicant-physical-injury': ['upper', 'torso']},
+                    {'q-applicant-physical-injury': ['upper', 'torso', 'legs']},
+                    {'q-applicant-physical-injury': ['upper', 'torso', 'arms']},
+                    {'q-applicant-physical-injury': ['upper', 'torso', 'arms', 'legs']}
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury': ['not-a-key']
+                    },
+                    {
+                        'q-applicant-physical-injury': 'not-an-array'
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'What was injured?',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Head or brain',
+                                    const: 'head'
+                                },
+                                {
+                                    title: 'Face or jaw',
+                                    const: 'face'
+                                },
+                                {
+                                    title: 'Eye or eyesight',
+                                    const: 'eye'
+                                },
+                                {
+                                    title: 'Ear or hearing',
+                                    const: 'ear'
+                                },
+                                {
+                                    title: 'Nose',
+                                    const: 'nose'
+                                },
+                                {
+                                    title: 'Mouth',
+                                    const: 'mouth'
+                                },
+                                {
+                                    title: 'Neck',
+                                    const: 'neck'
+                                },
+                                {
+                                    title: 'Skin',
+                                    const: 'skin'
+                                },
+                                {
+                                    title: 'Muscle, ligament or tendon',
+                                    const: 'muscle'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper': ['head']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper': ['neck']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper': ['face']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper': ['eye']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-head': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your head or brain',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-head'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-head': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Brain damage',
+                                    const: 'phyinj-003'
+                                },
+                                {
+                                    title: 'Epilepsy',
+                                    const: 'phyinj-004'
+                                },
+                                {
+                                    title: 'Nerve damage',
+                                    const: 'phyinj-005'
+                                },
+                                {
+                                    title: 'Fractured skull',
+                                    const: 'phyinj-042'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-head': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-head': ['phyinj-042']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-head': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-head': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-head': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-face': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your face',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-face'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-face': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Face fractures',
+                                    const: 'phyinj-035'
+                                },
+                                {
+                                    title: 'Face numbness',
+                                    const: 'phyinj-036'
+                                },
+                                {
+                                    title: 'Broken cheekbone',
+                                    const: 'phyinj-037'
+                                },
+                                {
+                                    title: 'Broken jaw',
+                                    const: 'phyinj-034'
+                                },
+                                {
+                                    title: 'Clicking jaw',
+                                    const: 'phyinj-029'
+                                },
+                                {
+                                    title: 'Dislocated jaw',
+                                    const: 'phyinj-030'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-face': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-face': ['phyinj-030']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-face': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-face': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-face': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-neck': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your neck',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-neck'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-neck': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken hyoid (throat bone)',
+                                    const: 'phyinj-038'
+                                },
+                                {
+                                    title: 'Whiplash',
+                                    const: 'phyinj-039'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-neck': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-neck': ['phyinj-039']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-neck': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-neck': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-neck': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-eye': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your eye or eyesight',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-eye'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-eye': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken eye socket',
+                                    const: 'phyinj-013'
+                                },
+                                {
+                                    title: 'Temporary blurred vision',
+                                    const: 'phyinj-014'
+                                },
+                                {
+                                    title: 'Permanent blurred vision',
+                                    const: 'phyinj-015'
+                                },
+                                {
+                                    title: 'Black eye',
+                                    const: 'phyinj-051'
+                                },
+                                {
+                                    title: 'Scratched eye',
+                                    const: 'phyinj-017'
+                                },
+                                {
+                                    title: 'Bleeding in eye',
+                                    const: 'phyinj-021'
+                                },
+                                {
+                                    title: 'Blindness',
+                                    const: 'phyinj-023'
+                                },
+                                {
+                                    title: 'Sight loss',
+                                    const: 'phyinj-024'
+                                },
+                                {
+                                    title: 'Damaged or detached retina',
+                                    const: 'phyinj-026'
+                                },
+                                {
+                                    title: 'Object in eye',
+                                    const: 'phyinj-027'
+                                },
+                                {
+                                    title: 'Cataract',
+                                    const: 'phyinj-016'
+                                },
+                                {
+                                    title: 'Dislocated lens',
+                                    const: 'phyinj-019'
+                                },
+                                {
+                                    title: 'Glaucoma',
+                                    const: 'phyinj-020'
+                                },
+                                {
+                                    title: 'Loss of eye',
+                                    const: 'phyinj-022'
+                                },
+                                {
+                                    title: 'Floater',
+                                    const: 'phyinj-025'
+                                },
+                                {
+                                    title: 'Damaged eye drain',
+                                    const: 'phyinj-028'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-eye': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-eye': ['phyinj-028']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-eye': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-eye': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-eye': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-ear': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your ear or hearing',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-ear'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-ear': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken ear bone',
+                                    const: 'phyinj-006'
+                                },
+                                {
+                                    title: 'Hearing loss',
+                                    const: 'phyinj-007'
+                                },
+                                {
+                                    title: 'Loss of ear',
+                                    const: 'phyinj-008'
+                                },
+                                {
+                                    title: '1 perforated eardrum',
+                                    const: 'phyinj-009'
+                                },
+                                {
+                                    title: '2 perforated eardrums',
+                                    const: 'phyinj-010'
+                                },
+                                {
+                                    title: 'Ringing in ears',
+                                    const: 'phyinj-011'
+                                },
+                                {
+                                    title: 'Dizziness',
+                                    const: 'phyinj-012'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-ear': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-ear': ['phyinj-012']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-ear': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-ear': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-ear': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-nose': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your nose',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-nose'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-nose': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken nose',
+                                    const: 'phyinj-033'
+                                },
+                                {
+                                    title: 'Loss of smell or taste',
+                                    const: 'phyinj-040'
+                                },
+                                {
+                                    title: 'Loss of nose',
+                                    const: 'phyinj-041'
+                                },
+                                {
+                                    title: 'Broken ethmoid (bone at base of nose)',
+                                    const: 'phyinj-031'
+                                },
+                                {
+                                    title:
+                                        'Broken ethmoid (bone at base of nose) needing operation',
+                                    const: 'phyinj-032'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-nose': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-nose': ['phyinj-032']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-nose': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-nose': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-nose': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-mouth': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your mouth',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-mouth'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-mouth': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Loose teeth',
+                                    const: 'phyinj-044'
+                                },
+                                {
+                                    title: 'Damaged or broken teeth',
+                                    const: 'phyinj-043'
+                                },
+                                {
+                                    title: 'Difficulty speaking',
+                                    const: 'phyinj-045'
+                                },
+                                {
+                                    title: 'Permanent loss of speech',
+                                    const: 'phyinj-046'
+                                },
+                                {
+                                    title: 'Loss of tongue',
+                                    const: 'phyinj-047'
+                                },
+                                {
+                                    title: 'Loss of smell or taste',
+                                    const: 'phyinj-040'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-mouth': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-mouth': ['phyinj-040']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-mouth': 999999999
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-mouth': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-mouth': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-upper-skin': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your skin on your head, face or neck',
+                type: 'object',
+                required: ['q-applicant-physical-injury-upper-skin'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-upper-skin': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Cuts',
+                                    const: 'phyinj-048'
+                                },
+                                {
+                                    title: 'Bruises',
+                                    const: 'phyinj-049'
+                                },
+                                {
+                                    title: 'Scars',
+                                    const: 'phyinj-002'
+                                },
+                                {
+                                    title: 'Burns',
+                                    const: 'phyinj-001'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-upper-skin': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-upper-skin': ['phyinj-001']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-skin': ['phyinj-002']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-skin': ['phyinj-048']
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-skin': ['phyinj-049']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-upper-skin': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-upper-skin': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'What part of your arms or hands were injured?',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Shoulder',
+                                    const: 'shoulder'
+                                },
+                                {
+                                    title: 'Arm',
+                                    const: 'arm'
+                                },
+                                {
+                                    title: 'Elbow',
+                                    const: 'elbow'
+                                },
+                                {
+                                    title: 'Wrist',
+                                    const: 'wrist'
+                                },
+                                {
+                                    title: 'Hand',
+                                    const: 'hand'
+                                },
+                                {
+                                    title: 'Finger and thumb',
+                                    const: 'digit'
+                                },
+                                {
+                                    title: 'Skin',
+                                    const: 'skin'
+                                },
+                                {
+                                    title: 'Muscle, ligament, or tendon injury',
+                                    const: 'muscle'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms': ['shoulder']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['arm']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['elbow']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['wrist']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['hand']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['digit']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['skin']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['muscle']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-shoulder': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your shoulder',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-shoulder'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-shoulder': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken shoulder',
+                                    const: 'phyinj-xxx'
+                                },
+                                {
+                                    title: 'Dislocated shoulder',
+                                    const: 'phyinj-100'
+                                },
+                                {
+                                    title: 'Frozen shoulder',
+                                    const: 'phyinj-101'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-shoulder':
+                            'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-shoulder': ['phyinj-xxx']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-shoulder': ['phyinj-100']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-shoulder': ['phyinj-101']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-shoulder': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-shoulder': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-arm': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your arm',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-arm'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-arm': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken arm',
+                                    const: 'phyinj-099'
+                                },
+                                {
+                                    title: 'Loss of arm',
+                                    const: 'phyinj-084'
+                                },
+                                {
+                                    title: 'Paralysed arm',
+                                    const: 'phyinj-085'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-arm': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-arm': ['phyinj-099']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-arm': ['phyinj-084']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-arm': ['phyinj-085']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-arm': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-arm': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-elbow': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your elbow',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-elbow'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-elbow': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Dislocated elbow',
+                                    const: 'phyinj-086'
+                                },
+                                {
+                                    title: 'Broken elbow',
+                                    const: 'phyinj-087'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-elbow': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-elbow': ['phyinj-086']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-elbow': ['phyinj-087']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-elbow': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-elbow': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-wrist': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your wrist',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-wrist'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-wrist': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken wrist',
+                                    const: 'phyinj-104'
+                                },
+                                {
+                                    title: 'Sprained wrist',
+                                    const: 'phyinj-105'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-wrist': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-wrist': ['phyinj-104']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-wrist': ['phyinj-105']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-wrist': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-wrist': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-hand': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your hand',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-hand'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-hand': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Broken hand',
+                                    const: 'phyinj-096'
+                                },
+                                {
+                                    title: 'Loss of use of hand',
+                                    const: 'phyinj-097'
+                                },
+                                {
+                                    title: 'Loss of grip',
+                                    const: 'phyinj-098'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-hand': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-hand': ['phyinj-096']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-hand': ['phyinj-097']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-hand': ['phyinj-098']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-hand': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-hand': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-digit': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your finger or thumb',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-digit'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-digit': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Dislocated thumb',
+                                    const: 'phyinj-110'
+                                },
+                                {
+                                    title: 'Dislocated index finger',
+                                    const: 'phyinj-109'
+                                },
+                                {
+                                    title: 'Dislocated finger on one hand',
+                                    const: 'phyinj-088'
+                                },
+                                {
+                                    title: 'Dislocated fingers on both hands',
+                                    const: 'phyinj-089'
+                                },
+                                {
+                                    title: 'Broken thumb',
+                                    const: 'phyinj-090'
+                                },
+                                {
+                                    title: 'Broken index finger',
+                                    const: 'phyinj-091'
+                                },
+                                {
+                                    title: 'Broken finger on one hand',
+                                    const: 'phyinj-092'
+                                },
+                                {
+                                    title: 'Broken fingers on both hands',
+                                    const: 'phyinj-093'
+                                },
+                                {
+                                    title: 'Loss of thumb',
+                                    const: 'phyinj-111'
+                                },
+                                {
+                                    title: 'Loss of finger',
+                                    const: 'phyinj-094'
+                                },
+                                {
+                                    title: 'Loss of part of finger',
+                                    const: 'phyinj-095'
+                                },
+                                {
+                                    title: 'Loss of fingernail',
+                                    const: 'phyinj-106'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-digit': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-110']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-109']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-088']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-089']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-090']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-091']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-092']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-093']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-094']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-095']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-106']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['phyinj-111']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-digit': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-digit': ['not-a-key']
+                    }
+                ]
+            },
+            'p-applicant-physical-injury-arms-skin': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                title: 'Select any injuries to your skin on your arms and hands',
+                type: 'object',
+                required: ['q-applicant-physical-injury-arms-skin'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-physical-injury-arms-skin': {
+                        type: 'array',
+                        items: {
+                            anyOf: [
+                                {
+                                    title: 'Cuts',
+                                    const: 'phyinj-107'
+                                },
+                                {
+                                    title: 'Bruises',
+                                    const: 'phyinj-108'
+                                },
+                                {
+                                    title: 'Scars',
+                                    const: 'phyinj-083'
+                                },
+                                {
+                                    title: 'Burns',
+                                    const: 'phyinj-082'
+                                }
+                            ]
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-physical-injury-arms-skin': 'Select an injury from the list'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-physical-injury-arms-skin': ['phyinj-107']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-skin': ['phyinj-108']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-skin': ['phyinj-083']
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-skin': ['phyinj-082']
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-physical-injury-arms-skin': 'not-an-array'
+                    },
+                    {
+                        'q-applicant-physical-injury-arms-skin': ['not-a-key']
+                    }
+                ]
+            },
             system: {
                 $schema: 'http://json-schema.org/draft-07/schema#',
                 type: 'object',
@@ -3015,7 +4184,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p-applicant-are-you-claiming-for-physical-injuries',
+                                target: 'p-applicant-are-you-claiming-for-payments',
                                 cond: [
                                     '==',
                                     '$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police',
@@ -3264,7 +4433,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details',
+                                target: 'p--context-physical-injuries',
                                 cond: [
                                     '==',
                                     '$.answers.p-offender-do-you-know-the-name-of-the-offender.q-offender-do-you-know-the-name-of-the-offender',
@@ -3295,7 +4464,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details',
+                                target: 'p--context-physical-injuries',
                                 cond: [
                                     '==',
                                     '$.answers.p-offender-do-you-have-contact-with-offender.q-offender-do-you-have-contact-with-offender',
@@ -3317,7 +4486,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-dmi-details'
+                                target: 'p--context-physical-injuries'
                             }
                         ]
                     }
@@ -3543,7 +4712,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-physical-injuries'
+                                target: 'p-applicant-are-you-claiming-for-payments'
                             }
                         ]
                     }
@@ -3584,7 +4753,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p-applicant-are-you-claiming-for-payments',
+                                target: 'p--context-dmi-details',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-are-you-claiming-for-physical-injuries.q-applicant-are-you-claiming-for-physical-injuries',
@@ -3592,7 +4761,7 @@ module.exports = {
                                 ]
                             },
                             {
-                                target: 'p--transition',
+                                target: 'p-applicant-physical-injury',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-are-you-claiming-for-physical-injuries.q-applicant-are-you-claiming-for-physical-injuries',
@@ -3783,6 +4952,769 @@ module.exports = {
                         ANSWER: [
                             {
                                 target: 'p--context-compensation'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'upper'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-head',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'head'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-face',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'face'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-neck',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'neck'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-eye',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-ear',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-head': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-face',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'face'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-neck',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'neck'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-eye',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-ear',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-face': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-neck',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'neck'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-eye',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-ear',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-neck': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-eye',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'eye'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-ear',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-eye': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-ear',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'ear'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-ear': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-nose',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'nose'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-nose': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-mouth',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'mouth'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-mouth': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-upper-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-upper.q-applicant-physical-injury-upper',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-upper-skin': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
+                                    'arms'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-shoulder',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'shoulder'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-arm',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'arm'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-elbow',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'elbow'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-wrist',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'wrist'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-hand',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'hand'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-shoulder': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-arm',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'arm'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-elbow',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'elbow'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-wrist',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'wrist'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-hand',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'hand'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-arm': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-elbow',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'elbow'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-wrist',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'wrist'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-hand',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'hand'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-elbow': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-wrist',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'wrist'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-hand',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'hand'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-wrist': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-hand',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'hand'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-hand': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-digit',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'digit'
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-digit': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-physical-injury-arms-skin',
+                                cond: [
+                                    'includes',
+                                    '$.answers.p-applicant-physical-injury-arms.q-applicant-physical-injury-arms',
+                                    'skin'
+                                ]
+                            },
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-physical-injury-arms-skin': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p--context-dmi-details'
+                            }
+                        ]
+                    }
+                },
+                'p--context-physical-injuries': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-are-you-claiming-for-physical-injuries'
                             }
                         ]
                     }
