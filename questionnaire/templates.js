@@ -5309,6 +5309,34 @@ module.exports = {
                         }
                     }
                 },
+                allOf: [
+                    {
+                        $ref: '#/definitions/if-other-then-q-applicant-expenses-max-one-item'
+                    }
+                ],
+                definitions: {
+                    'if-other-then-q-applicant-expenses-max-one-item': {
+                        if: {
+                            properties: {
+                                'q-applicant-expenses': {
+                                    contains: {const: 'no-expenses'}
+                                }
+                            },
+                            required: ['q-applicant-expenses']
+                        },
+                        then: {
+                            required: ['q-applicant-expenses'],
+                            properties: {
+                                'q-applicant-expenses': {
+                                    maxItems: 1,
+                                    errorMessage: {
+                                        maxItems: "Select any expenses you've had"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 errorMessage: {
                     required: {
                         'q-applicant-expenses': 'Select expenses from the list'
