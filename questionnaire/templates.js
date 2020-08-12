@@ -5330,7 +5330,8 @@ module.exports = {
                                 'q-applicant-expenses': {
                                     maxItems: 1,
                                     errorMessage: {
-                                        maxItems: "Select any expenses you've had"
+                                        maxItems:
+                                            'Select any expenses you’ve had or select ‘I have not had these expenses’'
                                     }
                                 }
                             }
