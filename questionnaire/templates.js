@@ -7426,6 +7426,37 @@ module.exports = {
                     }
                 ]
             },
+            'p-applicant-fatal-claim': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-fatal-claim'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-fatal-claim': {
+                        type: 'boolean',
+                        title: 'Are you applying for someone who died from their injuries?'
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-fatal-claim':
+                            'Select yes if you are applying for someone who died from their injuries'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-fatal-claim': true
+                    },
+                    {
+                        'q-applicant-fatal-claim': false
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-fatal-claim': 'foo'
+                    }
+                ]
+            },
             system: {
                 $schema: 'http://json-schema.org/draft-07/schema#',
                 type: 'object',
@@ -7456,7 +7487,7 @@ module.exports = {
             }
         },
         routes: {
-            initial: 'p-applicant-who-are-you-applying-for',
+            initial: 'p-applicant-fatal-claim',
             referrer: 'https://www.gov.uk/claim-compensation-criminal-injury/make-claim',
             summary: 'p-applicant-declaration',
             confirmation: 'p--confirmation',
@@ -10671,13 +10702,35 @@ module.exports = {
                         ]
                     }
                 },
+                'p-applicant-fatal-claim': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p--transition',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-fatal-claim.q-applicant-fatal-claim',
+                                    true
+                                ]
+                            },
+                            {
+                                target: 'p-applicant-who-are-you-applying-for',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-fatal-claim.q-applicant-fatal-claim',
+                                    false
+                                ]
+                            }
+                        ]
+                    }
+                },
                 system: {
                     type: 'final'
                 }
             }
         },
         answers: {},
-        progress: ['p-applicant-who-are-you-applying-for'],
+        progress: ['p-applicant-fatal-claim'],
         meta: {
             questionnaireDocumentVersion: '1.0.0',
             onComplete: {
