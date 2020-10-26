@@ -7351,7 +7351,7 @@ module.exports = {
                 properties: {
                     'you-cannot-get-compensation': {
                         description:
-                            '<p class="govuk-body">You can only get compensation from this service if you’ve been a victim of a violent crime.</p>'
+                            '<p class="govuk-body">You can only get compensation from this service if you\'ve been a victim of a violent crime.</p><p class="govuk-body">Call us if you want to discuss whether you can claim.</p>{% include \'contact.njk\' %}'
                     }
                 },
                 examples: [{}],
