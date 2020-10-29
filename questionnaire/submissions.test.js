@@ -302,6 +302,29 @@ describe('Questionnaire submissions', () => {
                     .set('Authorization', `Bearer ${tokens['create:questionnaires']}`);
                 expect(res.body.data.attributes.caseReferenceNumber).toEqual(null);
             });
+
+            it('should allow resubmission off failed applications', async () => {
+                await request(app)
+                    .post('/api/v1/questionnaires/67d8e5d2-44a5-4ab7-91c0-3fd27d009235/submissions')
+                    .set('Authorization', `Bearer ${tokens['create:questionnaires']}`)
+                    .set('Content-Type', 'application/vnd.api+json')
+                    .send({
+                        data: {
+                            type: 'submissions',
+                            attributes: {
+                                questionnaireId: '67d8e5d2-44a5-4ab7-91c0-3fd27d009235'
+                            }
+                        }
+                    });
+                const res = await request(app)
+                    .get('/api/v1/questionnaires/67d8e5d2-44a5-4ab7-91c0-3fd27d009235/submissions')
+                    .set('Authorization', `Bearer ${tokens['create:questionnaires']}`);
+                console.log({
+                    a: res.body.data.attribute,
+                    b: res.statusCode
+                });
+                expect(res.statusCode).toEqual('bacon');
+            });
         });
 
         describe('multiple POSTS', () => {
