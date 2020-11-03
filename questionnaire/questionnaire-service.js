@@ -59,7 +59,6 @@ function createQuestionnaireService({
 
     async function getQuestionnaire(questionnaireId) {
         const questionnaire = await db.getQuestionnaire(questionnaireId);
-
         return questionnaire;
     }
 

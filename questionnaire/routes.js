@@ -165,18 +165,23 @@ router
                 questionnaire.routes.summary
             );
 
+            if (!isQuestionnaireComplete) {
+                const err = Error(
+                    `Questionnaire with ID "${questionnaireId}" is not in a submittable state`
+                );
+                err.name = 'HTTPError';
+                err.statusCode = 409;
+                err.error = '409 Conflict';
+                throw err;
+            }
+
             // if the submission status is anything other than 'NOT_STARTED' then it
             // means that the submission resource has been previously created.
-            // skip over this for failed application so they can be resubmitted.
-            if (!isQuestionnaireComplete || !['NOT_STARTED', 'FAILED'].includes(submissionStatus)) {
-                const errorReasons = {
-                    notSubmittable: `Questionnaire with ID "${questionnaireId}" is not in a submittable state`,
-                    duplicate: `Submission resource with ID "${questionnaireId}" already exists`
-                };
-                const errorReason = !isQuestionnaireComplete
-                    ? errorReasons.notSubmittable
-                    : errorReasons.duplicate;
-                const err = Error(errorReason);
+            // also skip over this for failed application so they can be resubmitted.
+            if (!['NOT_STARTED', 'FAILED'].includes(submissionStatus)) {
+                const err = Error(
+                    `Submission resource with ID "${questionnaireId}" already exists`
+                );
                 err.name = 'HTTPError';
                 err.statusCode = 409;
                 err.error = '409 Conflict';
@@ -185,24 +190,20 @@ router
 
             // if the summary section ID is in the progress array, then that means
             // the questionnaire is submittable.
-            if (isQuestionnaireComplete) {
-                // check all answers are correct.
-                await questionnaireService.validateAllAnswers(questionnaireId);
+            // if (isQuestionnaireComplete) {
+            // check all answers are correct.
+            await questionnaireService.validateAllAnswers(questionnaireId);
 
-                // TODO: refactor `getSubmissionResponseData` to be more intuitive.
-                const response = await questionnaireService.getSubmissionResponseData(
-                    questionnaireId,
-                    true
-                );
+            // TODO: refactor `getSubmissionResponseData` to be more intuitive.
+            const response = await questionnaireService.getSubmissionResponseData(
+                questionnaireId,
+                true
+            );
 
-                questionnaireService.createAnswers(
-                    questionnaireId,
-                    questionnaire.routes.summary,
-                    {}
-                );
+            questionnaireService.createAnswers(questionnaireId, questionnaire.routes.summary, {});
 
-                res.status(201).json(response);
-            }
+            res.status(201).json(response);
+            // }
         } catch (err) {
             next(err);
         }

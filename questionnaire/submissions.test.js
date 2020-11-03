@@ -24,6 +24,16 @@ const tokens = {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkYXRhLWNhcHR1cmUtc2VydmljZSIsImlzcyI6IiQuYXVkIiwianRpIjoiNDUwMzE2ZTYtNDFhNS00MGRjLWI3NTUtMzA2ZGQ2M2FlMDhiIiwic3ViIjoiY2ljYS13ZWIiLCJzY29wZSI6InJlYWQ6cHJvZ3Jlc3MtZW50cmllcyIsImlhdCI6MTU2NTc5NzE1MH0.fF6Ln7GZmq-R36N-Avuo_a_8Jj5-wla17x0552XnMbE'
 };
 
+const failedResubmittedResponse = jest
+    .fn()
+    .mockReturnValueOnce(questionnaireCompleteWithoutCRN)
+    .mockReturnValue(questionnaireCompleteWithCRN);
+
+const failedResubmittedStatus = jest
+    .fn()
+    .mockReturnValueOnce('FAILED')
+    .mockReturnValue('COMPLETED');
+
 jest.doMock('./questionnaire-dal.js', () =>
     // return a modified factory function, that returns an object with a method, that returns a valid created response
     jest.fn(() => ({
@@ -45,6 +55,11 @@ jest.doMock('./questionnaire-dal.js', () =>
             // nonSubmittable.
             if (questionnaireId === '4fa7503f-1f73-42e7-b875-b342dee69941') {
                 return questionnaireIncompleteWithoutCRN;
+            }
+
+            // failed, then resubmitted.
+            if (questionnaireId === '6107e721-9532-419a-8205-3ec72903ef0c') {
+                return failedResubmittedResponse();
             }
 
             throw new VError(
@@ -70,6 +85,10 @@ jest.doMock('./questionnaire-dal.js', () =>
             }
             if (questionnaireId === '4fa7503f-1f73-42e7-b875-b342dee69941') {
                 return 'NOT_STARTED';
+            }
+            // failed, then resubmitted.
+            if (questionnaireId === '6107e721-9532-419a-8205-3ec72903ef0c') {
+                return failedResubmittedStatus();
             }
 
             throw new VError(
@@ -303,27 +322,20 @@ describe('Questionnaire submissions', () => {
                 expect(res.body.data.attributes.caseReferenceNumber).toEqual(null);
             });
 
-            it('should allow resubmission off failed applications', async () => {
-                await request(app)
-                    .post('/api/v1/questionnaires/67d8e5d2-44a5-4ab7-91c0-3fd27d009235/submissions')
+            it('should allow resubmission of failed applications', async () => {
+                const res = await request(app)
+                    .post('/api/v1/questionnaires/6107e721-9532-419a-8205-3ec72903ef0c/submissions')
                     .set('Authorization', `Bearer ${tokens['create:questionnaires']}`)
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
                             attributes: {
-                                questionnaireId: '67d8e5d2-44a5-4ab7-91c0-3fd27d009235'
+                                questionnaireId: '6107e721-9532-419a-8205-3ec72903ef0c'
                             }
                         }
                     });
-                const res = await request(app)
-                    .get('/api/v1/questionnaires/67d8e5d2-44a5-4ab7-91c0-3fd27d009235/submissions')
-                    .set('Authorization', `Bearer ${tokens['create:questionnaires']}`);
-                console.log({
-                    a: res.body.data.attribute,
-                    b: res.statusCode
-                });
-                expect(res.statusCode).toEqual('bacon');
+                expect(res.body.data.attributes.status).toEqual('COMPLETED');
             });
         });
 
