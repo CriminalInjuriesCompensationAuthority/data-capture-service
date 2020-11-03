@@ -190,7 +190,7 @@ router
 
             // if the summary section ID is in the progress array, then that means
             // the questionnaire is submittable.
-            // if (isQuestionnaireComplete) {
+
             // check all answers are correct.
             await questionnaireService.validateAllAnswers(questionnaireId);
 
@@ -203,7 +203,6 @@ router
             questionnaireService.createAnswers(questionnaireId, questionnaire.routes.summary, {});
 
             res.status(201).json(response);
-            // }
         } catch (err) {
             next(err);
         }
