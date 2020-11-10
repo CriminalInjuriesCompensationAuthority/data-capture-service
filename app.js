@@ -70,7 +70,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+// for the `swaggerUi.setup()` function within `docs/routes.js`.
+app.use('/openapi.json', express.static(path.join(__dirname, './openapi/openapi.json')));
+app.use(
+    '/openapi-admin.json',
+    express.static(path.join(__dirname, './openapi/openapi-admin.json'))
+);
 app.use('/docs', docsRouter);
 
 app.use((req, res, next) => {

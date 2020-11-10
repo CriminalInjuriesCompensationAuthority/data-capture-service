@@ -3,8 +3,8 @@
     "version": "1.3.3",
     "scripts": {
         "start": "node ./bin/www",
-        "start:dev": "nodemon -L --inspect=0.0.0.0:9229 -e .js,.json,.njk,.yml --ignore openapi/openapi.json --exec npm run build:run",
-        "openapi:build": "speccy lint openapi/src/openapi-src.json -j && speccy resolve ./openapi/src/openapi-src.json -j | yaml2json --pretty --indentation 4 --save - > ./openapi/openapi.json && node ./openapi/src/dereference-openapi.js",
+        "start:dev": "nodemon -L --inspect=0.0.0.0:9229 -e .js,.json,.njk,.yml --ignore ./openapi/ --exec npm run build:run",
+        "openapi:build": "speccy lint openapi/src/openapi-src.json -j && speccy lint openapi/src/openapi-admin-src.json -j && speccy resolve ./openapi/src/openapi-src.json -j | yaml2json --pretty --indentation 4 --save - > ./openapi/openapi.json && speccy resolve ./openapi/src/openapi-admin-src.json -j | yaml2json --pretty --indentation 4 --save - > ./openapi/openapi-admin.json && node ./openapi/src/dereference-openapi.js",
         "build:run": "npm run openapi:build && npm run start",
         "pretestx": "eslint .",
         "test": "jest",

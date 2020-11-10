@@ -4,10 +4,10 @@
 const $RefParser = require('json-schema-ref-parser');
 const fs = require('fs');
 
-(async () => {
-    const dereferencedContract = await $RefParser.dereference('openapi/openapi.json');
+async function dereference(contractPath) {
+    const dereferencedContract = await $RefParser.dereference(contractPath);
 
-    fs.writeFile('openapi/openapi.json', JSON.stringify(dereferencedContract, null, 4), err => {
+    fs.writeFile(contractPath, JSON.stringify(dereferencedContract, null, 4), err => {
         // throws an error, you could also catch it here
         if (err) {
             throw err;
@@ -15,6 +15,11 @@ const fs = require('fs');
 
         // success case, the file was saved
         // eslint-disable-next-line
-        console.log('dereferenced contract saved');
+        console.log(`dereferenced contract saved - "${contractPath}"`);
     });
+}
+
+(async () => {
+    await dereference('openapi/openapi.json');
+    await dereference('openapi/openapi-admin.json');
 })();

@@ -22,7 +22,13 @@
             "bearerAuth": []
         }
     ],
-    "tags": [{"name": "Answers"}, {"name": "Questionnaires"}, {"name": "ProgressEntries"}],
+    "tags": [
+        {"name": "Answers"},
+        {"name": "Questionnaires"},
+        {"name": "ProgressEntries"},
+        {"name": "Submissions"},
+        {"name": "Dataset"}
+    ],
     "paths": {
         "/questionnaires": {
             "post": {
