@@ -200,8 +200,8 @@ function createQuestionnaireService({
             caseReferenceNumber = await retrieveCaseReferenceNumber(questionnaireId);
         }
 
-        // kick things off if it is a POST request and it is not yet started.
-        if (isPostRequest === true && submissionStatus === 'NOT_STARTED') {
+        // kick things off if it is a POST request and it is not yet started, or previously failed.
+        if (isPostRequest === true && ['NOT_STARTED', 'FAILED'].includes(submissionStatus)) {
             await startSubmission(questionnaireId);
             // `startSubmission` updates the submission status within the
             // database so we need to get it again.
@@ -626,17 +626,21 @@ function createQuestionnaireService({
             questionnaire.routes.summary
         );
 
+        if (!isQuestionnaireComplete) {
+            const err = Error(
+                `Questionnaire with ID "${questionnaireId}" is not in a submittable state`
+            );
+            err.name = 'HTTPError';
+            err.statusCode = 409;
+            err.error = '409 Conflict';
+            throw err;
+        }
+
         // if the submission status is anything other than 'NOT_STARTED' then it
         // means that the submission resource has been previously created.
-        if (!isQuestionnaireComplete || submissionStatus !== 'NOT_STARTED') {
-            const errorReasons = {
-                notSubmittable: `Questionnaire with ID "${questionnaireId}" is not in a submittable state`,
-                duplicate: `Submission resource with ID "${questionnaireId}" already exists`
-            };
-            const errorReason = !isQuestionnaireComplete
-                ? errorReasons.notSubmittable
-                : errorReasons.duplicate;
-            const err = Error(errorReason);
+        // also skip over this for failed application so they can be resubmitted.
+        if (!['NOT_STARTED', 'FAILED'].includes(submissionStatus)) {
+            const err = Error(`Submission resource with ID "${questionnaireId}" already exists`);
             err.name = 'HTTPError';
             err.statusCode = 409;
             err.error = '409 Conflict';
