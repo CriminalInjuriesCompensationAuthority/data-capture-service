@@ -9,6 +9,7 @@ const pino = require('pino-http');
 const errorHandler = require('./middleware/error-handler');
 const docsRouter = require('./docs/routes');
 const questionnaireRouter = require('./questionnaire/routes');
+const adminRouter = require('./admin/routes');
 
 const app = express();
 const logger = pino({
@@ -70,6 +71,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 // for the `swaggerUi.setup()` function within `docs/routes.js`.
 app.use('/openapi.json', express.static(path.join(__dirname, './openapi/openapi.json')));
 app.use(
@@ -87,12 +89,24 @@ app.use((req, res, next) => {
     next();
 });
 
-// Install the OpenApiValidator onto express app
-new OpenApiValidator({
-    apiSpecPath: './openapi/openapi.json'
-}).install(app);
+function setUpQuestionnaireRoutesAndSpec() {
+    new OpenApiValidator({
+        apiSpecPath: './openapi/openapi.json'
+    }).install(app);
 
-app.use('/api/v1/questionnaires', questionnaireRouter);
+    app.use('/api/v1/questionnaires', questionnaireRouter);
+}
+
+function setUpAdminRoutesAndSpec() {
+    new OpenApiValidator({
+        apiSpecPath: './openapi/openapi-admin.json'
+    }).install(app);
+
+    app.use('/api/admin/v1', adminRouter);
+}
+
+setUpAdminRoutesAndSpec();
+setUpQuestionnaireRoutesAndSpec();
 
 // Express doesn't treat 404s as errors. If the following handler has been reached then nothing else matched e.g. a 404
 // https://expressjs.com/en/starter/faq.html#how-do-i-handle-404-responses

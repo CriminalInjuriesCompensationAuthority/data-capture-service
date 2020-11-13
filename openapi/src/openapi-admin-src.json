@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "Data Capture Service API",
+        "title": "Administration - Data Capture Service API",
         "description": "Manage a questionnaire lifecycle",
         "version": "1.0.0",
         "license": {
@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "/api/v1"
+            "url": "/api/admin/v1"
         }
     ],
     "security": [
@@ -24,83 +24,12 @@
     ],
     "tags": [{"name": "Submissions"}],
     "paths": {
-        "/questionnaires/{questionnaireId}/resubmit": {
-            "get": {
-                "tags": ["Submissions"],
-                "summary": "Get submission resource for a questionnaire",
-                "description": "Gets submission state for a questionnaire",
-                "operationId": "getSubmissions",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/questionnaireId"
-                    }
-                ],
-                "x-scopes": ["read:questionnaires"],
-                "x-requests": {
-                    "400": {
-                        "parameters": [
-                            {
-                                "name": "questionnaireId",
-                                "example": "NOT-A-UUID"
-                            }
-                        ]
-                    },
-                    "401": {
-                        "auth": false
-                    },
-                    "404": {
-                        "parameters": [
-                            {
-                                "name": "questionnaireId",
-                                "example": "68653be7-877f-4106-b91e-4ba8dac883f4"
-                            }
-                        ]
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/get/res/200.json"
-                                },
-                                "example": {
-                                    "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
-                                        "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": false,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/UnauthorizedError"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/NotFound"
-                    }
-                }
-            },
+        "/resubmit-failed-applications": {
             "post": {
                 "tags": ["Submissions"],
-                "summary": "Submit a questionnaire",
-                "description": "Start the submission of a questionnaire",
-                "operationId": "SubmitQuestionnaire",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/questionnaireId"
-                    }
-                ],
+                "summary": "Restart failed submissions",
+                "description": "Restart the submission of a failed questionnaire",
+                "operationId": "ResubmitQuestionnaire",
                 "x-scopes": ["update:questionnaires"],
                 "x-requests": {
                     "400": {
@@ -110,9 +39,7 @@
                                     "example": {
                                         "data": {
                                             "THIS-IS-NOT-A-VALID-PROPERTY-NAME": "submissions",
-                                            "attributes": {
-                                                "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb"
-                                            }
+                                            "attributes": {}
                                         }
                                     }
                                 }
@@ -124,52 +51,46 @@
                     },
                     "403": {
                         "x-scopes": ["create:dummy-resource"]
-                    },
-                    "404": {
-                        "parameters": [
-                            {
-                                "name": "questionnaireId",
-                                "example": "68653be7-877f-4106-b91e-4ba8dac883f4"
-                            }
-                        ]
                     }
                 },
                 "requestBody": {
-                    "description": "Questionnaire ID",
+                    "description": "Resubmission",
                     "required": true,
                     "content": {
                         "application/vnd.api+json": {
                             "schema": {
-                                "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/post/req/201.json"
+                                "$ref": "./json-schemas/admin/resubmit-failed-submissions/post/req/200.json"
                             },
                             "example": {
                                 "data": {
-                                    "type": "submissions",
-                                    "attributes": {
-                                        "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb"
-                                    }
+                                    "type": "resubmissions",
+                                    "attributes": {}
                                 }
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "Resubmitted",
                         "content": {
                             "application/vnd.api+json": {
                                 "schema": {
-                                    "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/post/res/201.json"
+                                    "$ref": "./json-schemas/admin/resubmit-failed-submissions/post/res/200.json"
                                 },
                                 "example": {
                                     "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
+                                        "id": "c478f63c-e074-4c36-ad22-cebb19819fe7",
+                                        "type": "resubmissions",
                                         "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": true,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
+                                            "resubmissions": [
+                                                {
+                                                    "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                                    "submitted": false,
+                                                    "status": "IN_PROGRESS",
+                                                    "caseReferenceNumber": "11\\111111"
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -210,42 +131,6 @@
                     "$ref": "./json-schemas/parameters/questionnaireId.json"
                 },
                 "example": "285cb104-0c15-4a9c-9840-cb1007f098fb"
-            },
-            "sectionId": {
-                "name": "sectionId",
-                "in": "path",
-                "required": true,
-                "description": "The id of the specific questionnaire section.",
-                "schema": {
-                    "$ref": "./json-schemas/parameters/sectionId.json"
-                },
-                "example": "system"
-            },
-            "filter": {
-                "in": "query",
-                "name": "filter",
-                "description": "Filter progress entries",
-                "schema": {
-                    "$ref": "./json-schemas/parameters/filter.json"
-                },
-                "style": "deepObject",
-                "explode": true,
-                "example": {
-                    "position": "current"
-                }
-            },
-            "page": {
-                "in": "query",
-                "name": "page",
-                "description": "Paginate progress entries",
-                "schema": {
-                    "$ref": "./json-schemas/parameters/page.json"
-                },
-                "style": "deepObject",
-                "explode": true,
-                "example": {
-                    "before": "p-applicant-declaration"
-                }
             }
         },
         "responses": {
