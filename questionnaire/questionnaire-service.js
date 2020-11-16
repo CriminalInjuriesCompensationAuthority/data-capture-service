@@ -607,7 +607,6 @@ function createQuestionnaireService({
     async function createSubmission(questionnaireId) {
         // 1) get questionnaire instance.
         const questionnaire = await getQuestionnaire(questionnaireId);
-
         if (!questionnaire) {
             const err = Error(
                 `Questionnaire with questionnaireId "${questionnaireId}" does not exist`

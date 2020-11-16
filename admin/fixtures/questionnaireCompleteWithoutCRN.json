@@ -1,0 +1,3896 @@
+{
+    "sections": {
+        "p-offender-describe-contact-with-offender": {
+            "required": ["q-offender-describe-contact-with-offender"],
+            "invalidExamples": [
+                {
+                    "q-offender-describe-contact-with-offender": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-offender-describe-contact-with-offender": "Describe your contact with the offender"
+                }
+            },
+            "examples": [
+                {
+                    "q-offender-describe-contact-with-offender": "Some contact"
+                }
+            ],
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-offender-describe-contact-with-offender": {
+                    "errorMessage": {
+                        "maxLength": "Description must be 500 characters or less"
+                    },
+                    "maxLength": 500,
+                    "type": "string",
+                    "description": "We cannot pay compensation if the offender may benefit from it.",
+                    "title": "Describe your contact with the offender"
+                }
+            }
+        },
+        "p-applicant-declaration": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Declaration",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "applicant-declaration": {
+                    "description": "<p class=\"govuk-body\">By submitting the application you agree that:</p><ul class=\"govuk-list govuk-list--bullet\"><li>the information you’ve given is true as far as you know</li><li>we can share the information you’ve given with other organisations and gather information from them</li></ul>{{ govukDetails({summaryText: \"Who we may share your data with\",html: 'These organisations may include:<ul class=\"govuk-list govuk-list--bullet\"><li>the police, prosecutors and ACRO Criminal Records Office</li><li>medical organisations and medical staff, including police medical staff</li><li>any other person or organisation needed to process your application (including medical experts or other experts)</li></ul>'}) }}<p class=\"govuk-body\">Read our privacy notice to see <a class=\"govuk-link\" href=\"https://www.gov.uk/guidance/cica-privacy-notice\">how we use your data</a>.</p>{{ govukWarningText({text: \"If you deliberately give false or misleading information, you may get less compensation or be prosecuted.\",iconFallbackText: \"Warning\"}) }}\n"
+                }
+            }
+        },
+        "p-applicant-enter-your-email-address": {
+            "invalidExamples": [
+                {
+                    "q-applicant-enter-your-email-address": 12345
+                }
+            ],
+            "examples": [
+                {
+                    "q-applicant-enter-your-email-address": "foo@hhjhjk34h5jkh24kj5h2k45.com"
+                },
+                {}
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-enter-your-email-address": {
+                    "description": "We may use this to contact you if we need to clarify something on your application form (optional).",
+                    "format": "email",
+                    "errorMessage": {
+                        "maxLength": "Email address must be 50 characters or less",
+                        "format": "Enter your email address, for example john.smith@email.com"
+                    },
+                    "maxLength": 50,
+                    "title": "Enter your email address",
+                    "type": "string"
+                }
+            }
+        },
+        "system": {
+            "required": ["case-reference"],
+            "invalidExamples": [
+                {
+                    "case-reference": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": "Case reference is required"
+            },
+            "examples": [
+                {
+                    "case-reference": "11\\123456"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "case-reference": {
+                    "pattern": "^[0-9]{2}\\\\[0-9]{6}$",
+                    "errorMessage": {
+                        "pattern": "Invalid case reference"
+                    },
+                    "type": "string"
+                }
+            }
+        },
+        "p-applicant-enter-your-telephone-number": {
+            "invalidExamples": [
+                {
+                    "q-applicant-enter-your-telephone-number": 12345
+                }
+            ],
+            "examples": [
+                {
+                    "q-applicant-enter-your-telephone-number": "01632 960 001"
+                },
+                {}
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-enter-your-telephone-number": {
+                    "description": "We may use this to contact you if we need to clarify something on your application form (optional).",
+                    "title": "Enter your telephone number",
+                    "pattern": "^[\\+\\d][\\d \\(\\)\\+\\-\\#]{7,19}$",
+                    "errorMessage": {
+                        "pattern": "Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192",
+                        "maxLength": "Telephone number must be 20 characters or less"
+                    },
+                    "maxLength": 20,
+                    "type": "string"
+                }
+            }
+        },
+        "p-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": {
+            "required": [
+                "q-applicant-explain-reason-for-delay-reporting",
+                "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police"
+            ],
+            "invalidExamples": [
+                {
+                    "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": [
+                        "foo"
+                    ],
+                    "q-applicant-explain-reason-for-delay-reporting": "Some reasons"
+                },
+                {
+                    "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": [
+                        12345
+                    ],
+                    "q-applicant-explain-reason-for-delay-reporting": "Some reasons"
+                },
+                {
+                    "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": [
+                        "i-was-under-18",
+                        "unable-to-report-crime",
+                        "other"
+                    ],
+                    "q-applicant-explain-reason-for-delay-reporting": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": "Select if you were under 18, unable to report the crime or other reasons",
+                    "q-applicant-explain-reason-for-delay-reporting": "Explain the reasons for the delay in reporting the crime to the police"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": [
+                        "i-was-under-18",
+                        "unable-to-report-crime",
+                        "other"
+                    ],
+                    "q-applicant-explain-reason-for-delay-reporting": "Some reasons"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": {
+                    "description": "Select all options that apply to you.",
+                    "title": "Select reasons for the delay in reporting the crime to the police",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "const": "i-was-under-18",
+                                "title": "I was under 18"
+                            },
+                            {
+                                "const": "unable-to-report-crime",
+                                "title": "Unable to report the crime"
+                            },
+                            {
+                                "const": "other",
+                                "title": "Other reasons"
+                            }
+                        ]
+                    },
+                    "maxItems": 3,
+                    "uniqueItems": true,
+                    "type": "array"
+                },
+                "q-applicant-explain-reason-for-delay-reporting": {
+                    "errorMessage": {
+                        "maxLength": "Explanation must be 500 characters or less"
+                    },
+                    "maxLength": 500,
+                    "type": "string",
+                    "title": "Briefly explain these reasons"
+                }
+            }
+        },
+        "p--before-you-continue": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "About the crime",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "applicant-impact-on-you": {
+                    "description": "<p class=\"govuk-body\">We’re going to ask you:</p><ul class=\"govuk-list govuk-list--bullet\"><li>when and where the crime happened</li><li>which police force investigated the crime</li></ul><p class=\"govuk-body\">This helps us get the information we need to make a decision about your claim.</p>{% set templateHtml %}{% include 'contact.njk' %}{% endset %}{{ govukDetails({summaryText: \"If you need help or support\",html: '<p class=\"govuk-body\">You can contact us for help with your application.</p>' + templateHtml + '<p class=\"govuk-body\">You can <a class=\"govuk-link\" href=\"https://www.victimandwitnessinformation.org.uk/\">get practical or emotional support</a> after a crime.</p><p class=\"govuk-body\">There is different practical or emotional support <a class=\"govuk-link\" href=\"https://www.mygov.scot/victim-witness-support/\">if you live in Scotland</a>.</p>'})}}"
+                }
+            }
+        },
+        "p-applicant-are-you-claiming-for-expenses": {
+            "required": ["q-applicant-are-you-claiming-for-expenses"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-claiming-for-expenses": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-claiming-for-expenses": "Select yes if you are claiming for loss of earnings"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-claiming-for-expenses": true
+                },
+                {
+                    "q-applicant-are-you-claiming-for-expenses": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-claiming-for-expenses": {
+                    "type": "boolean",
+                    "description": "This can include the cost of equipment, changes to your home, and care costs.",
+                    "title": "Are you claiming for expenses as a result of your injuries?"
+                }
+            }
+        },
+        "p-applicant-you-cannot-get-compensation": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "You cannot get compensation",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "you-cannot-get-compensation": {
+                    "description": "\n                <p class=\"govuk-body\">If the crime has not been reported to the police we cannot pay compensation.</p>\n                <p class=\"govuk-body\">You may continue your application, but any future application for the same injuries will be refused.</p>\n            "
+                }
+            }
+        },
+        "p-applicant-affect-on-daily-life-dmi": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "invalidExamples": [
+                {
+                    "q-applicant-affect-on-daily-life-dmi": 12345
+                }
+            ],
+            "type": "object",
+            "examples": [
+                {
+                    "q-applicant-affect-on-daily-life-dmi": "Some description"
+                }
+            ],
+            "properties": {
+                "q-applicant-affect-on-daily-life-dmi": {
+                    "errorMessage": {
+                        "maxLength": "Description must be 500 characters or less"
+                    },
+                    "maxLength": 500,
+                    "type": "string",
+                    "description": "This helps us understand how the crime has affected you. You can leave this blank, but we may have to ask for more information later.",
+                    "title": "Briefly say how the crime has affected your daily life"
+                }
+            }
+        },
+        "p-applicant-when-did-the-crime-start": {
+            "required": ["q-applicant-when-did-the-crime-start"],
+            "invalidExamples": [
+                {
+                    "q-applicant-when-did-the-crime-start": 12345
+                },
+                {
+                    "q-applicant-when-did-the-crime-start": "not a date"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-when-did-the-crime-start": "Enter the date the crime started and include a month and year"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-when-did-the-crime-start": "2020-01-01T00:00:00.000Z"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-when-did-the-crime-start": {
+                    "errorMessage": {
+                        "format": "Enter the date the crime started and include a month and year"
+                    },
+                    "format": "date-time",
+                    "type": "string",
+                    "description": "For example, 02 2020. You can enter an approximate date.",
+                    "title": "When did it start?"
+                },
+                "i-dont-know-when-the-crime-started": {
+                    "description": "{% from \"components/details/macro.njk\" import govukDetails %}{% set templateHtml %}{% include 'contact.njk' %}{% endset %}{{ govukDetails({summaryText: \"I do not know when the crime started\",html: '<p class=\"govuk-body\">You can contact us for help with your application.</p>' + templateHtml})}}"
+                }
+            }
+        },
+        "p-applicant-when-did-the-crime-stop": {
+            "required": ["q-applicant-when-did-the-crime-stop"],
+            "invalidExamples": [
+                {
+                    "q-applicant-when-did-the-crime-stop": 12345
+                },
+                {
+                    "q-applicant-when-did-the-crime-stop": "not a date"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-when-did-the-crime-stop": "Enter the date the crime stopped and include a month and year"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-when-did-the-crime-stop": "2020-01-10T00:00:00.000Z"
+                },
+                {
+                    "q-applicant-when-did-the-crime-stop": "2010-01-01T00:00:00.000Z"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "i-dont-know-when-the-crime-stopped": {
+                    "description": "{% from \"components/details/macro.njk\" import govukDetails %}{% set templateHtml %}{% include 'contact.njk' %}{% endset %}{{ govukDetails({summaryText: \"I do not know when the crime stopped\",html: '<p class=\"govuk-body\">You can contact us for help with your application.</p>' + templateHtml})}}"
+                },
+                "q-applicant-when-did-the-crime-stop": {
+                    "errorMessage": {
+                        "format": "Enter the date the crime stopped and include a month and year"
+                    },
+                    "format": "date-time",
+                    "type": "string",
+                    "description": "For example, 03 2020. You can enter an approximate date.",
+                    "title": "When did it stop?"
+                }
+            }
+        },
+        "p--confirmation": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Confirmation",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "confirmation": {
+                    "description": "{% set mobilePhoneNumber = \"||/answers/p-applicant-confirmation-method/q-applicant-enter-your-telephone-number||\" %}{% set emailAddress = \"||/answers/p-applicant-confirmation-method/q-applicant-enter-your-email-address||\" %}{% if mobilePhoneNumber %}{% set contactMethod =  mobilePhoneNumber %}{% else %}{% set contactMethod =  emailAddress %}{% endif %}{{ govukPanel({titleText: \"Application submitted\",html: \"<p>Your reference number is <br /><strong>||/answers/system/case-reference||</strong></p><p>We've sent your reference number to <strong>\" + contactMethod + \"</strong></p>\"}) }}<p class=\"govuk-body\">Thank you for submitting your application.</p><h2 class=\"govuk-heading-m\">What happens next</h2><p class=\"govuk-body\">We will:</p><ul class=\"govuk-list govuk-list--bullet\"><li>ask the police for evidence</li><li>ask you for more information if we need it</li><li>make a decision</li><li>send our decision letter by post</li></ul><p class=\"govuk-body\">We aim to make a decision within 1 year, but it can take longer. We may have to wait until there is enough information about your injuries and recovery.</p>{{ govukWarningText({text: \"You must inform us immediately if any of the information you have given us changes, especially your address, telephone number or email address.\",iconFallbackText: \"Warning\"}) }}<h2 class=\"govuk-heading-m\">Contact us</h2>{% include 'contact.njk' %}<p class=\"govuk-body\">We will not always send an acknowledgement if you:</p><ul class=\"govuk-list govuk-list--bullet\"><li>email us</li><li>write to us</li><li>send us documents</li></ul><h2 class=\"govuk-heading-m\">Help us improve this service</h2><p class=\"govuk-body\">You can complete a short survey to help us improve this service.</p><p class=\"govuk-body\">It does not ask for any details about your case, and has no effect on your application.</p><p class=\"govuk-body\"><a class=\"govuk-link\" href=\"https://www.surveymonkey.com/r/Privatebetafeedback\">Tell us what you think of our service</a> (takes 10 minutes)</p>"
+                }
+            }
+        },
+        "p-gp-enter-your-address": {
+            "invalidExamples": [
+                {
+                    "q-gp-postcode": "G1 1XX",
+                    "q-gp-building-and-street": 12345,
+                    "q-gp-building-and-street2": "Flat 2/3",
+                    "q-gp-county": "FooCounty",
+                    "q-gp-town-or-city": "FooCity"
+                },
+                {
+                    "q-gp-postcode": "G1 1XX",
+                    "q-gp-building-and-street": "1 Foo Lane",
+                    "q-gp-building-and-street2": 12345,
+                    "q-gp-county": "FooCounty",
+                    "q-gp-town-or-city": "FooCity"
+                },
+                {
+                    "q-gp-postcode": "G1 1XX",
+                    "q-gp-building-and-street": "1 Foo Lane",
+                    "q-gp-building-and-street2": "Flat 2/3",
+                    "q-gp-county": "FooCounty",
+                    "q-gp-town-or-city": 12345
+                },
+                {
+                    "q-gp-postcode": "G1 1XX",
+                    "q-gp-building-and-street": "1 Foo Lane",
+                    "q-gp-building-and-street2": "Flat 2/3",
+                    "q-gp-county": 12345,
+                    "q-gp-town-or-city": "FooCity"
+                },
+                {
+                    "q-gp-postcode": 12345,
+                    "q-gp-building-and-street": "1 Foo Lane",
+                    "q-gp-building-and-street2": "Flat 2/3",
+                    "q-gp-county": "FooCounty",
+                    "q-gp-town-or-city": "FooCity"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-gp-building-and-street": "Enter the name of your GP's practice",
+                    "q-gp-building-and-street2": "Enter the building and street of your GP",
+                    "q-gp-town-or-city": "Enter the town or city where your GP's practice is"
+                }
+            },
+            "title": "What is your GP's address?",
+            "required": [
+                "q-gp-building-and-street",
+                "q-gp-town-or-city",
+                "q-gp-building-and-street2"
+            ],
+            "examples": [
+                {
+                    "q-gp-postcode": "G1 1XX",
+                    "q-gp-building-and-street": "1 Foo Lane",
+                    "q-gp-building-and-street2": "Flat 2/3",
+                    "q-gp-county": "FooCounty",
+                    "q-gp-town-or-city": "FooCity"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-gp-postcode": {
+                    "errorMessage": {
+                        "maxLength": "Postcode must be 10 characters or less"
+                    },
+                    "maxLength": 10,
+                    "type": "string",
+                    "title": "Postcode (optional)"
+                },
+                "q-gp-building-and-street": {
+                    "errorMessage": {
+                        "maxLength": "Practice name must be less than 60 characters"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Practice name"
+                },
+                "q-gp-building-and-street2": {
+                    "errorMessage": {
+                        "maxLength": "Building and street must be less than 60 characters"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Building and street"
+                },
+                "q-gp-county": {
+                    "errorMessage": {
+                        "maxLength": "County must be 32 characters or less"
+                    },
+                    "maxLength": 32,
+                    "type": "string",
+                    "title": "County (optional)"
+                },
+                "q-gp-town-or-city": {
+                    "errorMessage": {
+                        "maxLength": "Town or city must be 32 characters or less"
+                    },
+                    "maxLength": 32,
+                    "type": "string",
+                    "title": "Town or city"
+                }
+            }
+        },
+        "p-applicant-what-other-names-have-you-used": {
+            "required": ["q-applicant-what-other-names-have-you-used"],
+            "invalidExamples": [
+                {
+                    "q-applicant-what-other-names-have-you-used": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-what-other-names-have-you-used": "Enter the other names you have used"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-what-other-names-have-you-used": "Mr Biz Baz"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-what-other-names-have-you-used": {
+                    "errorMessage": {
+                        "maxLength": "Other names you have used must be 50 characters or less"
+                    },
+                    "maxLength": 50,
+                    "type": "string",
+                    "title": "What other names have you used?"
+                }
+            }
+        },
+        "p-applicant-has-a-decision-been-made": {
+            "invalidExamples": [
+                {
+                    "q-applicant-has-a-decision-been-made": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-has-a-decision-been-made": "Select yes if you have received a decision about the other compensation claim"
+                }
+            },
+            "title": "Have they made a decision about your claim?",
+            "required": ["q-applicant-has-a-decision-been-made"],
+            "examples": [
+                {
+                    "q-applicant-has-a-decision-been-made": true
+                },
+                {
+                    "q-applicant-has-a-decision-been-made": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-has-a-decision-been-made": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "p-applicant-enter-your-name": {
+            "invalidExamples": [
+                {
+                    "q-applicant-title": 12345,
+                    "q-applicant-first-name": "Foo",
+                    "q-applicant-last-name": "Bar"
+                },
+                {
+                    "q-applicant-title": "Mr",
+                    "q-applicant-first-name": 12345,
+                    "q-applicant-last-name": "Bar"
+                },
+                {
+                    "q-applicant-title": "Mr",
+                    "q-applicant-first-name": "Foo",
+                    "q-applicant-last-name": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-title": "Enter your title",
+                    "q-applicant-first-name": "Enter your first name",
+                    "q-applicant-last-name": "Enter your last name"
+                }
+            },
+            "title": "Enter your name",
+            "required": ["q-applicant-title", "q-applicant-first-name", "q-applicant-last-name"],
+            "examples": [
+                {
+                    "q-applicant-title": "Mr",
+                    "q-applicant-first-name": "Foo",
+                    "q-applicant-last-name": "Bar"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-title": {
+                    "errorMessage": {
+                        "maxLength": "Title must be 6 characters or less"
+                    },
+                    "maxLength": 6,
+                    "type": "string",
+                    "title": "Title"
+                },
+                "q-applicant-first-name": {
+                    "errorMessage": {
+                        "maxLength": "First name must be 70 characters or less"
+                    },
+                    "maxLength": 70,
+                    "type": "string",
+                    "title": "First name"
+                },
+                "q-applicant-last-name": {
+                    "errorMessage": {
+                        "maxLength": "Last name must be 70 characters or less"
+                    },
+                    "maxLength": 70,
+                    "type": "string",
+                    "title": "Last name"
+                }
+            }
+        },
+        "p-applicant-british-citizen-or-eu-national": {
+            "required": ["q-applicant-british-citizen-or-eu-national"],
+            "invalidExamples": [
+                {
+                    "q-applicant-british-citizen-or-eu-national": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-british-citizen-or-eu-national": "Select yes if you are a British citizen or EU national"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-british-citizen-or-eu-national": true
+                },
+                {
+                    "q-applicant-british-citizen-or-eu-national": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-british-citizen-or-eu-national": {
+                    "type": "boolean",
+                    "title": "Are you a British citizen or EU national?"
+                }
+            }
+        },
+        "p-applicant-where-in-wales-did-it-happen": {
+            "invalidExamples": [
+                {
+                    "q-applicant-welsh-location": "Some location",
+                    "q-applicant-welsh-town-or-city": 12345
+                },
+                {
+                    "q-applicant-welsh-location": 12345,
+                    "q-applicant-welsh-town-or-city": "Some town"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-welsh-location": "Enter the name of a street, business, building or nearby local landmark",
+                    "q-applicant-welsh-town-or-city": "Enter the town or city where the crime happened"
+                }
+            },
+            "title": "Where in Wales did it happen?",
+            "required": ["q-applicant-welsh-town-or-city", "q-applicant-welsh-location"],
+            "examples": [
+                {
+                    "q-applicant-welsh-location": "Some location",
+                    "q-applicant-welsh-town-or-city": "Some town"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-welsh-location": {
+                    "errorMessage": {
+                        "maxLength": "Location must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "description": "For example, the name of a street, business, building or nearby local landmark. You can enter more than one.",
+                    "title": "Location"
+                },
+                "q-applicant-welsh-town-or-city": {
+                    "errorMessage": {
+                        "maxLength": "Town or city must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Town or city"
+                }
+            }
+        },
+        "p-applicant-confirmation-method": {
+            "invalidExamples": [
+                {
+                    "q-applicant-confirmation-method": "none",
+                    "q-applicant-enter-your-email-address": "foo@bar.com"
+                },
+                {
+                    "q-applicant-confirmation-method": "none",
+                    "q-applicant-enter-your-telephone-number": "07701 234567"
+                },
+                {
+                    "q-applicant-confirmation-method": "email"
+                },
+                {
+                    "q-applicant-confirmation-method": "text"
+                },
+                {
+                    "q-applicant-confirmation-method": "email",
+                    "q-applicant-enter-your-telephone-number": "07701 234567"
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-email-address": "foo@bar.com"
+                },
+                {
+                    "q-applicant-confirmation-method": "email",
+                    "q-applicant-enter-your-email-address": "not an email address"
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-telephone-number": "not a UK mobile phone number"
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-telephone-number": "0141 420 5000"
+                },
+                {
+                    "q-applicant-confirmation-method": 10
+                },
+                {
+                    "q-applicant-confirmation-method": false
+                },
+                {
+                    "q-applicant-confirmation-method": true,
+                    "q-applicant-enter-your-email-address": true
+                },
+                {
+                    "q-applicant-confirmation-method": "none",
+                    "q-applicant-enter-your-email-address": ["something"]
+                },
+                {
+                    "q-applicant-confirmation-method": "none",
+                    "q-applicant-enter-your-email-address": 123
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-email-address": true
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-telephone-number": 123
+                },
+                {
+                    "q-applicant-confirmation-method": "email",
+                    "q-applicant-enter-your-telephone-number": false
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-confirmation-method": "Select how you want to get your confirmation message"
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/if-email-then-q-applicant-enter-your-email-address-is-required"
+                },
+                {
+                    "$ref": "#/definitions/if-text-then-q-applicant-enter-your-telephone-number-is-required"
+                },
+                {
+                    "$ref": "#/definitions/if-none-then-phone-and-email-explicitly-not-required"
+                }
+            ],
+            "required": ["q-applicant-confirmation-method"],
+            "propertyNames": {
+                "enum": [
+                    "q-applicant-confirmation-method",
+                    "q-applicant-enter-your-email-address",
+                    "q-applicant-enter-your-telephone-number"
+                ]
+            },
+            "examples": [
+                {
+                    "q-applicant-confirmation-method": "none"
+                },
+                {
+                    "q-applicant-confirmation-method": "email",
+                    "q-applicant-enter-your-email-address": "foo@bar.com"
+                },
+                {
+                    "q-applicant-confirmation-method": "text",
+                    "q-applicant-enter-your-telephone-number": "07701 234567"
+                }
+            ],
+            "definitions": {
+                "if-email-then-q-applicant-enter-your-email-address-is-required": {
+                    "then": {
+                        "errorMessage": {
+                            "required": {
+                                "q-applicant-enter-your-email-address": "Enter an email address"
+                            }
+                        },
+                        "required": ["q-applicant-enter-your-email-address"],
+                        "propertyNames": {
+                            "enum": [
+                                "q-applicant-confirmation-method",
+                                "q-applicant-enter-your-email-address"
+                            ]
+                        }
+                    },
+                    "if": {
+                        "required": ["q-applicant-confirmation-method"],
+                        "properties": {
+                            "q-applicant-confirmation-method": {
+                                "const": "email"
+                            }
+                        }
+                    }
+                },
+                "if-text-then-q-applicant-enter-your-telephone-number-is-required": {
+                    "then": {
+                        "errorMessage": {
+                            "required": {
+                                "q-applicant-enter-your-telephone-number": "Enter a UK mobile phone number"
+                            }
+                        },
+                        "required": ["q-applicant-enter-your-telephone-number"],
+                        "propertyNames": {
+                            "enum": [
+                                "q-applicant-confirmation-method",
+                                "q-applicant-enter-your-telephone-number"
+                            ]
+                        }
+                    },
+                    "if": {
+                        "required": ["q-applicant-confirmation-method"],
+                        "properties": {
+                            "q-applicant-confirmation-method": {
+                                "const": "text"
+                            }
+                        }
+                    }
+                },
+                "if-none-then-phone-and-email-explicitly-not-required": {
+                    "then": {
+                        "additionalProperties": false,
+                        "required": ["q-applicant-confirmation-method"],
+                        "properties": {
+                            "q-applicant-confirmation-method": {
+                                "const": "none"
+                            }
+                        }
+                    },
+                    "if": {
+                        "required": ["q-applicant-confirmation-method"],
+                        "properties": {
+                            "q-applicant-confirmation-method": {
+                                "const": "none"
+                            }
+                        }
+                    }
+                }
+            },
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-confirmation-method": {
+                    "oneOf": [
+                        {
+                            "const": "email",
+                            "title": "Email"
+                        },
+                        {
+                            "const": "text",
+                            "title": "Text message"
+                        },
+                        {
+                            "const": "none",
+                            "title": "I don't have an email address or UK mobile phone number"
+                        }
+                    ],
+                    "type": "string",
+                    "title": "How should we tell you we've got your application?"
+                },
+                "q-applicant-enter-your-telephone-number": {
+                    "errorMessage": {
+                        "maxLength": "Telephone number must be 20 characters or less",
+                        "format": "Enter a UK mobile phone number, like 07700 900 982 or +44 7700 900 982"
+                    },
+                    "maxLength": 20,
+                    "format": "mobile-uk",
+                    "type": "string",
+                    "title": "UK mobile phone number"
+                },
+                "q-applicant-enter-your-email-address": {
+                    "errorMessage": {
+                        "maxLength": "Email address must be 50 characters or less",
+                        "format": "Enter an email address in the correct format, like name@example.com"
+                    },
+                    "maxLength": 50,
+                    "format": "email",
+                    "type": "string",
+                    "title": "Email address"
+                }
+            }
+        },
+        "p-applicant-when-did-the-crime-happen": {
+            "required": ["q-applicant-when-did-the-crime-happen"],
+            "invalidExamples": [
+                {
+                    "q-applicant-when-did-the-crime-happen": 12345
+                },
+                {
+                    "q-applicant-when-did-the-crime-happen": "not a date"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-when-did-the-crime-happen": "Enter the date the crime happened and include a day, month and year"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-when-did-the-crime-happen": "2020-01-01T00:00:00.000Z"
+                },
+                {
+                    "q-applicant-when-did-the-crime-happen": "2010-01-01T00:00:00.000Z"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "when-did-the-crime-happen": {
+                    "description": "{% from \"components/details/macro.njk\" import govukDetails %}{% set templateHtml %}{% include 'contact.njk' %}{% endset %}{{ govukDetails({summaryText: \"I do not know when the crime happened\",html: '<p class=\"govuk-body\">You can contact us for help with your application.</p>' + templateHtml})}}"
+                },
+                "q-applicant-when-did-the-crime-happen": {
+                    "errorMessage": {
+                        "format": "Enter the date the crime happened and include a day, month and year"
+                    },
+                    "format": "date-time",
+                    "type": "string",
+                    "description": "For example, 28 2 2020. You can enter an approximate date.",
+                    "title": "When did the crime happen?"
+                }
+            }
+        },
+        "p--check-your-answers": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Check your answers",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "p-check-your-answers": {
+                    "summaryInfo": {
+                        "urlPath": "apply",
+                        "editAnswerText": "Change"
+                    }
+                }
+            }
+        },
+        "p-applicant-are-you-18-or-over": {
+            "required": ["q-applicant-are-you-18-or-over"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-18-or-over": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-18-or-over": "Select yes if you are 18 or over"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-18-or-over": true
+                },
+                {
+                    "q-applicant-are-you-18-or-over": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-18-or-over": {
+                    "type": "boolean",
+                    "title": "Are you 18 or over?"
+                }
+            }
+        },
+        "p-applicant-were-you-a-victim-of-sexual-assault-or-abuse": {
+            "required": ["q-applicant-were-you-a-victim-of-sexual-assault-or-abuse"],
+            "invalidExamples": [
+                {
+                    "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": "Select yes if you were a victim of sexual assault or abuse"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": true
+                },
+                {
+                    "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": {
+                    "type": "boolean",
+                    "title": "Were you a victim of sexual assault or abuse?"
+                }
+            }
+        },
+        "p--context-applicant-details": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Your details",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "details-context": {
+                    "description": "<p class=\"govuk-body\">We’re going to ask for some details about you.</p><p class=\"govuk-body\">We’ll use these to:</p><ul class=\"govuk-list govuk-list--bullet\"><li>contact you</li><li>get a report about the crime from the police</li></ul>\n"
+                }
+            }
+        },
+        "p--was-the-crime-reported-to-police": {
+            "required": ["q--was-the-crime-reported-to-police"],
+            "invalidExamples": [
+                {
+                    "q--was-the-crime-reported-to-police": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q--was-the-crime-reported-to-police": "Select yes if the crime was reported to the police"
+                }
+            },
+            "examples": [
+                {
+                    "q--was-the-crime-reported-to-police": true
+                },
+                {
+                    "q--was-the-crime-reported-to-police": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "dont-know-if-crime-reported": {
+                    "description": "{% from \"components/details/macro.njk\" import govukDetails %}{% set templateHtml %}{% include 'contact.njk' %}{% endset %}{{ govukDetails({summaryText: \"I do not know if the crime was reported to the police\",html: '<p class=\"govuk-body\">You can contact us for help with your application.</p>' + templateHtml})}}"
+                },
+                "q--was-the-crime-reported-to-police": {
+                    "type": "boolean",
+                    "title": "Was the crime reported to the police?"
+                }
+            }
+        },
+        "p-offender-enter-offenders-name": {
+            "required": ["q-offender-enter-offenders-name"],
+            "invalidExamples": [
+                {
+                    "q-offender-enter-offenders-name": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-offender-enter-offenders-name": "Enter the offender's name"
+                }
+            },
+            "examples": [
+                {
+                    "q-offender-enter-offenders-name": "Foo Bar"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-offender-enter-offenders-name": {
+                    "errorMessage": {
+                        "maxLength": "Offender's name must be 120 characters or less"
+                    },
+                    "maxLength": 120,
+                    "type": "string",
+                    "description": "We will never contact the offender.",
+                    "title": "Enter the offender's name"
+                }
+            }
+        },
+        "p-applicant-have-you-applied-for-or-received-any-other-compensation": {
+            "required": ["q-applicant-have-you-applied-for-or-received-any-other-compensation"],
+            "invalidExamples": [
+                {
+                    "q-applicant-have-you-applied-for-or-received-any-other-compensation": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-have-you-applied-for-or-received-any-other-compensation": "Select yes if you have applied for any other form of compensation"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-have-you-applied-for-or-received-any-other-compensation": true
+                },
+                {
+                    "q-applicant-have-you-applied-for-or-received-any-other-compensation": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-have-you-applied-for-or-received-any-other-compensation": {
+                    "type": "boolean",
+                    "description": "For example, if you sought civil damages or a court decided you should get compensation.",
+                    "title": "Have you applied for or received any other form of compensation?"
+                }
+            }
+        },
+        "p-applicant-select-treatments": {
+            "invalidExamples": [
+                {
+                    "q-applicant-select-treatments-dmi": {
+                        "foo": "bar"
+                    }
+                },
+                {
+                    "q-applicant-other-treatment-dmi": "some description"
+                },
+                {
+                    "q-applicant-select-treatments-dmi": ["other"]
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-select-treatments-dmi": "Select any treatments you have received for your mental injury"
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/if-other-then-q-applicant-other-treatment-dmi-is-required"
+                }
+            ],
+            "required": ["q-applicant-select-treatments-dmi"],
+            "propertyNames": {
+                "enum": ["q-applicant-select-treatments-dmi", "q-applicant-other-treatment-dmi"]
+            },
+            "examples": [
+                {
+                    "q-applicant-select-treatments-dmi": ["cbt"]
+                },
+                {
+                    "q-applicant-other-treatment-dmi": "some description",
+                    "q-applicant-select-treatments-dmi": ["cbt", "other"]
+                },
+                {
+                    "q-applicant-select-treatments-dmi": ["emdr"]
+                },
+                {
+                    "q-applicant-other-treatment-dmi": "some description",
+                    "q-applicant-select-treatments-dmi": ["emdr", "other"]
+                },
+                {
+                    "q-applicant-other-treatment-dmi": "some description",
+                    "q-applicant-select-treatments-dmi": ["other"]
+                }
+            ],
+            "definitions": {
+                "if-other-then-q-applicant-other-treatment-dmi-is-required": {
+                    "then": {
+                        "errorMessage": {
+                            "required": {
+                                "q-applicant-other-treatment-dmi": "Enter any other treatment you have received for your mental injury"
+                            }
+                        },
+                        "required": ["q-applicant-other-treatment-dmi"],
+                        "propertyNames": {
+                            "enum": [
+                                "q-applicant-select-treatments-dmi",
+                                "q-applicant-other-treatment-dmi"
+                            ]
+                        }
+                    },
+                    "if": {
+                        "required": ["q-applicant-select-treatments-dmi"],
+                        "properties": {
+                            "q-applicant-select-treatments-dmi": {
+                                "contains": {
+                                    "const": "other"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-other-treatment-dmi": {
+                    "errorMessage": {
+                        "maxLength": "Other treatments must be 499 characters or less"
+                    },
+                    "maxLength": 499,
+                    "type": "string",
+                    "title": "Other treatments"
+                },
+                "q-applicant-select-treatments-dmi": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "const": "cbt",
+                                "title": "CBT (cognitive behavioural therapy)"
+                            },
+                            {
+                                "const": "emdr",
+                                "title": "EMDR (eye movement desensitisation and reprocessing)"
+                            },
+                            {
+                                "const": "antidepressants",
+                                "title": "Antidepressants"
+                            },
+                            {
+                                "const": "counselling",
+                                "title": "Counselling"
+                            },
+                            {
+                                "const": "psychotherapy",
+                                "title": "Psychotherapy"
+                            },
+                            {
+                                "const": "other",
+                                "title": "Other"
+                            }
+                        ]
+                    },
+                    "type": "array",
+                    "description": "Include any treatment you're waiting to get.",
+                    "title": "What mental health treatments have you had"
+                }
+            }
+        },
+        "p-offender-do-you-know-the-name-of-the-offender": {
+            "required": ["q-offender-do-you-know-the-name-of-the-offender"],
+            "invalidExamples": [
+                {
+                    "q-offender-do-you-know-the-name-of-the-offender": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-offender-do-you-know-the-name-of-the-offender": "Select yes if you know the offender's name"
+                }
+            },
+            "examples": [
+                {
+                    "q-offender-do-you-know-the-name-of-the-offender": true
+                },
+                {
+                    "q-offender-do-you-know-the-name-of-the-offender": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-offender-do-you-know-the-name-of-the-offender": {
+                    "type": "boolean",
+                    "title": "Do you know the offender's name?"
+                }
+            }
+        },
+        "p-applicant-are-you-claiming-for-loe": {
+            "required": ["q-applicant-are-you-claiming-for-loe"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-claiming-for-loe": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-claiming-for-loe": "Select yes if you sare claiming for loss of earnings"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-claiming-for-loe": true
+                },
+                {
+                    "q-applicant-are-you-claiming-for-loe": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-claiming-for-loe": {
+                    "type": "boolean",
+                    "description": "You must have had very limited or no ability to work for more than 28 weeks.",
+                    "title": "Are you claiming for loss of earnings?"
+                }
+            }
+        },
+        "p--which-police-force-is-investigating-the-crime": {
+            "invalidExamples": [
+                {
+                    "q-police-force-id": 999999999
+                },
+                {
+                    "q-police-force-id": "10000147"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-police-force-id": "Select a police force from the list"
+                }
+            },
+            "title": "Which police force is investigating the crime?",
+            "required": ["q-police-force-id"],
+            "examples": [
+                {
+                    "q-police-force-id": 10000147
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-police-force-id": {
+                    "oneOf": [
+                        {
+                            "const": 10000033,
+                            "title": "Avon And Somerset Constabulary"
+                        },
+                        {
+                            "const": 10000035,
+                            "title": "Bedfordshire Police"
+                        },
+                        {
+                            "const": 10000001,
+                            "title": "British Transport Police"
+                        },
+                        {
+                            "const": 10000039,
+                            "title": "Cambridgeshire Constabulary"
+                        },
+                        {
+                            "const": 10000049,
+                            "title": "Cheshire Constabulary"
+                        },
+                        {
+                            "const": 10000059,
+                            "title": "City Of London Police"
+                        },
+                        {
+                            "const": 10000066,
+                            "title": "Cleveland Police"
+                        },
+                        {
+                            "const": 10000082,
+                            "title": "Cumbria Constabulary"
+                        },
+                        {
+                            "const": 10000084,
+                            "title": "Derbyshire Constabulary"
+                        },
+                        {
+                            "const": 10000090,
+                            "title": "Devon and Cornwall Police"
+                        },
+                        {
+                            "const": 10000093,
+                            "title": "Dorset Police"
+                        },
+                        {
+                            "const": 10000102,
+                            "title": "Durham Constabulary"
+                        },
+                        {
+                            "const": 10000114,
+                            "title": "Essex Police"
+                        },
+                        {
+                            "const": 10000128,
+                            "title": "Gloucestershire Constabulary"
+                        },
+                        {
+                            "const": 10000140,
+                            "title": "Greater Manchester Police"
+                        },
+                        {
+                            "const": 10000150,
+                            "title": "Hampshire Constabulary"
+                        },
+                        {
+                            "const": 10000153,
+                            "title": "Hertfordshire Constabulary"
+                        },
+                        {
+                            "const": 10000169,
+                            "title": "Humberside Police"
+                        },
+                        {
+                            "const": 10000172,
+                            "title": "Kent Police"
+                        },
+                        {
+                            "const": 10000175,
+                            "title": "Lancashire Constabulary"
+                        },
+                        {
+                            "const": 10000176,
+                            "title": "Leicestershire Police"
+                        },
+                        {
+                            "const": 10000179,
+                            "title": "Lincolnshire Police"
+                        },
+                        {
+                            "const": 10000181,
+                            "title": "Merseyside Police"
+                        },
+                        {
+                            "const": 11809785,
+                            "title": "Metropolitan Barking"
+                        },
+                        {
+                            "const": 11809719,
+                            "title": "Metropolitan Barnet"
+                        },
+                        {
+                            "const": 11809788,
+                            "title": "Metropolitan Bexley"
+                        },
+                        {
+                            "const": 11809722,
+                            "title": "Metropolitan Brent"
+                        },
+                        {
+                            "const": 11809760,
+                            "title": "Metropolitan Bromley"
+                        },
+                        {
+                            "const": 11809694,
+                            "title": "Metropolitan Camden"
+                        },
+                        {
+                            "const": 11809713,
+                            "title": "Metropolitan Croydon"
+                        },
+                        {
+                            "const": 11809743,
+                            "title": "Metropolitan Ealing"
+                        },
+                        {
+                            "const": 11809783,
+                            "title": "Metropolitan Enfield"
+                        },
+                        {
+                            "const": 11809709,
+                            "title": "Metropolitan Greenwich"
+                        },
+                        {
+                            "const": 11809763,
+                            "title": "Metropolitan Hackney"
+                        },
+                        {
+                            "const": 11809795,
+                            "title": "Metropolitan Hammersmith"
+                        },
+                        {
+                            "const": 11809738,
+                            "title": "Metropolitan Haringey"
+                        },
+                        {
+                            "const": 11809803,
+                            "title": "Metropolitan Harrow"
+                        },
+                        {
+                            "const": 11809800,
+                            "title": "Metropolitan Havering"
+                        },
+                        {
+                            "const": 11809775,
+                            "title": "Metropolitan Hillingdon"
+                        },
+                        {
+                            "const": 11809780,
+                            "title": "Metropolitan Hounslow"
+                        },
+                        {
+                            "const": 11809765,
+                            "title": "Metropolitan Islington"
+                        },
+                        {
+                            "const": 11809801,
+                            "title": "Metropolitan Kensington"
+                        },
+                        {
+                            "const": 11809865,
+                            "title": "Metropolitan Kingston"
+                        },
+                        {
+                            "const": 11809693,
+                            "title": "Metropolitan Lambeth"
+                        },
+                        {
+                            "const": 11809698,
+                            "title": "Metropolitan Lewisham"
+                        },
+                        {
+                            "const": 11809861,
+                            "title": "Metropolitan Merton"
+                        },
+                        {
+                            "const": 11809701,
+                            "title": "Metropolitan Newham"
+                        },
+                        {
+                            "const": 11809782,
+                            "title": "Metropolitan Redbridge"
+                        },
+                        {
+                            "const": 11809862,
+                            "title": "Metropolitan Richmond"
+                        },
+                        {
+                            "const": 11809691,
+                            "title": "Metropolitan Southwark"
+                        },
+                        {
+                            "const": 11809805,
+                            "title": "Metropolitan Sutton"
+                        },
+                        {
+                            "const": 11809767,
+                            "title": "Metropolitan Tower Hamlets"
+                        },
+                        {
+                            "const": 11809726,
+                            "title": "Metropolitan Waltham Forest"
+                        },
+                        {
+                            "const": 11809771,
+                            "title": "Metropolitan Wandsworth"
+                        },
+                        {
+                            "const": 11809683,
+                            "title": "Metropolitan Westminster"
+                        },
+                        {
+                            "const": 10000185,
+                            "title": "Norfolk Constabulary"
+                        },
+                        {
+                            "const": 10000189,
+                            "title": "North Yorkshire Police"
+                        },
+                        {
+                            "const": 10000191,
+                            "title": "Northamptonshire Police"
+                        },
+                        {
+                            "const": 10000195,
+                            "title": "Northumbria Police"
+                        },
+                        {
+                            "const": 10000199,
+                            "title": "Nottinghamshire Police"
+                        },
+                        {
+                            "const": 10000218,
+                            "title": "South Yorkshire Police"
+                        },
+                        {
+                            "const": 10000223,
+                            "title": "Staffordshire Police"
+                        },
+                        {
+                            "const": 10000233,
+                            "title": "Suffolk Constabulary"
+                        },
+                        {
+                            "const": 10000237,
+                            "title": "Surrey Police"
+                        },
+                        {
+                            "const": 10000240,
+                            "title": "Sussex Police"
+                        },
+                        {
+                            "const": 10000247,
+                            "title": "Thames Valley Police"
+                        },
+                        {
+                            "const": 10000274,
+                            "title": "Warwickshire Police"
+                        },
+                        {
+                            "const": 10000279,
+                            "title": "West Mercia Police"
+                        },
+                        {
+                            "const": 10000285,
+                            "title": "West Midlands Police"
+                        },
+                        {
+                            "const": 10000291,
+                            "title": "West Yorkshire Police"
+                        },
+                        {
+                            "const": 10000295,
+                            "title": "Wiltshire Police"
+                        },
+                        {
+                            "const": 12607027,
+                            "title": "Police Scotland Argyll and West Dunbartonshire"
+                        },
+                        {
+                            "const": 12157147,
+                            "title": "Police Scotland Ayrshire"
+                        },
+                        {
+                            "const": 10000098,
+                            "title": "Police Scotland Dumfries and Galloway"
+                        },
+                        {
+                            "const": 13400412,
+                            "title": "Police Scotland Edinburgh"
+                        },
+                        {
+                            "const": 10002424,
+                            "title": "Police Scotland Fife"
+                        },
+                        {
+                            "const": 10000045,
+                            "title": "Police Scotland Forth Valley"
+                        },
+                        {
+                            "const": 12607023,
+                            "title": "Police Scotland Greater Glasgow"
+                        },
+                        {
+                            "const": 10000193,
+                            "title": "Police Scotland Highland and Islands"
+                        },
+                        {
+                            "const": 12607028,
+                            "title": "Police Scotland Lanarkshire"
+                        },
+                        {
+                            "const": 10000133,
+                            "title": "Police Scotland North East"
+                        },
+                        {
+                            "const": 12607026,
+                            "title": "Police Scotland Renfrewshire and Inverclyde"
+                        },
+                        {
+                            "const": 10000243,
+                            "title": "Police Scotland Tayside"
+                        },
+                        {
+                            "const": 13400413,
+                            "title": "Police Scotland The Lothians and Scottish Borders"
+                        },
+                        {
+                            "const": 10000109,
+                            "title": "Dyfed-Powys"
+                        },
+                        {
+                            "const": 10000147,
+                            "title": "Gwent"
+                        },
+                        {
+                            "const": 10000187,
+                            "title": "North Wales"
+                        },
+                        {
+                            "const": 10000215,
+                            "title": "South Wales"
+                        }
+                    ],
+                    "type": "integer"
+                },
+                "list-of-police-forces": {
+                    "description": "\n                {% from \"components/details/macro.njk\" import govukDetails %}\n                {{ govukDetails({\n                    summaryText: \"Help with police forces\",\n                    html: '<p>See a list of all <a class=\"govuk-link\" href=\"/police-forces\" target=\"_blank\">police forces in England, Scotland and Wales</a> (opens in a new tab)</p>'\n                }) }}\n            "
+                }
+            }
+        },
+        "p-applicant-where-in-england-did-it-happen": {
+            "invalidExamples": [
+                {
+                    "q-applicant-english-town-or-city": 12345,
+                    "q-applicant-english-location": "Some location"
+                },
+                {
+                    "q-applicant-english-town-or-city": "York",
+                    "q-applicant-english-location": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-english-town-or-city": "Enter the town or city where the crime happened",
+                    "q-applicant-english-location": "Enter the name of a street, business, building or nearby local landmark"
+                }
+            },
+            "title": "Where in England did it happen?",
+            "required": ["q-applicant-english-town-or-city", "q-applicant-english-location"],
+            "examples": [
+                {
+                    "q-applicant-english-town-or-city": "Some town",
+                    "q-applicant-english-location": "Some location"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-english-town-or-city": {
+                    "errorMessage": {
+                        "maxLength": "Town or city must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Town or city"
+                },
+                "q-applicant-english-location": {
+                    "errorMessage": {
+                        "maxLength": "Location must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "description": "For example, the name of a street, business, building or nearby local landmark. You can enter more than one.",
+                    "title": "Location"
+                }
+            }
+        },
+        "p-applicant-applied-for-other-compensation-briefly-explain-why-not": {
+            "invalidExamples": [
+                {
+                    "q-applicant-applied-for-other-compensation-briefly-explain-why-not": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-applied-for-other-compensation-briefly-explain-why-not": "Enter a reason"
+                }
+            },
+            "title": "Briefly explain why you have not applied for or received any other form of compensation",
+            "required": ["q-applicant-applied-for-other-compensation-briefly-explain-why-not"],
+            "examples": [
+                {
+                    "q-applicant-applied-for-other-compensation-briefly-explain-why-not": "blah"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-applied-for-other-compensation-briefly-explain-why-not": {
+                    "errorMessage": {
+                        "maxLength": "Explanation must be 500 characters or less"
+                    },
+                    "type": "string",
+                    "maxLength": 500
+                }
+            }
+        },
+        "p-applicant-enter-your-address": {
+            "invalidExamples": [
+                {
+                    "q-applicant-postcode": "G1 1XX",
+                    "q-applicant-county": "FooCounty",
+                    "q-applicant-building-and-street": 12345,
+                    "q-applicant-building-and-street-2": "Flat 2/3",
+                    "q-applicant-town-or-city": "FooCity"
+                },
+                {
+                    "q-applicant-postcode": "G1 1XX",
+                    "q-applicant-county": "FooCounty",
+                    "q-applicant-building-and-street": "1 Foo Lane",
+                    "q-applicant-building-and-street-2": 12345,
+                    "q-applicant-town-or-city": "FooCity"
+                },
+                {
+                    "q-applicant-postcode": "G1 1XX",
+                    "q-applicant-county": "FooCounty",
+                    "q-applicant-building-and-street": "1 Foo Lane",
+                    "q-applicant-building-and-street-2": "Flat 2/3",
+                    "q-applicant-town-or-city": 12345
+                },
+                {
+                    "q-applicant-postcode": "G1 1XX",
+                    "q-applicant-county": 12345,
+                    "q-applicant-building-and-street": "1 Foo Lane",
+                    "q-applicant-building-and-street-2": "Flat 2/3",
+                    "q-applicant-town-or-city": "FooCity"
+                },
+                {
+                    "q-applicant-postcode": 12345,
+                    "q-applicant-county": "FooCounty",
+                    "q-applicant-building-and-street": "1 Foo Lane",
+                    "q-applicant-building-and-street-2": "Flat 2/3",
+                    "q-applicant-town-or-city": "FooCity"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-building-and-street": "Enter the building and street where you live",
+                    "q-applicant-town-or-city": "Enter the town or city where you live"
+                }
+            },
+            "title": "Enter your address",
+            "required": ["q-applicant-building-and-street", "q-applicant-town-or-city"],
+            "examples": [
+                {
+                    "q-applicant-postcode": "G1 1XX",
+                    "q-applicant-county": "FooCounty",
+                    "q-applicant-building-and-street": "1 Foo Lane",
+                    "q-applicant-building-and-street-2": "Flat 2/3",
+                    "q-applicant-town-or-city": "FooCity"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-postcode": {
+                    "errorMessage": {
+                        "maxLength": "Postcode must be 10 characters or less"
+                    },
+                    "maxLength": 10,
+                    "type": "string",
+                    "title": "Postcode (optional)"
+                },
+                "q-applicant-county": {
+                    "errorMessage": {
+                        "maxLength": "County must be 32 characters or less"
+                    },
+                    "maxLength": 32,
+                    "type": "string",
+                    "title": "County (optional)"
+                },
+                "q-applicant-building-and-street": {
+                    "errorMessage": {
+                        "maxLength": "First line of address must be less than 60 characters"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Building and street"
+                },
+                "q-applicant-building-and-street-2": {
+                    "errorMessage": {
+                        "maxLength": "Second line of address must be less than 60 characters"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "<span class='govuk-visually-hidden'>Building and street line 2"
+                },
+                "q-applicant-town-or-city": {
+                    "errorMessage": {
+                        "maxLength": "Town or city must be 32 characters or less"
+                    },
+                    "maxLength": 32,
+                    "type": "string",
+                    "title": "Town or city"
+                }
+            }
+        },
+        "p-applicant-has-your-treatment-finished-dmi": {
+            "required": ["q-applicant-has-your-treatment-finished-dmi"],
+            "invalidExamples": [
+                {
+                    "q-applicant-has-your-treatment-finished-dmi": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-has-your-treatment-finished-dmi": "Select yes if you have finished your mental health treatment"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-has-your-treatment-finished-dmi": true
+                },
+                {
+                    "q-applicant-has-your-treatment-finished-dmi": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-has-your-treatment-finished-dmi": {
+                    "type": "boolean",
+                    "title": "Have you finished your mental health treatment?"
+                }
+            }
+        },
+        "p-applicant-have-you-applied-to-us-before": {
+            "invalidExamples": [
+                {
+                    "q-enter-your-previous-reference-number": "11//123456",
+                    "q-applicant-have-you-applied-to-us-before": false
+                },
+                {
+                    "q-enter-your-previous-reference-number": 12345,
+                    "q-applicant-have-you-applied-to-us-before": true
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-have-you-applied-to-us-before": "Select yes if you have applied to us before"
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/if-true-then-q-enter-your-previous-reference-number-is-required"
+                }
+            ],
+            "required": ["q-applicant-have-you-applied-to-us-before"],
+            "propertyNames": {
+                "enum": [
+                    "q-applicant-have-you-applied-to-us-before",
+                    "q-enter-your-previous-reference-number"
+                ]
+            },
+            "examples": [
+                {
+                    "q-enter-your-previous-reference-number": "11//123456",
+                    "q-applicant-have-you-applied-to-us-before": true
+                },
+                {
+                    "q-applicant-have-you-applied-to-us-before": false
+                }
+            ],
+            "additionalProperties": false,
+            "definitions": {
+                "if-true-then-q-enter-your-previous-reference-number-is-required": {
+                    "then": {
+                        "propertyNames": {
+                            "enum": [
+                                "q-applicant-have-you-applied-to-us-before",
+                                "q-enter-your-previous-reference-number"
+                            ]
+                        }
+                    },
+                    "else": {
+                        "propertyNames": {
+                            "enum": ["q-applicant-have-you-applied-to-us-before"]
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "q-applicant-have-you-applied-to-us-before": {
+                                "const": true
+                            }
+                        }
+                    }
+                }
+            },
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-enter-your-previous-reference-number": {
+                    "errorMessage": {
+                        "maxLength": "Previous reference number must be 50 characters or less"
+                    },
+                    "maxLength": 50,
+                    "type": "string",
+                    "title": "Enter your previous reference number if you know it (optional)"
+                },
+                "q-applicant-have-you-applied-to-us-before": {
+                    "type": "boolean",
+                    "title": "Have you applied to us before?"
+                }
+            }
+        },
+        "p--context-dmi-details": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Your mental health",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "details-context": {
+                    "description": "<p class=\"govuk-body\">We’re going to ask how the crime affected your mental health.</p><p class=\"govuk-body\">This helps us decide if you'll get a payment for mental injury.</p><h2 class=\"govuk-heading-m\">Disabling mental injury</h2><p class=\"govuk-body\">We can only pay for a 'disabling mental injury' that:</p><ul class=\"govuk-list govuk-list--bullet\"><li>makes it much harder to do things you would normally do</li><li>lasts 6 weeks or more</li><li>is diagnosed by a clinical psychologist or psychiatrist</li></ul><p class=\"govuk-body\">You can apply if you do not have a diagnosis yet. We'll tell you what medical evidence you'll need.</p>"
+                }
+            }
+        },
+        "p-applicant-mental-injury-duration": {
+            "required": ["q-applicant-mental-injury-duration"],
+            "invalidExamples": [
+                {
+                    "q-applicant-mental-injury-duration": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-mental-injury-duration": "Select yes if your mental injury has lasted longer than 6 weeks"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-mental-injury-duration": true
+                },
+                {
+                    "q-applicant-mental-injury-duration": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-mental-injury-duration": {
+                    "type": "boolean",
+                    "title": "Has your mental injury lasted 6 weeks or more?"
+                }
+            }
+        },
+        "p-offender-do-you-have-contact-with-offender": {
+            "required": ["q-offender-do-you-have-contact-with-offender"],
+            "invalidExamples": [
+                {
+                    "q-offender-do-you-have-contact-with-offender": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-offender-do-you-have-contact-with-offender": "Select yes if you have contact with the offender"
+                }
+            },
+            "examples": [
+                {
+                    "q-offender-do-you-have-contact-with-offender": true
+                },
+                {
+                    "q-offender-do-you-have-contact-with-offender": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-offender-do-you-have-contact-with-offender": {
+                    "type": "boolean",
+                    "title": "Do you have contact with the offender?"
+                }
+            }
+        },
+        "p-applicant-who-are-you-applying-for": {
+            "required": ["q-applicant-who-are-you-applying-for"],
+            "invalidExamples": [
+                {
+                    "q-applicant-who-are-you-applying-for": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-who-are-you-applying-for": "Select myself if you are applying for yourself"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-who-are-you-applying-for": "myself"
+                },
+                {
+                    "q-applicant-who-are-you-applying-for": "someone-else"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-who-are-you-applying-for": {
+                    "oneOf": [
+                        {
+                            "const": "myself",
+                            "title": "Myself"
+                        },
+                        {
+                            "const": "someone-else",
+                            "title": "Someone else"
+                        }
+                    ],
+                    "type": "string",
+                    "title": "Who are you applying for?"
+                }
+            }
+        },
+        "p--when-was-the-crime-reported-to-police": {
+            "required": ["q--when-was-the-crime-reported-to-police"],
+            "invalidExamples": [
+                {
+                    "q--when-was-the-crime-reported-to-police": 12345
+                },
+                {
+                    "q--when-was-the-crime-reported-to-police": "not a date"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q--when-was-the-crime-reported-to-police": "Enter the date the crime was reported to the police"
+                }
+            },
+            "examples": [
+                {
+                    "q--when-was-the-crime-reported-to-police": "2020-01-01T00:00:00.000Z"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q--when-was-the-crime-reported-to-police": {
+                    "errorMessage": {
+                        "format": "Enter the date the crime was reported to police and include a day, month and year"
+                    },
+                    "format": "date-time",
+                    "type": "string",
+                    "description": "For example, 28 2 2020. You can enter an approximate date.",
+                    "title": "When was the crime reported to the police?"
+                }
+            }
+        },
+        "p-applicant-did-the-crime-happen-once-or-over-time": {
+            "required": ["q-applicant-did-the-crime-happen-once-or-over-time"],
+            "invalidExamples": [
+                {
+                    "q-applicant-did-the-crime-happen-once-or-over-time": "never"
+                },
+                {
+                    "q-applicant-did-the-crime-happen-once-or-over-time": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-did-the-crime-happen-once-or-over-time": "Select Once or Over a period of time"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-did-the-crime-happen-once-or-over-time": "once"
+                },
+                {
+                    "q-applicant-did-the-crime-happen-once-or-over-time": "over-a-period-of-time"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-did-the-crime-happen-once-or-over-time": {
+                    "oneOf": [
+                        {
+                            "const": "once",
+                            "title": "Once"
+                        },
+                        {
+                            "const": "over-a-period-of-time",
+                            "title": "Over a period of time"
+                        }
+                    ],
+                    "type": "string",
+                    "title": "Did the crime happen once or over a period of time?"
+                }
+            }
+        },
+        "p-applicant-who-did-you-apply-to": {
+            "invalidExamples": [
+                {
+                    "q-applicant-who-did-you-apply-to": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-who-did-you-apply-to": "Enter who you applied to or received compensation from"
+                }
+            },
+            "title": "Who have you applied to or received compensation from?",
+            "required": ["q-applicant-who-did-you-apply-to"],
+            "examples": [
+                {
+                    "q-applicant-who-did-you-apply-to": "blah"
+                }
+            ],
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-who-did-you-apply-to": {
+                    "errorMessage": {
+                        "maxLength": "Who you applied to or received compensation from must be 50 characters or less"
+                    },
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "p--transition-no-phone-or-email": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "You must apply by telephone if you do not have an email address or UK mobile phone",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "transition": {
+                    "description": "{% include 'contact.njk' %}"
+                }
+            }
+        },
+        "p-applicant-where-in-scotland-did-it-happen": {
+            "invalidExamples": [
+                {
+                    "q-applicant-scottish-town-or-city": 12345,
+                    "q-applicant-scottish-location": "Some location"
+                },
+                {
+                    "q-applicant-scottish-town-or-city": "Some town",
+                    "q-applicant-scottish-location": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-scottish-town-or-city": "Enter the town or city where the crime happened",
+                    "q-applicant-scottish-location": "Enter the name of a street, business, building or nearby local landmark"
+                }
+            },
+            "title": "Where in Scotland did it happen?",
+            "required": ["q-applicant-scottish-town-or-city", "q-applicant-scottish-location"],
+            "examples": [
+                {
+                    "q-applicant-scottish-town-or-city": "Some town",
+                    "q-applicant-scottish-location": "Some location"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-scottish-town-or-city": {
+                    "errorMessage": {
+                        "maxLength": "Town or city must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "title": "Town or city"
+                },
+                "q-applicant-scottish-location": {
+                    "errorMessage": {
+                        "maxLength": "Location must be 60 characters or less"
+                    },
+                    "maxLength": 60,
+                    "type": "string",
+                    "description": "For example, the name of a street, business, building or nearby local landmark. You can enter more than one.",
+                    "title": "Location"
+                }
+            }
+        },
+        "p-applicant-enter-your-date-of-birth": {
+            "required": ["q-applicant-enter-your-date-of-birth"],
+            "invalidExamples": [
+                {
+                    "q-applicant-enter-your-date-of-birth": 12345
+                },
+                {
+                    "q-applicant-enter-your-date-of-birth": "not a date"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-enter-your-date-of-birth": "Enter your date of birth and include a day, month and year"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-enter-your-date-of-birth": "1970-01-01T00:00:00.000Z"
+                },
+                {
+                    "q-applicant-enter-your-date-of-birth": "2019-01-01T00:00:00.000Z"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-enter-your-date-of-birth": {
+                    "errorMessage": {
+                        "format": "Enter your date of birth and include a day, month and year"
+                    },
+                    "format": "date-time",
+                    "type": "string",
+                    "description": "For example, 31 3 1980.",
+                    "title": "Enter your date of birth"
+                }
+            }
+        },
+        "p-applicant-how-much-was-award": {
+            "invalidExamples": [
+                {
+                    "q-how-much-was-award": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-how-much-was-award": "Enter an amount"
+                }
+            },
+            "title": "How much compensation were you awarded?",
+            "required": ["q-how-much-was-award"],
+            "examples": [
+                {
+                    "q-how-much-was-award": "blah"
+                }
+            ],
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-how-much-was-award": {
+                    "errorMessage": {
+                        "maxLength": "Award amount must be 50 characters or less"
+                    },
+                    "type": "string",
+                    "maxLength": 50
+                }
+            }
+        },
+        "p-applicant-have-you-seen-a-gp": {
+            "required": ["q-applicant-have-you-seen-a-gp"],
+            "invalidExamples": [
+                {
+                    "q-applicant-have-you-seen-a-gp": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-have-you-seen-a-gp": "Select yes if you have seen a GP about your injuries"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-have-you-seen-a-gp": true
+                },
+                {
+                    "q-applicant-have-you-seen-a-gp": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-have-you-seen-a-gp": {
+                    "type": "boolean",
+                    "description": "This includes your mental health.",
+                    "title": "Have you seen a GP about your injuries?"
+                }
+            }
+        },
+        "p--you-need-to-contact-us": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "You need to contact us",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "you-need-to-contact-us": {
+                    "description": "<p class=\"govuk-body\">We need to check if you are eligible for compensation.</p>{% include 'contact.njk' %}"
+                }
+            }
+        },
+        "p-applicant-do-you-have-disabling-mental-injury": {
+            "required": ["q-applicant-do-you-have-disabling-mental-injury"],
+            "invalidExamples": [
+                {
+                    "q-applicant-do-you-have-disabling-mental-injury": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-do-you-have-disabling-mental-injury": "Select yes if you suffered a disabling mental injury"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-do-you-have-disabling-mental-injury": true
+                },
+                {
+                    "q-applicant-do-you-have-disabling-mental-injury": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-do-you-have-disabling-mental-injury": {
+                    "type": "boolean",
+                    "description": "This means it's much harder than usual to do things you would normally do, like going to work, seeing friends, or having a relationship.",
+                    "title": "Do you have a disabling mental injury?"
+                }
+            }
+        },
+        "p--transition": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Continue your claim",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "transition": {
+                    "description": "<p class=\"govuk-body\">You'll be taken to another website to continue your claim.</p>{{ govukButton({text: \"Continue\",href: \"https://www.cica.gov.uk/OAS/Account/create\",isStartButton: true}) }}"
+                }
+            }
+        },
+        "p-applicant-where-did-the-crime-happen": {
+            "required": ["q-applicant-where-did-the-crime-happen"],
+            "invalidExamples": [
+                {
+                    "q-applicant-where-did-the-crime-happen": "Japan"
+                },
+                {
+                    "q-applicant-where-did-the-crime-happen": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-where-did-the-crime-happen": "Select England, Scotland, Wales or Somewhere else"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-where-did-the-crime-happen": "england"
+                },
+                {
+                    "q-applicant-where-did-the-crime-happen": "scotland"
+                },
+                {
+                    "q-applicant-where-did-the-crime-happen": "wales"
+                },
+                {
+                    "q-applicant-where-did-the-crime-happen": "somewhere-else"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-where-did-the-crime-happen": {
+                    "oneOf": [
+                        {
+                            "const": "england",
+                            "title": "England"
+                        },
+                        {
+                            "const": "scotland",
+                            "title": "Scotland"
+                        },
+                        {
+                            "const": "wales",
+                            "title": "Wales"
+                        },
+                        {
+                            "const": "somewhere-else",
+                            "title": "Somewhere else"
+                        }
+                    ],
+                    "type": "string",
+                    "title": "Where did the crime happen?"
+                }
+            }
+        },
+        "p-applicant-select-reasons-for-the-delay-in-making-your-application": {
+            "required": [
+                "q-applicant-explain-reason-for-delay-application",
+                "q-applicant-select-reasons-for-the-delay-in-making-your-application"
+            ],
+            "invalidExamples": [
+                {
+                    "q-applicant-explain-reason-for-delay-application": "Because reasons",
+                    "q-applicant-select-reasons-for-the-delay-in-making-your-application": [
+                        "not a valid answer"
+                    ]
+                },
+                {
+                    "q-applicant-explain-reason-for-delay-application": "Because reasons",
+                    "q-applicant-select-reasons-for-the-delay-in-making-your-application": [12345]
+                },
+                {
+                    "q-applicant-explain-reason-for-delay-application": 12345,
+                    "q-applicant-select-reasons-for-the-delay-in-making-your-application": [
+                        "i-was-underage"
+                    ]
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-explain-reason-for-delay-application": "Explain the reasons for the delay in making your application",
+                    "q-applicant-select-reasons-for-the-delay-in-making-your-application": "Select if you were under 18, advised to wait, medical reasons or other reasons"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-explain-reason-for-delay-application": "some reason",
+                    "q-applicant-select-reasons-for-the-delay-in-making-your-application": [
+                        "i-was-underage",
+                        "medical-reasons"
+                    ]
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-explain-reason-for-delay-application": {
+                    "errorMessage": {
+                        "maxLength": "Explanation must be 500 characters or less"
+                    },
+                    "maxLength": 500,
+                    "type": "string",
+                    "title": "Briefly explain these reasons"
+                },
+                "q-applicant-select-reasons-for-the-delay-in-making-your-application": {
+                    "description": "Select all options that apply to you.",
+                    "title": "Select reasons for the delay in making your application",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "const": "i-was-underage",
+                                "title": "I was under 18"
+                            },
+                            {
+                                "const": "i-was-advised-to-wait",
+                                "title": "I was advised to wait"
+                            },
+                            {
+                                "const": "medical-reasons",
+                                "title": "Medical reasons"
+                            },
+                            {
+                                "const": "other-reasons",
+                                "title": "Other reasons"
+                            }
+                        ]
+                    },
+                    "maxItems": 4,
+                    "uniqueItems": true,
+                    "type": "array"
+                }
+            }
+        },
+        "p--context-compensation": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Other compensation",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "compensation-context": {
+                    "description": "<p class=\"govuk-body\">We're going to ask about any other compensation you've been paid for your injuries.</p><p class=\"govuk-body\">This is so we can work out how much compensation you can get.</p>"
+                }
+            }
+        },
+        "p-applicant-are-you-registered-with-gp": {
+            "required": ["q-applicant-are-you-registered-with-gp"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-registered-with-gp": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-registered-with-gp": "Select yes if you are registered with a GP"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-registered-with-gp": true
+                },
+                {
+                    "q-applicant-are-you-registered-with-gp": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-registered-with-gp": {
+                    "type": "boolean",
+                    "title": "Are you registered with a GP practice?"
+                }
+            }
+        },
+        "p-applicant-are-you-claiming-for-physical-injuries": {
+            "required": ["q-applicant-are-you-claiming-for-physical-injuries"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-claiming-for-physical-injuries": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-claiming-for-physical-injuries": "Select yes if you sare claiming for a physical injury"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-claiming-for-physical-injuries": true
+                },
+                {
+                    "q-applicant-are-you-claiming-for-physical-injuries": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-claiming-for-physical-injuries": {
+                    "type": "boolean",
+                    "title": "Are you claiming for any physical injuries?"
+                }
+            }
+        },
+        "p-applicant-have-you-been-known-by-any-other-names": {
+            "required": ["q-applicant-have-you-been-known-by-any-other-names"],
+            "invalidExamples": [
+                {
+                    "q-applicant-have-you-been-known-by-any-other-names": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-have-you-been-known-by-any-other-names": "Select yes if you have been known by any other names"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-have-you-been-known-by-any-other-names": true
+                },
+                {
+                    "q-applicant-have-you-been-known-by-any-other-names": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-have-you-been-known-by-any-other-names": {
+                    "type": "boolean",
+                    "title": "Have you ever been known by any other names?"
+                }
+            }
+        },
+        "p-applicant-are-you-claiming-for-payments": {
+            "required": ["q-applicant-are-you-claiming-for-payments"],
+            "invalidExamples": [
+                {
+                    "q-applicant-are-you-claiming-for-payments": "foo"
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-applicant-are-you-claiming-for-payments": "Select yes if you sare claiming for sexually transmitted infection, pregnancy, or loss of a pregnancy"
+                }
+            },
+            "examples": [
+                {
+                    "q-applicant-are-you-claiming-for-payments": true
+                },
+                {
+                    "q-applicant-are-you-claiming-for-payments": false
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-applicant-are-you-claiming-for-payments": {
+                    "type": "boolean",
+                    "title": "Are you claiming for a sexually transmitted infection (STI), pregnancy, or loss of a pregnancy?"
+                }
+            }
+        },
+        "p--context-offender": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "About the offender",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "offender-context": {
+                    "description": "<p class=\"govuk-body\">We’re going to ask:</p><ul class=\"govuk-list govuk-list--bullet\"><li>the offender's name (if you know it)</li><li>if you have contact with the offender</li></ul><p class=\"govuk-body\">This is so we can make sure the offender does not benefit from any compensation you get.</p><p class=\"govuk-body\">We will never contact the offender.</p>"
+                }
+            }
+        },
+        "p--whats-the-crime-reference-number": {
+            "required": ["q--whats-the-crime-reference-number"],
+            "invalidExamples": [
+                {
+                    "q--whats-the-crime-reference-number": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q--whats-the-crime-reference-number": "Enter the crime reference number"
+                }
+            },
+            "examples": [
+                {
+                    "q--whats-the-crime-reference-number": "abc123"
+                }
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "i-dont-know-the-crime-reference": {
+                    "description": "{% from \"components/details/macro.njk\" import govukDetails %}{{ govukDetails({summaryText: \"Help with your crime reference number\",html: \"<p>If you don't have your crime reference number, you can call 101 to speak to your local police station.</p>\"}) }}"
+                },
+                "q--whats-the-crime-reference-number": {
+                    "errorMessage": {
+                        "maxLength": "Crime reference number must be 30 characters or less"
+                    },
+                    "maxLength": 30,
+                    "type": "string",
+                    "description": "This is the reference number the police gave the crime when it was reported.",
+                    "title": "What's the crime reference number?"
+                }
+            }
+        },
+        "p-applicant-when-will-you-find-out": {
+            "invalidExamples": [
+                {
+                    "q-when-will-you-find-out": 12345
+                }
+            ],
+            "errorMessage": {
+                "required": {
+                    "q-when-will-you-find-out": "Enter an approximate date"
+                }
+            },
+            "title": "When will you find out if you've been awarded compensation?",
+            "required": ["q-when-will-you-find-out"],
+            "examples": [
+                {
+                    "q-when-will-you-find-out": "blah"
+                }
+            ],
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "q-when-will-you-find-out": {
+                    "errorMessage": {
+                        "maxLength": "When will you find out must be 50 characters or less"
+                    },
+                    "type": "string",
+                    "description": "Enter an approximate date, for example, December 2020. If you do not know you can say so.",
+                    "maxLength": 50
+                }
+            }
+        },
+        "p--context-gp-details": {
+            "invalidExamples": [
+                {
+                    "foo": "bar"
+                }
+            ],
+            "title": "Your GP",
+            "examples": [{}],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "properties": {
+                "details-context": {
+                    "description": "<p class=\"govuk-body\">We’re going to ask for some details about your GP.</p><p class=\"govuk-body\">We’ll use these to:</p><ul class=\"govuk-list govuk-list--bullet\"><li>understand if you've told your GP about your injuries</li><li>make sure any letters or forms we send out are addressed properly</li></ul><p class=\"govuk-body\">We will not contact your GP or ask to see your medical records without your consent.</p>\n"
+                }
+            }
+        }
+    },
+    "answers": {
+        "p-applicant-declaration": {},
+        "p-applicant-enter-your-email-address": {
+            "q-applicant-enter-your-email-address": "adrian.roworth@cica.gov.uk"
+        },
+        "p--before-you-continue": {},
+        "p-applicant-are-you-claiming-for-expenses": {
+            "q-applicant-are-you-claiming-for-expenses": false
+        },
+        "p-applicant-are-you-18-or-over": {
+            "q-applicant-are-you-18-or-over": true
+        },
+        "p-offender-do-you-know-the-name-of-the-offender": {
+            "q-offender-do-you-know-the-name-of-the-offender": false
+        },
+        "p-applicant-enter-your-name": {
+            "q-applicant-title": "Mr",
+            "q-applicant-first-name": "Adrian",
+            "q-applicant-last-name": "Roworth"
+        },
+        "p-applicant-confirmation-method": {
+            "q-applicant-confirmation-method": "text",
+            "q-applicant-enter-your-telephone-number": "07706518824"
+        },
+        "p--check-your-answers": {},
+        "p-applicant-when-did-the-crime-happen": {
+            "q-applicant-when-did-the-crime-happen": "2020-01-01T00:00:00.000Z"
+        },
+        "p-applicant-were-you-a-victim-of-sexual-assault-or-abuse": {
+            "q-applicant-were-you-a-victim-of-sexual-assault-or-abuse": true
+        },
+        "p--context-applicant-details": {},
+        "p--was-the-crime-reported-to-police": {
+            "q--was-the-crime-reported-to-police": false
+        },
+        "p-applicant-have-you-applied-for-or-received-any-other-compensation": {
+            "q-applicant-have-you-applied-for-or-received-any-other-compensation": false
+        },
+        "p-applicant-british-citizen-or-eu-national": {
+            "q-applicant-british-citizen-or-eu-national": true
+        },
+        "p-applicant-applied-for-other-compensation-briefly-explain-why-not": {
+            "q-applicant-applied-for-other-compensation-briefly-explain-why-not": "dsdsa"
+        },
+        "p-applicant-enter-your-address": {
+            "q-applicant-postcode": "G2 8JQ",
+            "q-applicant-county": "Lanarkshire",
+            "q-applicant-building-and-street": "Building name",
+            "q-applicant-building-and-street-2": "Street name",
+            "q-applicant-town-or-city": "Glasgow"
+        },
+        "p--context-dmi-details": {},
+        "p-applicant-are-you-claiming-for-loe": {
+            "q-applicant-are-you-claiming-for-loe": false
+        },
+        "p-applicant-who-are-you-applying-for": {
+            "q-applicant-who-are-you-applying-for": "myself"
+        },
+        "p-applicant-have-you-applied-to-us-before": {
+            "q-applicant-have-you-applied-to-us-before": false
+        },
+        "p-applicant-did-the-crime-happen-once-or-over-time": {
+            "q-applicant-did-the-crime-happen-once-or-over-time": "once"
+        },
+        "p-applicant-enter-your-date-of-birth": {
+            "q-applicant-enter-your-date-of-birth": "1987-09-03T00:00:00.000Z"
+        },
+        "p-applicant-you-cannot-get-compensation": {},
+        "p-applicant-do-you-have-disabling-mental-injury": {
+            "q-applicant-do-you-have-disabling-mental-injury": false
+        },
+        "p-applicant-where-did-the-crime-happen": {
+            "q-applicant-where-did-the-crime-happen": "scotland"
+        },
+        "p--context-compensation": {},
+        "p-applicant-are-you-claiming-for-physical-injuries": {
+            "q-applicant-are-you-claiming-for-physical-injuries": false
+        },
+        "p-applicant-have-you-been-known-by-any-other-names": {
+            "q-applicant-have-you-been-known-by-any-other-names": false
+        },
+        "p-applicant-are-you-claiming-for-payments": {
+            "q-applicant-are-you-claiming-for-payments": false
+        },
+        "p--context-offender": {},
+        "p-applicant-where-in-scotland-did-it-happen": {
+            "q-applicant-scottish-town-or-city": "Glasgow",
+            "q-applicant-scottish-location": "rwerewr"
+        }
+    },
+    "version": "1.2.2",
+    "meta": {
+        "onComplete": {
+            "tasks": [
+                {
+                    "templatePlaceholderMap": {
+                        "emailAddress": "/answers/p-applicant-confirmation-method/q-applicant-enter-your-email-address",
+                        "caseReference": "/answers/system/case-reference"
+                    },
+                    "type": "sendEmail",
+                    "templateId": "cb79653c-cf6e-44d4-8c03-087ba21cfd01"
+                },
+                {
+                    "templatePlaceholderMap": {
+                        "phoneNumber": "/answers/p-applicant-confirmation-method/q-applicant-enter-your-telephone-number",
+                        "caseReference": "/answers/system/case-reference"
+                    },
+                    "type": "sendSms",
+                    "templateId": "3c847bb8-957a-4bba-9fad-090657bb5c71"
+                }
+            ]
+        },
+        "questionnaireDocumentVersion": "1.0.0"
+    },
+    "routes": {
+        "states": {
+            "p-offender-describe-contact-with-offender": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--context-dmi-details"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-declaration": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--confirmation"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-enter-your-email-address": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--before-you-continue"
+                        }
+                    ]
+                }
+            },
+            "system": {
+                "type": "final"
+            },
+            "p-applicant-enter-your-telephone-number": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--before-you-continue"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--which-police-force-is-investigating-the-crime"
+                        }
+                    ]
+                }
+            },
+            "p--before-you-continue": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-did-the-crime-happen-once-or-over-time"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-claiming-for-expenses": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-expenses.q-applicant-are-you-claiming-for-expenses",
+                                false
+                            ],
+                            "target": "p--context-applicant-details"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-expenses.q-applicant-are-you-claiming-for-expenses",
+                                true
+                            ],
+                            "target": "p--transition"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-you-cannot-get-compensation": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-are-you-claiming-for-physical-injuries"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-affect-on-daily-life-dmi": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--context-gp-details"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-when-did-the-crime-start": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-when-did-the-crime-stop"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-when-did-the-crime-stop": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "dateExceedsTwoYearsFromNow",
+                                "$.answers.p-applicant-when-did-the-crime-stop.q-applicant-when-did-the-crime-stop"
+                            ],
+                            "target": "p-applicant-select-reasons-for-the-delay-in-making-your-application"
+                        },
+                        {
+                            "target": "p-applicant-where-did-the-crime-happen"
+                        }
+                    ]
+                }
+            },
+            "p--confirmation": {
+                "type": "final"
+            },
+            "p-gp-enter-your-address": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--context-compensation"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-what-other-names-have-you-used": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-enter-your-date-of-birth"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-has-a-decision-been-made": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-has-a-decision-been-made.q-applicant-has-a-decision-been-made",
+                                true
+                            ],
+                            "target": "p-applicant-how-much-was-award"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-has-a-decision-been-made.q-applicant-has-a-decision-been-made",
+                                false
+                            ],
+                            "target": "p-applicant-when-will-you-find-out"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-enter-your-name": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-have-you-been-known-by-any-other-names"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-british-citizen-or-eu-national": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-british-citizen-or-eu-national.q-applicant-british-citizen-or-eu-national",
+                                false
+                            ],
+                            "target": "p--transition"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-british-citizen-or-eu-national.q-applicant-british-citizen-or-eu-national",
+                                true
+                            ],
+                            "target": "p-applicant-were-you-a-victim-of-sexual-assault-or-abuse"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-where-in-wales-did-it-happen": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                false
+                            ],
+                            "target": "p--context-offender"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                true
+                            ],
+                            "target": "p--when-was-the-crime-reported-to-police"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-confirmation-method": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-confirmation-method.q-applicant-confirmation-method",
+                                "none"
+                            ],
+                            "target": "p--transition-no-phone-or-email"
+                        },
+                        {
+                            "target": "p-applicant-enter-your-name"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-when-did-the-crime-happen": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "dateExceedsTwoYearsFromNow",
+                                "$.answers.p-applicant-when-did-the-crime-happen.q-applicant-when-did-the-crime-happen"
+                            ],
+                            "target": "p-applicant-select-reasons-for-the-delay-in-making-your-application"
+                        },
+                        {
+                            "target": "p-applicant-where-did-the-crime-happen"
+                        }
+                    ]
+                }
+            },
+            "p--check-your-answers": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-declaration"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-18-or-over": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-18-or-over.q-applicant-are-you-18-or-over",
+                                false
+                            ],
+                            "target": "p--transition"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-18-or-over.q-applicant-are-you-18-or-over",
+                                true
+                            ],
+                            "target": "p-applicant-british-citizen-or-eu-national"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-were-you-a-victim-of-sexual-assault-or-abuse": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-were-you-a-victim-of-sexual-assault-or-abuse.q-applicant-were-you-a-victim-of-sexual-assault-or-abuse",
+                                false
+                            ],
+                            "target": "p--transition"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-were-you-a-victim-of-sexual-assault-or-abuse.q-applicant-were-you-a-victim-of-sexual-assault-or-abuse",
+                                true
+                            ],
+                            "target": "p--was-the-crime-reported-to-police"
+                        }
+                    ]
+                }
+            },
+            "p--context-applicant-details": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-confirmation-method"
+                        }
+                    ]
+                }
+            },
+            "p--was-the-crime-reported-to-police": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                false
+                            ],
+                            "target": "p-applicant-you-cannot-get-compensation"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                true
+                            ],
+                            "target": "p-applicant-are-you-claiming-for-physical-injuries"
+                        }
+                    ]
+                }
+            },
+            "p-offender-enter-offenders-name": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-offender-do-you-have-contact-with-offender"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-have-you-applied-for-or-received-any-other-compensation": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-have-you-applied-for-or-received-any-other-compensation.q-applicant-have-you-applied-for-or-received-any-other-compensation",
+                                true
+                            ],
+                            "target": "p-applicant-who-did-you-apply-to"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-have-you-applied-for-or-received-any-other-compensation.q-applicant-have-you-applied-for-or-received-any-other-compensation",
+                                false
+                            ],
+                            "target": "p-applicant-applied-for-other-compensation-briefly-explain-why-not"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-select-treatments": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-has-your-treatment-finished-dmi"
+                        }
+                    ]
+                }
+            },
+            "p-offender-do-you-know-the-name-of-the-offender": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-offender-do-you-know-the-name-of-the-offender.q-offender-do-you-know-the-name-of-the-offender",
+                                false
+                            ],
+                            "target": "p--context-dmi-details"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-offender-do-you-know-the-name-of-the-offender.q-offender-do-you-know-the-name-of-the-offender",
+                                true
+                            ],
+                            "target": "p-offender-enter-offenders-name"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-claiming-for-loe": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe",
+                                false
+                            ],
+                            "target": "p-applicant-are-you-claiming-for-expenses"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-loe.q-applicant-are-you-claiming-for-loe",
+                                true
+                            ],
+                            "target": "p--transition"
+                        }
+                    ]
+                }
+            },
+            "p--which-police-force-is-investigating-the-crime": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--whats-the-crime-reference-number"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-where-in-england-did-it-happen": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                false
+                            ],
+                            "target": "p--context-offender"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                true
+                            ],
+                            "target": "p--when-was-the-crime-reported-to-police"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-applied-for-other-compensation-briefly-explain-why-not": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--check-your-answers"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-enter-your-address": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-confirmation-method.q-applicant-confirmation-method",
+                                "email"
+                            ],
+                            "target": "p-applicant-enter-your-telephone-number"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-confirmation-method.q-applicant-confirmation-method",
+                                "text"
+                            ],
+                            "target": "p-applicant-enter-your-email-address"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-has-your-treatment-finished-dmi": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-affect-on-daily-life-dmi"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-have-you-applied-to-us-before": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-have-you-applied-for-or-received-any-other-compensation"
+                        }
+                    ]
+                }
+            },
+            "p--context-dmi-details": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-do-you-have-disabling-mental-injury"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-mental-injury-duration": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-select-treatments"
+                        }
+                    ]
+                }
+            },
+            "p-offender-do-you-have-contact-with-offender": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-offender-do-you-have-contact-with-offender.q-offender-do-you-have-contact-with-offender",
+                                false
+                            ],
+                            "target": "p--context-dmi-details"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-offender-do-you-have-contact-with-offender.q-offender-do-you-have-contact-with-offender",
+                                true
+                            ],
+                            "target": "p-offender-describe-contact-with-offender"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-who-are-you-applying-for": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-who-are-you-applying-for.q-applicant-who-are-you-applying-for",
+                                "someone-else"
+                            ],
+                            "target": "p--transition"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-who-are-you-applying-for.q-applicant-who-are-you-applying-for",
+                                "myself"
+                            ],
+                            "target": "p-applicant-are-you-18-or-over"
+                        }
+                    ]
+                }
+            },
+            "p--when-was-the-crime-reported-to-police": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "dateDifferenceGreaterThanTwoDays",
+                                "$.answers.p--when-was-the-crime-reported-to-police.q--when-was-the-crime-reported-to-police",
+                                "$.answers.p-applicant-when-did-the-crime-happen.q-applicant-when-did-the-crime-happen"
+                            ],
+                            "target": "p-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police"
+                        },
+                        {
+                            "cond": [
+                                "dateDifferenceGreaterThanTwoDays",
+                                "$.answers.p--when-was-the-crime-reported-to-police.q--when-was-the-crime-reported-to-police",
+                                "$.answers.p-applicant-when-did-the-crime-stop.q-applicant-when-did-the-crime-stop"
+                            ],
+                            "target": "p-applicant-select-reasons-for-the-delay-in-reporting-the-crime-to-police"
+                        },
+                        {
+                            "target": "p--which-police-force-is-investigating-the-crime"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-did-the-crime-happen-once-or-over-time": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-did-the-crime-happen-once-or-over-time.q-applicant-did-the-crime-happen-once-or-over-time",
+                                "once"
+                            ],
+                            "target": "p-applicant-when-did-the-crime-happen"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-did-the-crime-happen-once-or-over-time.q-applicant-did-the-crime-happen-once-or-over-time",
+                                "over-a-period-of-time"
+                            ],
+                            "target": "p-applicant-when-did-the-crime-start"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-who-did-you-apply-to": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-has-a-decision-been-made"
+                        }
+                    ]
+                }
+            },
+            "p--transition-no-phone-or-email": {
+                "type": "final"
+            },
+            "p-applicant-where-in-scotland-did-it-happen": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                false
+                            ],
+                            "target": "p--context-offender"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police",
+                                true
+                            ],
+                            "target": "p--when-was-the-crime-reported-to-police"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-enter-your-date-of-birth": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "dateLessThanEighteenYearsAgo",
+                                "$.answers.p-applicant-enter-your-date-of-birth.q-applicant-enter-your-date-of-birth"
+                            ],
+                            "target": "p--transition"
+                        },
+                        {
+                            "target": "p-applicant-enter-your-address"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-how-much-was-award": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--check-your-answers"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-have-you-seen-a-gp": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-registered-with-gp.q-applicant-are-you-registered-with-gp",
+                                true
+                            ],
+                            "target": "p-gp-enter-your-address"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp",
+                                true
+                            ],
+                            "target": "p-gp-enter-your-address"
+                        },
+                        {
+                            "target": "p--context-compensation"
+                        }
+                    ]
+                }
+            },
+            "p--you-need-to-contact-us": {
+                "type": "final"
+            },
+            "p-applicant-do-you-have-disabling-mental-injury": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-do-you-have-disabling-mental-injury.q-applicant-do-you-have-disabling-mental-injury",
+                                false
+                            ],
+                            "target": "p--context-compensation"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-do-you-have-disabling-mental-injury.q-applicant-do-you-have-disabling-mental-injury",
+                                true
+                            ],
+                            "target": "p-applicant-mental-injury-duration"
+                        }
+                    ]
+                }
+            },
+            "p--transition": {
+                "type": "final"
+            },
+            "p-applicant-where-did-the-crime-happen": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-where-did-the-crime-happen.q-applicant-where-did-the-crime-happen",
+                                "england"
+                            ],
+                            "target": "p-applicant-where-in-england-did-it-happen"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-where-did-the-crime-happen.q-applicant-where-did-the-crime-happen",
+                                "scotland"
+                            ],
+                            "target": "p-applicant-where-in-scotland-did-it-happen"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-where-did-the-crime-happen.q-applicant-where-did-the-crime-happen",
+                                "wales"
+                            ],
+                            "target": "p-applicant-where-in-wales-did-it-happen"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-where-did-the-crime-happen.q-applicant-where-did-the-crime-happen",
+                                "somewhere-else"
+                            ],
+                            "target": "p--you-need-to-contact-us"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-select-reasons-for-the-delay-in-making-your-application": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-where-did-the-crime-happen"
+                        }
+                    ]
+                }
+            },
+            "p--context-compensation": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-have-you-applied-to-us-before"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-registered-with-gp": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-have-you-seen-a-gp"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-claiming-for-physical-injuries": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-physical-injuries.q-applicant-are-you-claiming-for-physical-injuries",
+                                false
+                            ],
+                            "target": "p-applicant-are-you-claiming-for-payments"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-physical-injuries.q-applicant-are-you-claiming-for-physical-injuries",
+                                true
+                            ],
+                            "target": "p--transition"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-have-you-been-known-by-any-other-names": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-have-you-been-known-by-any-other-names.q-applicant-have-you-been-known-by-any-other-names",
+                                false
+                            ],
+                            "target": "p-applicant-enter-your-date-of-birth"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-have-you-been-known-by-any-other-names.q-applicant-have-you-been-known-by-any-other-names",
+                                true
+                            ],
+                            "target": "p-applicant-what-other-names-have-you-used"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-are-you-claiming-for-payments": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-payments.q-applicant-are-you-claiming-for-payments",
+                                false
+                            ],
+                            "target": "p-applicant-are-you-claiming-for-loe"
+                        },
+                        {
+                            "cond": [
+                                "==",
+                                "$.answers.p-applicant-are-you-claiming-for-payments.q-applicant-are-you-claiming-for-payments",
+                                true
+                            ],
+                            "target": "p--transition"
+                        }
+                    ]
+                }
+            },
+            "p--context-offender": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-offender-do-you-know-the-name-of-the-offender"
+                        }
+                    ]
+                }
+            },
+            "p--whats-the-crime-reference-number": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--context-offender"
+                        }
+                    ]
+                }
+            },
+            "p-applicant-when-will-you-find-out": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p--check-your-answers"
+                        }
+                    ]
+                }
+            },
+            "p--context-gp-details": {
+                "on": {
+                    "ANSWER": [
+                        {
+                            "target": "p-applicant-are-you-registered-with-gp"
+                        }
+                    ]
+                }
+            }
+        },
+        "referrer": "https://www.gov.uk/claim-compensation-criminal-injury/make-claim",
+        "confirmation": "p--confirmation",
+        "initial": "p-applicant-who-are-you-applying-for",
+        "summary": "p-applicant-declaration"
+    },
+    "progress": [
+        "p-applicant-who-are-you-applying-for",
+        "p-applicant-are-you-18-or-over",
+        "p-applicant-british-citizen-or-eu-national",
+        "p-applicant-were-you-a-victim-of-sexual-assault-or-abuse",
+        "p--was-the-crime-reported-to-police",
+        "p-applicant-you-cannot-get-compensation",
+        "p-applicant-are-you-claiming-for-physical-injuries",
+        "p-applicant-are-you-claiming-for-payments",
+        "p-applicant-are-you-claiming-for-loe",
+        "p-applicant-are-you-claiming-for-expenses",
+        "p--context-applicant-details",
+        "p-applicant-confirmation-method",
+        "p-applicant-enter-your-name",
+        "p-applicant-have-you-been-known-by-any-other-names",
+        "p-applicant-enter-your-date-of-birth",
+        "p-applicant-enter-your-address",
+        "p-applicant-enter-your-email-address",
+        "p--before-you-continue",
+        "p-applicant-did-the-crime-happen-once-or-over-time",
+        "p-applicant-when-did-the-crime-happen",
+        "p-applicant-where-did-the-crime-happen",
+        "p-applicant-where-in-scotland-did-it-happen",
+        "p--context-offender",
+        "p-offender-do-you-know-the-name-of-the-offender",
+        "p--context-dmi-details",
+        "p-applicant-do-you-have-disabling-mental-injury",
+        "p--context-compensation",
+        "p-applicant-have-you-applied-to-us-before",
+        "p-applicant-have-you-applied-for-or-received-any-other-compensation",
+        "p-applicant-applied-for-other-compensation-briefly-explain-why-not",
+        "p--check-your-answers",
+        "p-applicant-declaration",
+        "p--confirmation"
+    ],
+    "currentSectionId": "p--confirmation",
+    "type": "apply-for-compensation",
+    "id": "67d8e5d2-44a5-4ab7-91c0-3fd27d009235"
+}

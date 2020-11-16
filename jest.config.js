@@ -12,7 +12,7 @@ process.env.DCS_LOG_LEVEL = 'silent';
 process.env.NOTIFY_API_KEY = '123apiKey';
 
 config.coverageThreshold = {
-    './!(db)/!(questionnaire-dal).js': {
+    './!(db)/!(*-dal).js': {
         branches: 60,
         functions: 60,
         lines: 60,
@@ -54,6 +54,12 @@ config.coverageThreshold = {
         branches: 60,
         functions: 0,
         lines: 23
+    },
+    './admin/admin-dal.js': {
+        branches: 0,
+        functions: 0,
+        lines: 15,
+        statements: 15
     }
 };
 
