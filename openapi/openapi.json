@@ -933,71 +933,70 @@
                             "application/vnd.api+json": {
                                 "schema": {
                                     "type": "object",
-                                    "additionalProperties": false,
                                     "required": ["data"],
                                     "properties": {
                                         "data": {
-                                            "type": "object",
-                                            "additionalProperties": false,
-                                            "required": ["id", "type", "attributes"],
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string",
-                                                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-                                                },
-                                                "type": {
-                                                    "enum": ["submissions"]
-                                                },
-                                                "attributes": {
-                                                    "type": "object",
-                                                    "additionalProperties": false,
-                                                    "required": [
-                                                        "questionnaireId",
-                                                        "submitted",
-                                                        "status",
-                                                        "caseReferenceNumber"
-                                                    ],
-                                                    "properties": {
-                                                        "questionnaireId": {
-                                                            "type": "string",
-                                                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-                                                        },
-                                                        "submitted": {
-                                                            "type": "boolean"
-                                                        },
-                                                        "status": {
-                                                            "enum": [
-                                                                "NOT_STARTED",
-                                                                "IN_PROGRESS",
-                                                                "COMPLETED",
-                                                                "FAILED"
-                                                            ]
-                                                        },
-                                                        "caseReferenceNumber": {
-                                                            "type": "string",
-                                                            "pattern": "^[0-9]{2}\\\\[0-9]{6}$",
-                                                            "nullable": true
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "required": ["type", "id", "attributes"],
+                                                "properties": {
+                                                    "type": {
+                                                        "enum": ["submissions"]
+                                                    },
+                                                    "id": {
+                                                        "enum": ["0"]
+                                                    },
+                                                    "attributes": {
+                                                        "type": "object",
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "questionnaireId",
+                                                            "submitted",
+                                                            "status",
+                                                            "caseReferenceNumber"
+                                                        ],
+                                                        "properties": {
+                                                            "questionnaireId": {
+                                                                "type": "string",
+                                                                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                                                            },
+                                                            "submitted": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "status": {
+                                                                "enum": [
+                                                                    "NOT_STARTED",
+                                                                    "IN_PROGRESS",
+                                                                    "COMPLETED",
+                                                                    "FAILED"
+                                                                ]
+                                                            },
+                                                            "caseReferenceNumber": {
+                                                                "type": "string",
+                                                                "pattern": "^[0-9]{2}\\\\[0-9]{6}$",
+                                                                "nullable": true
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        },
-                                        "meta": {
-                                            "type": "object"
                                         }
                                     }
                                 },
                                 "example": {
-                                    "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
-                                        "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": false,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
+                                    "data": [
+                                        {
+                                            "id": "0",
+                                            "type": "submissions",
+                                            "attributes": {
+                                                "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                                "submitted": true,
+                                                "status": "IN_PROGRESS",
+                                                "caseReferenceNumber": "11\\111111"
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         }
@@ -1122,25 +1121,14 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/questionnaires/submissions": {
             "post": {
                 "tags": ["Submissions"],
-                "summary": "Submit a questionnaire",
-                "description": "Start the submission of a questionnaire",
-                "operationId": "SubmitQuestionnaire",
-                "parameters": [
-                    {
-                        "name": "questionnaireId",
-                        "in": "path",
-                        "required": true,
-                        "description": "The id of the specific questionnaire instance. Format UUIDv4.",
-                        "schema": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-                        },
-                        "example": "285cb104-0c15-4a9c-9840-cb1007f098fb"
-                    }
-                ],
+                "summary": "Submit 1 or more questionnaires",
+                "description": "Start the submission of 1 or more questionnaires",
+                "operationId": "SubmitQuestionnaires",
                 "x-scopes": ["update:questionnaires"],
                 "x-requests": {
                     "400": {
@@ -1164,29 +1152,19 @@
                     },
                     "403": {
                         "x-scopes": ["create:dummy-resource"]
-                    },
-                    "404": {
-                        "parameters": [
-                            {
-                                "name": "questionnaireId",
-                                "example": "68653be7-877f-4106-b91e-4ba8dac883f4"
-                            }
-                        ]
                     }
                 },
                 "requestBody": {
-                    "description": "Questionnaire ID",
+                    "description": "Questionnaire IDs",
                     "required": true,
                     "content": {
                         "application/vnd.api+json": {
                             "schema": {
                                 "type": "object",
-                                "additionalProperties": false,
                                 "required": ["data"],
                                 "properties": {
                                     "data": {
                                         "type": "object",
-                                        "additionalProperties": false,
                                         "required": ["type", "attributes"],
                                         "properties": {
                                             "type": {
@@ -1196,9 +1174,13 @@
                                                 "type": "object",
                                                 "additionalProperties": false,
                                                 "properties": {
-                                                    "questionnaireId": {
-                                                        "type": "string",
-                                                        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                                                    "questionnaireIds": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "minItems": 1,
+                                                            "type": "string",
+                                                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1210,7 +1192,7 @@
                                 "data": {
                                     "type": "submissions",
                                     "attributes": {
-                                        "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb"
+                                        "questionnaireIds": ["285cb104-0c15-4a9c-9840-cb1007f098fb"]
                                     }
                                 }
                             }
@@ -1228,67 +1210,69 @@
                                     "required": ["data"],
                                     "properties": {
                                         "data": {
-                                            "type": "object",
-                                            "additionalProperties": false,
-                                            "required": ["id", "type", "attributes"],
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string",
-                                                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-                                                },
-                                                "type": {
-                                                    "enum": ["submissions"]
-                                                },
-                                                "attributes": {
-                                                    "type": "object",
-                                                    "additionalProperties": false,
-                                                    "required": [
-                                                        "questionnaireId",
-                                                        "submitted",
-                                                        "status",
-                                                        "caseReferenceNumber"
-                                                    ],
-                                                    "properties": {
-                                                        "questionnaireId": {
-                                                            "type": "string",
-                                                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-                                                        },
-                                                        "submitted": {
-                                                            "type": "boolean"
-                                                        },
-                                                        "status": {
-                                                            "enum": [
-                                                                "NOT_STARTED",
-                                                                "IN_PROGRESS",
-                                                                "COMPLETED",
-                                                                "FAILED"
-                                                            ]
-                                                        },
-                                                        "caseReferenceNumber": {
-                                                            "type": "string",
-                                                            "pattern": "^[0-9]{2}\\\\[0-9]{6}$",
-                                                            "nullable": true
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": false,
+                                                "required": ["id", "type", "attributes"],
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                                                    },
+                                                    "type": {
+                                                        "enum": ["submissions"]
+                                                    },
+                                                    "attributes": {
+                                                        "type": "object",
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "questionnaireId",
+                                                            "submitted",
+                                                            "status",
+                                                            "caseReferenceNumber"
+                                                        ],
+                                                        "properties": {
+                                                            "questionnaireId": {
+                                                                "type": "string",
+                                                                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                                                            },
+                                                            "submitted": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "status": {
+                                                                "enum": [
+                                                                    "NOT_STARTED",
+                                                                    "IN_PROGRESS",
+                                                                    "COMPLETED",
+                                                                    "FAILED"
+                                                                ]
+                                                            },
+                                                            "caseReferenceNumber": {
+                                                                "type": "string",
+                                                                "pattern": "^[0-9]{2}\\\\[0-9]{6}$",
+                                                                "nullable": true
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        },
-                                        "meta": {
-                                            "type": "object"
                                         }
                                     }
                                 },
                                 "example": {
-                                    "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
-                                        "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": true,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
+                                    "data": [
+                                        {
+                                            "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                            "type": "submissions",
+                                            "attributes": {
+                                                "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                                "submitted": true,
+                                                "status": "IN_PROGRESS",
+                                                "caseReferenceNumber": "11\\111111"
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         }

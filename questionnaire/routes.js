@@ -118,6 +118,7 @@ router
             const submissionStatus = await questionnaireService.getQuestionnaireSubmissionStatus(
                 questionnaireId
             );
+            const resourceCollection = [];
             // the default value for this column is "NOT_STARTED", so if it doesn't
             // exist, then it must not be a valid questionnaire ID.
             if (!submissionStatus) {
@@ -130,82 +131,37 @@ router
                 throw err;
             }
 
-            const response = await questionnaireService.getSubmissionResponseData(questionnaireId);
+            const resource = await questionnaireService.getSubmissionResponseData(questionnaireId);
+            resource.id = 0;
+            resourceCollection.push(resource);
 
-            res.status(200).json(response);
-        } catch (err) {
-            next(err);
-        }
-    })
-    .post(permissions('update:questionnaires'), async (req, res, next) => {
-        try {
-            const {questionnaireId} = req.params;
-            const questionnaireService = createQuestionnaireService({logger: req.log});
-
-            // 1) get questionnaire instance.
-            const questionnaire = await questionnaireService.getQuestionnaire(questionnaireId);
-
-            if (!questionnaire) {
-                const err = Error(
-                    `Questionnaire with questionnaireId "${questionnaireId}" does not exist`
-                );
-                err.name = 'HTTPError';
-                err.statusCode = 404;
-                err.error = '404 Not Found';
-                throw err;
-            }
-
-            // 2) get questionnaire instance's submission status.
-            const submissionStatus = await questionnaireService.getQuestionnaireSubmissionStatus(
-                questionnaireId
-            );
-            // 3) are we currently, or have we been on this questionnaire's summary page?
-            // we infer a questionnaire is complete if the user has visited the summary page.
-            const isQuestionnaireComplete = questionnaire.progress.includes(
-                questionnaire.routes.summary
-            );
-
-            // if the submission status is anything other than 'NOT_STARTED' then it
-            // means that the submission resource has been previously created.
-            if (!isQuestionnaireComplete || submissionStatus !== 'NOT_STARTED') {
-                const errorReasons = {
-                    notSubmittable: `Questionnaire with ID "${questionnaireId}" is not in a submittable state`,
-                    duplicate: `Submission resource with ID "${questionnaireId}" already exists`
-                };
-                const errorReason = !isQuestionnaireComplete
-                    ? errorReasons.notSubmittable
-                    : errorReasons.duplicate;
-                const err = Error(errorReason);
-                err.name = 'HTTPError';
-                err.statusCode = 409;
-                err.error = '409 Conflict';
-                throw err;
-            }
-
-            // if the summary section ID is in the progress array, then that means
-            // the questionnaire is submittable.
-            if (isQuestionnaireComplete) {
-                // check all answers are correct.
-                await questionnaireService.validateAllAnswers(questionnaireId);
-
-                // TODO: refactor `getSubmissionResponseData` to be more intuitive.
-                const response = await questionnaireService.getSubmissionResponseData(
-                    questionnaireId,
-                    true
-                );
-
-                questionnaireService.createAnswers(
-                    questionnaireId,
-                    questionnaire.routes.summary,
-                    {}
-                );
-
-                res.status(201).json(response);
-            }
+            res.status(200).json({
+                data: resourceCollection
+            });
         } catch (err) {
             next(err);
         }
     });
+
+router.route('/submissions').post(permissions('update:questionnaires'), async (req, res, next) => {
+    try {
+        const {questionnaireIds} = req.body.data.attributes;
+        const questionnaireService = createQuestionnaireService({logger: req.log});
+
+        const promises = [...new Set(questionnaireIds)].map(async questionnaireId => {
+            const submissionResource = await questionnaireService.createSubmission(questionnaireId);
+            return submissionResource;
+        });
+
+        const resourceCollection = await Promise.all(promises);
+
+        res.status(201).json({
+            data: resourceCollection
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router
     .route('/:questionnaireId/progress-entries')

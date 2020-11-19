@@ -341,16 +341,18 @@
                                     "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/get/res/200.json"
                                 },
                                 "example": {
-                                    "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
-                                        "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": false,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
+                                    "data": [
+                                        {
+                                            "id": "0",
+                                            "type": "submissions",
+                                            "attributes": {
+                                                "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                                "submitted": true,
+                                                "status": "IN_PROGRESS",
+                                                "caseReferenceNumber": "11\\111111"
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         }
@@ -365,17 +367,14 @@
                         "$ref": "#/components/responses/NotFound"
                     }
                 }
-            },
+            }
+        },
+        "/questionnaires/submissions": {
             "post": {
                 "tags": ["Submissions"],
-                "summary": "Submit a questionnaire",
-                "description": "Start the submission of a questionnaire",
-                "operationId": "SubmitQuestionnaire",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/questionnaireId"
-                    }
-                ],
+                "summary": "Submit 1 or more questionnaires",
+                "description": "Start the submission of 1 or more questionnaires",
+                "operationId": "SubmitQuestionnaires",
                 "x-scopes": ["update:questionnaires"],
                 "x-requests": {
                     "400": {
@@ -401,27 +400,37 @@
                         "x-scopes": ["create:dummy-resource"]
                     },
                     "404": {
-                        "parameters": [
-                            {
-                                "name": "questionnaireId",
-                                "example": "68653be7-877f-4106-b91e-4ba8dac883f4"
+                        "requestBody": {
+                            "content": {
+                                "application/vnd.api+json": {
+                                    "example": {
+                                        "data": {
+                                            "type": "submissions",
+                                            "attributes": {
+                                                "questionnaireIds": [
+                                                    "68653be7-877f-4106-b91e-4ba8dac883f4"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        ]
+                        }
                     }
                 },
                 "requestBody": {
-                    "description": "Questionnaire ID",
+                    "description": "Questionnaire IDs",
                     "required": true,
                     "content": {
                         "application/vnd.api+json": {
                             "schema": {
-                                "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/post/req/201.json"
+                                "$ref": "./json-schemas/_questionnaires_submissions/post/req/201.json"
                             },
                             "example": {
                                 "data": {
                                     "type": "submissions",
                                     "attributes": {
-                                        "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb"
+                                        "questionnaireIds": ["285cb104-0c15-4a9c-9840-cb1007f098fb"]
                                     }
                                 }
                             }
@@ -434,19 +443,21 @@
                         "content": {
                             "application/vnd.api+json": {
                                 "schema": {
-                                    "$ref": "./json-schemas/_questionnaires_{questionnaireId}_submissions/post/res/201.json"
+                                    "$ref": "./json-schemas/_questionnaires_submissions/post/res/201.json"
                                 },
                                 "example": {
-                                    "data": {
-                                        "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                        "type": "submissions",
-                                        "attributes": {
-                                            "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
-                                            "submitted": true,
-                                            "status": "IN_PROGRESS",
-                                            "caseReferenceNumber": "11\\111111"
+                                    "data": [
+                                        {
+                                            "id": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                            "type": "submissions",
+                                            "attributes": {
+                                                "questionnaireId": "285cb104-0c15-4a9c-9840-cb1007f098fb",
+                                                "submitted": true,
+                                                "status": "IN_PROGRESS",
+                                                "caseReferenceNumber": "11\\111111"
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         }

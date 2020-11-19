@@ -1,5 +1,14 @@
 'use strict';
 
+/* * ****************************************************************************************** * */
+/* * ****************************************************************************************** * */
+/* *         THIS FILE IS GENERATED. ALL MANUAL EDITS MADE TO THIS FILE WILL BE LOST!!!         * */
+/* *         --------------------------------------------------------------------------         * */
+/* *         If you need to make a change to this test file you will need to edit the           * */
+/* *         generate-tests file and regenerate the tests using command line.                   * */
+/* * ****************************************************************************************** * */
+/* * ****************************************************************************************** * */
+
 const VError = require('verror');
 const request = require('supertest');
 const {matchersWithOptions} = require('jest-json-schema');
@@ -605,53 +614,49 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
                 expect(res.body).toMatchSchema({
                     $schema: 'http://json-schema.org/draft-07/schema#',
                     type: 'object',
-                    additionalProperties: false,
                     required: ['data'],
                     properties: {
                         data: {
-                            type: 'object',
-                            additionalProperties: false,
-                            required: ['id', 'type', 'attributes'],
-                            properties: {
-                                id: {
-                                    type: 'string',
-                                    pattern:
-                                        '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                                },
-                                type: {const: 'submissions'},
-                                attributes: {
-                                    type: 'object',
-                                    additionalProperties: false,
-                                    required: [
-                                        'questionnaireId',
-                                        'submitted',
-                                        'status',
-                                        'caseReferenceNumber'
-                                    ],
-                                    properties: {
-                                        questionnaireId: {
-                                            type: 'string',
-                                            pattern:
-                                                '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                                        },
-                                        submitted: {type: 'boolean'},
-                                        status: {
-                                            enum: [
-                                                'NOT_STARTED',
-                                                'IN_PROGRESS',
-                                                'COMPLETED',
-                                                'FAILED'
-                                            ]
-                                        },
-                                        caseReferenceNumber: {
-                                            type: ['string', 'null'],
-                                            pattern: '^[0-9]{2}\\\\[0-9]{6}$'
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                required: ['type', 'id', 'attributes'],
+                                properties: {
+                                    type: {const: 'submissions'},
+                                    id: {const: 0},
+                                    attributes: {
+                                        type: 'object',
+                                        additionalProperties: false,
+                                        required: [
+                                            'questionnaireId',
+                                            'submitted',
+                                            'status',
+                                            'caseReferenceNumber'
+                                        ],
+                                        properties: {
+                                            questionnaireId: {
+                                                type: 'string',
+                                                pattern:
+                                                    '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                                            },
+                                            submitted: {type: 'boolean'},
+                                            status: {
+                                                enum: [
+                                                    'NOT_STARTED',
+                                                    'IN_PROGRESS',
+                                                    'COMPLETED',
+                                                    'FAILED'
+                                                ]
+                                            },
+                                            caseReferenceNumber: {
+                                                type: ['string', 'null'],
+                                                pattern: '^[0-9]{2}\\\\[0-9]{6}$'
+                                            }
                                         }
                                     }
                                 }
                             }
-                        },
-                        meta: {type: 'object'}
+                        }
                     }
                 });
             });
@@ -744,17 +749,19 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
             });
         });
     });
+});
+describe('/questionnaires/submissions', () => {
     describe('post', () => {
         describe('201', () => {
             it('should Created', async () => {
                 const res = await request(app)
-                    .post('/api/v1/questionnaires/285cb104-0c15-4a9c-9840-cb1007f098fb/submissions')
+                    .post('/api/v1/questionnaires/submissions')
                     .set('Authorization', `Bearer ${tokens['update:questionnaires']}`)
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
-                            attributes: {questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'}
+                            attributes: {questionnaireIds: ['285cb104-0c15-4a9c-9840-cb1007f098fb']}
                         }
                     });
 
@@ -767,49 +774,51 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
                     required: ['data'],
                     properties: {
                         data: {
-                            type: 'object',
-                            additionalProperties: false,
-                            required: ['id', 'type', 'attributes'],
-                            properties: {
-                                id: {
-                                    type: 'string',
-                                    pattern:
-                                        '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                                },
-                                type: {const: 'submissions'},
-                                attributes: {
-                                    type: 'object',
-                                    additionalProperties: false,
-                                    required: [
-                                        'questionnaireId',
-                                        'submitted',
-                                        'status',
-                                        'caseReferenceNumber'
-                                    ],
-                                    properties: {
-                                        questionnaireId: {
-                                            type: 'string',
-                                            pattern:
-                                                '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                                        },
-                                        submitted: {type: 'boolean'},
-                                        status: {
-                                            enum: [
-                                                'NOT_STARTED',
-                                                'IN_PROGRESS',
-                                                'COMPLETED',
-                                                'FAILED'
-                                            ]
-                                        },
-                                        caseReferenceNumber: {
-                                            type: ['string', 'null'],
-                                            pattern: '^[0-9]{2}\\\\[0-9]{6}$'
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                additionalProperties: false,
+                                required: ['id', 'type', 'attributes'],
+                                properties: {
+                                    id: {
+                                        type: 'string',
+                                        pattern:
+                                            '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                                    },
+                                    type: {const: 'submissions'},
+                                    attributes: {
+                                        type: 'object',
+                                        additionalProperties: false,
+                                        required: [
+                                            'questionnaireId',
+                                            'submitted',
+                                            'status',
+                                            'caseReferenceNumber'
+                                        ],
+                                        properties: {
+                                            questionnaireId: {
+                                                type: 'string',
+                                                pattern:
+                                                    '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                                            },
+                                            submitted: {type: 'boolean'},
+                                            status: {
+                                                enum: [
+                                                    'NOT_STARTED',
+                                                    'IN_PROGRESS',
+                                                    'COMPLETED',
+                                                    'FAILED'
+                                                ]
+                                            },
+                                            caseReferenceNumber: {
+                                                type: ['string', 'null'],
+                                                pattern: '^[0-9]{2}\\\\[0-9]{6}$'
+                                            }
                                         }
                                     }
                                 }
                             }
-                        },
-                        meta: {type: 'object'}
+                        }
                     }
                 });
             });
@@ -817,13 +826,16 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
         describe('400', () => {
             it('should There is an issue with the request', async () => {
                 const res = await request(app)
-                    .post('/api/v1/questionnaires/285cb104-0c15-4a9c-9840-cb1007f098fb/submissions')
+                    .post('/api/v1/questionnaires/submissions')
                     .set('Authorization', `Bearer ${tokens['update:questionnaires']}`)
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
-                            attributes: {questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'},
+                            attributes: {
+                                questionnaireIds: ['285cb104-0c15-4a9c-9840-cb1007f098fb'],
+                                questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'
+                            },
                             'THIS-IS-NOT-A-VALID-PROPERTY-NAME': 'submissions'
                         }
                     });
@@ -854,12 +866,12 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
         describe('401', () => {
             it('should Access token is missing or invalid', async () => {
                 const res = await request(app)
-                    .post('/api/v1/questionnaires/285cb104-0c15-4a9c-9840-cb1007f098fb/submissions')
+                    .post('/api/v1/questionnaires/submissions')
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
-                            attributes: {questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'}
+                            attributes: {questionnaireIds: ['285cb104-0c15-4a9c-9840-cb1007f098fb']}
                         }
                     });
 
@@ -889,13 +901,13 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
         describe('403', () => {
             it("should The JWT doesn't permit access to this endpoint", async () => {
                 const res = await request(app)
-                    .post('/api/v1/questionnaires/285cb104-0c15-4a9c-9840-cb1007f098fb/submissions')
+                    .post('/api/v1/questionnaires/submissions')
                     .set('Authorization', `Bearer ${tokens['create:dummy-resource']}`)
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
-                            attributes: {questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'}
+                            attributes: {questionnaireIds: ['285cb104-0c15-4a9c-9840-cb1007f098fb']}
                         }
                     });
 
@@ -925,13 +937,13 @@ describe('/questionnaires/{questionnaireId}/submissions', () => {
         describe('404', () => {
             it('should The specified resource was not found', async () => {
                 const res = await request(app)
-                    .post('/api/v1/questionnaires/68653be7-877f-4106-b91e-4ba8dac883f4/submissions')
+                    .post('/api/v1/questionnaires/submissions')
                     .set('Authorization', `Bearer ${tokens['update:questionnaires']}`)
                     .set('Content-Type', 'application/vnd.api+json')
                     .send({
                         data: {
                             type: 'submissions',
-                            attributes: {questionnaireId: '285cb104-0c15-4a9c-9840-cb1007f098fb'}
+                            attributes: {questionnaireIds: ['68653be7-877f-4106-b91e-4ba8dac883f4']}
                         }
                     });
 
