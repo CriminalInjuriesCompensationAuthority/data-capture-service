@@ -7465,6 +7465,81 @@ module.exports = {
                     }
                 ]
             },
+            'p-applicant-provide-additional-information': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-provide-additional-information'],
+                additionalProperties: false,
+                properties: {
+                    'q-applicant-provide-additional-information': {
+                        type: 'boolean',
+                        title: 'Is there anything else you want to tell us about the incident?'
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-provide-additional-information':
+                            'Select yes if there is anything else you want to tell us about the incident?'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-provide-additional-information': true
+                    },
+                    {
+                        'q-applicant-provide-additional-information': false
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-provide-additional-information': 'foo'
+                    }
+                ]
+            },
+            'p-applicant-additional-information': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-additional-information'],
+                properties: {
+                    'q-applicant-additional-information': {
+                        type: 'string',
+                        title: 'Enter any other details about the incident',
+                        maxLength: 1000,
+                        errorMessage: {
+                            maxLength: 'Other details must be 1000 characters or less'
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-additional-information': 'Describe what other details you have'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-additional-information': 'Some treatment'
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-additional-information': 12345
+                    }
+                ]
+            },
+            'p--context-additional-info': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                title: 'Additional information',
+                additionalProperties: false,
+                properties: {
+                    'additional-info-context': {
+                        description:
+                            '<p class="govuk-body">We\'re going to ask you if you want to provide any more details about your claim.</p><p class="govuk-body">This can be information that did not fit the questions you have been asked.</p><ul class="govuk-list govuk-list--bullet"><li>crime reference numbers</li><li>offender names</li><li>locations</li></ul><p class="govuk-body">This helps us get the information we need to make a decision about your claim.</p>{% from "components/details/macro.njk" import govukDetails %}{% set templateHtml %}{% include \'contact.njk\' %}{% endset %}{{ govukDetails({summaryText: "If you need help or support",html: \'<p class="govuk-body">You can contact us for help with your application.</p>\' + templateHtml + \'<p class="govuk-body">You can <a class="govuk-link" href="https://www.victimandwitnessinformation.org.uk/">get practical or emotional support</a> after a crime.</p><p class="govuk-body">There is different practical or emotional support <a class="govuk-link" href="https://www.mygov.scot/victim-witness-support/">if you live in Scotland</a>.</p>\'})}}'
+                    }
+                },
+                examples: [{}],
+                invalidExamples: [{foo: 'bar'}]
+            },
             system: {
                 $schema: 'http://json-schema.org/draft-07/schema#',
                 type: 'object',
@@ -7962,7 +8037,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--check-your-answers'
+                                target: 'p--context-additional-info'
                             }
                         ]
                     }
@@ -8002,7 +8077,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--check-your-answers'
+                                target: 'p--context-additional-info'
                             }
                         ]
                     }
@@ -8011,7 +8086,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--check-your-answers'
+                                target: 'p--context-additional-info'
                             }
                         ]
                     }
@@ -8388,14 +8463,37 @@ module.exports = {
                             },
                             {
                                 target: 'p-applicant-medical-help',
+                                // both of the GP boolean questions being false implies they have NOT entered the GP details.
                                 cond: [
-                                    '==',
-                                    '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
-                                    false
+                                    'and',
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-registered-with-gp.q-applicant-are-you-registered-with-gp',
+                                        false
+                                    ],
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
+                                        false
+                                    ]
                                 ]
                             },
                             {
-                                target: 'p--context-money'
+                                target: 'p--context-money',
+                                // either of the GP boolean questions being true implies they have entered the GP details.
+                                cond: [
+                                    'or',
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-registered-with-gp.q-applicant-are-you-registered-with-gp',
+                                        true
+                                    ],
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
+                                        true
+                                    ]
+                                ]
                             }
                         ]
                     }
@@ -8406,9 +8504,17 @@ module.exports = {
                             {
                                 target: 'p-applicant-medical-help',
                                 cond: [
-                                    '==',
-                                    '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
-                                    false
+                                    'and',
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-are-you-registered-with-gp.q-applicant-are-you-registered-with-gp',
+                                        false
+                                    ],
+                                    [
+                                        '==',
+                                        '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
+                                        false
+                                    ]
                                 ]
                             },
                             {
@@ -8426,14 +8532,6 @@ module.exports = {
                                     'includes',
                                     '$.answers.p-applicant-physical-injury.q-applicant-physical-injury',
                                     'upper'
-                                ]
-                            },
-                            {
-                                target: 'p-applicant-medical-help',
-                                cond: [
-                                    '==',
-                                    '$.answers.p-applicant-have-you-seen-a-gp.q-applicant-have-you-seen-a-gp',
-                                    false
                                 ]
                             },
                             {
@@ -10693,6 +10791,46 @@ module.exports = {
                                     '$.answers.p-applicant-fatal-claim.q-applicant-fatal-claim',
                                     false
                                 ]
+                            }
+                        ]
+                    }
+                },
+                'p--context-additional-info': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-provide-additional-information'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-provide-additional-information': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-additional-information',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-provide-additional-information.q-applicant-provide-additional-information',
+                                    true
+                                ]
+                            },
+                            {
+                                target: 'p--check-your-answers',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-provide-additional-information.q-applicant-provide-additional-information',
+                                    false
+                                ]
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-additional-information': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p--check-your-answers'
                             }
                         ]
                     }
