@@ -7473,13 +7473,15 @@ module.exports = {
                 properties: {
                     'q-applicant-provide-additional-information': {
                         type: 'boolean',
-                        title: 'Is there anything else you want to tell us about the incident?'
+                        title: 'Would you like to add any information to your claim?',
+                        description:
+                            'This may include details of additional crime reference numbers, locations, dates and/or offenders.'
                     }
                 },
                 errorMessage: {
                     required: {
                         'q-applicant-provide-additional-information':
-                            'Select yes if there is anything else you want to tell us about the incident?'
+                            'Select yes if you would like to add any information to your claim'
                     }
                 },
                 examples: [
@@ -7503,21 +7505,24 @@ module.exports = {
                 properties: {
                     'q-applicant-additional-information': {
                         type: 'string',
-                        title: 'Enter any other details about the incident',
+                        title: 'Enter additional information',
+                        description:
+                            'You can provide any extra information, including additional crime reference numbers, details of additional crimes, locations, dates and/or offenders here.',
                         maxLength: 1000,
                         errorMessage: {
-                            maxLength: 'Other details must be 1000 characters or less'
+                            maxLength: 'Additional information must be 1000 characters or less'
                         }
                     }
                 },
                 errorMessage: {
                     required: {
-                        'q-applicant-additional-information': 'Describe what other details you have'
+                        'q-applicant-additional-information':
+                            'Describe what additional information you want to provide'
                     }
                 },
                 examples: [
                     {
-                        'q-applicant-additional-information': 'Some treatment'
+                        'q-applicant-additional-information': 'Some info'
                     }
                 ],
                 invalidExamples: [
@@ -7526,19 +7531,69 @@ module.exports = {
                     }
                 ]
             },
-            'p--context-additional-info': {
+            'p-applicant-describe-incident': {
                 $schema: 'http://json-schema.org/draft-07/schema#',
                 type: 'object',
-                title: 'Additional information',
+                required: ['q-applicant-describe-incident'],
                 additionalProperties: false,
                 properties: {
-                    'additional-info-context': {
-                        description:
-                            '<p class="govuk-body">We\'re going to ask you if you want to provide any more details about your claim.</p><p class="govuk-body">This can be information that did not fit the questions you have been asked.</p><ul class="govuk-list govuk-list--bullet"><li>crime reference numbers</li><li>offender names</li><li>locations</li></ul><p class="govuk-body">This helps us get the information we need to make a decision about your claim.</p>{% from "components/details/macro.njk" import govukDetails %}{% set templateHtml %}{% include \'contact.njk\' %}{% endset %}{{ govukDetails({summaryText: "If you need help or support",html: \'<p class="govuk-body">You can contact us for help with your application.</p>\' + templateHtml + \'<p class="govuk-body">You can <a class="govuk-link" href="https://www.victimandwitnessinformation.org.uk/">get practical or emotional support</a> after a crime.</p><p class="govuk-body">There is different practical or emotional support <a class="govuk-link" href="https://www.mygov.scot/victim-witness-support/">if you live in Scotland</a>.</p>\'})}}'
+                    'q-applicant-describe-incident': {
+                        type: 'boolean',
+                        title: 'Would you like to briefly describe the crime in your own words?',
+                        description: 'The police will send us a report of the crime.'
                     }
                 },
-                examples: [{}],
-                invalidExamples: [{foo: 'bar'}]
+                errorMessage: {
+                    required: {
+                        'q-applicant-describe-incident':
+                            'Select yes if you would like to describe the crime in your own words'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-describe-incident': true
+                    },
+                    {
+                        'q-applicant-describe-incident': false
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-describe-incident': 'foo'
+                    }
+                ]
+            },
+            'p-applicant-incident-description': {
+                $schema: 'http://json-schema.org/draft-07/schema#',
+                type: 'object',
+                required: ['q-applicant-incident-description'],
+                properties: {
+                    'q-applicant-incident-description': {
+                        type: 'string',
+                        title: 'Briefly describe the crime in your own words',
+                        description:
+                            'You can add details that may not be included in the crime report.',
+                        maxLength: 1000,
+                        errorMessage: {
+                            maxLength: 'Description must be 1000 characters or less'
+                        }
+                    }
+                },
+                errorMessage: {
+                    required: {
+                        'q-applicant-incident-description': 'Describe the crime in your own words'
+                    }
+                },
+                examples: [
+                    {
+                        'q-applicant-incident-description': 'Some description'
+                    }
+                ],
+                invalidExamples: [
+                    {
+                        'q-applicant-incident-description': 12345
+                    }
+                ]
             },
             system: {
                 $schema: 'http://json-schema.org/draft-07/schema#',
@@ -7734,7 +7789,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-offender'
+                                target: 'p-applicant-describe-incident'
                             }
                         ]
                     }
@@ -7855,7 +7910,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-offender',
+                                target: 'p-applicant-describe-incident',
                                 cond: [
                                     '==',
                                     '$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police',
@@ -7877,7 +7932,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-offender',
+                                target: 'p-applicant-describe-incident',
                                 cond: [
                                     '==',
                                     '$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police',
@@ -7899,7 +7954,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-offender',
+                                target: 'p-applicant-describe-incident',
                                 cond: [
                                     '==',
                                     '$.answers.p--was-the-crime-reported-to-police.q--was-the-crime-reported-to-police',
@@ -8037,7 +8092,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-additional-info'
+                                target: 'p-applicant-provide-additional-information'
                             }
                         ]
                     }
@@ -8077,7 +8132,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-additional-info'
+                                target: 'p-applicant-provide-additional-information'
                             }
                         ]
                     }
@@ -8086,7 +8141,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--context-additional-info'
+                                target: 'p-applicant-provide-additional-information'
                             }
                         ]
                     }
@@ -10795,15 +10850,6 @@ module.exports = {
                         ]
                     }
                 },
-                'p--context-additional-info': {
-                    on: {
-                        ANSWER: [
-                            {
-                                target: 'p-applicant-provide-additional-information'
-                            }
-                        ]
-                    }
-                },
                 'p-applicant-provide-additional-information': {
                     on: {
                         ANSWER: [
@@ -10831,6 +10877,37 @@ module.exports = {
                         ANSWER: [
                             {
                                 target: 'p--check-your-answers'
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-describe-incident': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p-applicant-incident-description',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-describe-incident.q-applicant-describe-incident',
+                                    true
+                                ]
+                            },
+                            {
+                                target: 'p--context-offender',
+                                cond: [
+                                    '==',
+                                    '$.answers.p-applicant-describe-incident.q-applicant-describe-incident',
+                                    false
+                                ]
+                            }
+                        ]
+                    }
+                },
+                'p-applicant-incident-description': {
+                    on: {
+                        ANSWER: [
+                            {
+                                target: 'p--context-offender'
                             }
                         ]
                     }
