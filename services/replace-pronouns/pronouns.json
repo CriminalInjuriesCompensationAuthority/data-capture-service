@@ -1,0 +1,65 @@
+{
+    "pronouns": {
+        "singular": {
+            "1st": {
+                "subject": "I",
+                "object": "me",
+                "possessive-dependent": "my",
+                "possessive-independent": "mine",
+                "reflective": "myself"
+            },
+            "2nd": {
+                "subject": "you",
+                "object": "you",
+                "possessive-dependent": "your",
+                "possessive-independent": "yours",
+                "reflective": "yourself"
+            },
+            "3rd": {
+                "subject-masculine": "he",
+                "object-masculine": "him",
+                "possessive-dependent-masculine": "his",
+                "possessive-independent-masculine": "his",
+                "reflective-masculine": "himself",
+                "subject-feminine": "she",
+                "object-feminine": "her",
+                "possessive-dependent-feminine": "hers",
+                "possessive-independent-feminine": "hers",
+                "reflective-feminine": "herself",
+                "subject-neuter": "it",
+                "object-neuter": "it",
+                "possessive-dependent-neuter": "its",
+                "possessive-independent-neuter": "its",
+                "reflective-neuter": "itself",
+                "subject-epicene": "they",
+                "object-epicene": "them",
+                "possessive-dependent-epicene": "their",
+                "possessive-independent-epicene": "theirs",
+                "reflective-epicene": "themself"
+            }
+        },
+        "plural": {
+            "1st": {
+                "subject": "we",
+                "object": "us",
+                "possessive-dependent": "our",
+                "possessive-independent": "ours",
+                "reflective": "ourselves"
+            },
+            "2nd": {
+                "subject": "you",
+                "object": "you",
+                "possessive-dependent": "your",
+                "possessive-independent": "yours",
+                "reflective": "yourselves"
+            },
+            "3rd": {
+                "subject": "they",
+                "object": "them",
+                "possessive-dependent": "their",
+                "possessive-independent": "theirs",
+                "reflective": "themselves"
+            }
+        }
+    }
+}

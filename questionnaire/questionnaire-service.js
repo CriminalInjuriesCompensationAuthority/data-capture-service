@@ -13,6 +13,7 @@ const templates = require('./templates');
 const createMessageBusCaller = require('../services/message-bus');
 const replaceJsonPointers = require('../services/replace-json-pointer');
 const createNotifyService = require('../services/notify');
+const replacePronouns = require('../services/replace-pronouns');
 
 const defaults = {};
 defaults.createQuestionnaireDAL = require('./questionnaire-dal');
@@ -418,7 +419,15 @@ function createQuestionnaireService({
 
     function buildSectionResource(sectionId, questionnaire) {
         const sectionAsJson = JSON.stringify(questionnaire.sections[sectionId]);
-        const sectionAsJsonWithReplacements = replaceJsonPointers(sectionAsJson, questionnaire);
+        const sectionAsJsonWithPronounReplacements = replacePronouns(
+            sectionId,
+            sectionAsJson,
+            questionnaire
+        );
+        const sectionAsJsonWithReplacements = replaceJsonPointers(
+            sectionAsJsonWithPronounReplacements,
+            questionnaire
+        );
         const sectionResource = {
             type: 'sections',
             id: sectionId,

@@ -295,12 +295,12 @@ module.exports = {
                 properties: {
                     'q-applicant-are-you-18-or-over': {
                         type: 'boolean',
-                        title: 'Are you 18 or over?'
+                        title: 'Are ||PRONOUN|| 18 or over?'
                     }
                 },
                 errorMessage: {
                     required: {
-                        'q-applicant-are-you-18-or-over': 'Select yes if you are 18 or over'
+                        'q-applicant-are-you-18-or-over': 'Select yes if ||PRONOUN|| are 18 or over'
                     }
                 },
                 examples: [
