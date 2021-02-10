@@ -7729,7 +7729,7 @@ module.exports = {
                     on: {
                         ANSWER: [
                             {
-                                target: 'p--transition',
+                                target: 'p-applicant-are-you-18-or-over',
                                 cond: [
                                     '==',
                                     '$.answers.p-applicant-who-are-you-applying-for.q-applicant-who-are-you-applying-for',
