@@ -264,13 +264,13 @@ module.exports = {
                 properties: {
                     'q-applicant-british-citizen-or-eu-national': {
                         type: 'boolean',
-                        title: 'Are you a British citizen or EU national?'
+                        title: 'Are ||PRONOUN|| a British citizen or EU national?'
                     }
                 },
                 errorMessage: {
                     required: {
                         'q-applicant-british-citizen-or-eu-national':
-                            'Select yes if you are a British citizen or EU national'
+                            'Select yes if you ||PRONOUN|| a British citizen or EU national'
                     }
                 },
                 examples: [

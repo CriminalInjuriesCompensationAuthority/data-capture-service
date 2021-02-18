@@ -5,5 +5,12 @@
             "myself": "/pronouns/singular/2nd/subject",
             "someone-else": "/pronouns/singular/3rd/subject-epicene"
         }
+    ],
+    "p-applicant-british-citizen-or-eu-national": [
+        "/answers/p-applicant-who-are-you-applying-for/q-applicant-who-are-you-applying-for",
+        {
+            "myself": "/pronouns/singular/2nd/subject",
+            "someone-else": "/pronouns/singular/3rd/subject-epicene"
+        }
     ]
 }
