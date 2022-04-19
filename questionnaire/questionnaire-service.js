@@ -247,6 +247,29 @@ function createQuestionnaireService({
             const qRouter = createQRouter(questionnaireDefinition);
             const sectionDetails = getSection(sectionId, qRouter);
 
+            let answeredQuestionnaire;
+
+            if (sectionDetails.id === 'p-applicant-upload-example') {
+                const nextSection = qRouter.next('uploaded', sectionDetails.id);
+                answeredQuestionnaire = nextSection.context;
+                try {
+                    await db.updateQuestionnaire(questionnaireId, answeredQuestionnaire);
+                    answerResource = {
+                        data: {
+                            type: 'answers',
+                            id: sectionDetails.id,
+                            attributes: 'uploaded'
+                        }
+                    };
+                } catch (err) {
+                    // re-throw for the moment
+                    // central error handler will collect it
+                    throw err;
+                }
+
+                return answerResource;
+            }
+
             // 3 - Section is available. Validate the answers against it
             const questionnaire = createQuestionnaireHelper({
                 questionnaireDefinition
@@ -275,7 +298,6 @@ function createQuestionnaireService({
 
             // 4 - If we're here all is good
             // Pass the answers to the router which will update the context (questionnaire) with these answers.
-            let answeredQuestionnaire;
 
             if (sectionDetails.id === 'system') {
                 const currentSection = qRouter.current();
