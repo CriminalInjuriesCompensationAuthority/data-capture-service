@@ -8,6 +8,7 @@ defaults.mutateObjectValues = require('./utils/mutateObjectValues');
 defaults.getValueInterpolator = require('./utils/getValueInterpolator');
 defaults.getValueContextualiser = require('./utils/getValueContextualiser');
 defaults.deepClone = require('./utils/deepCloneJsonDerivedObject');
+defaults.getJsonExpressionEvaluator = require('./utils/getJsonExpressionEvaluator');
 
 function createQuestionnaire({
     questionnaireDefinition,
@@ -17,7 +18,8 @@ function createQuestionnaire({
     mutateObjectValues = defaults.mutateObjectValues,
     getValueInterpolator = defaults.getValueInterpolator,
     getValueContextualiser = defaults.getValueContextualiser,
-    deepClone = defaults.deepClone
+    deepClone = defaults.deepClone,
+    getJsonExpressionEvaluator = defaults.getJsonExpressionEvaluator
 }) {
     function getProgress() {
         return questionnaireDefinition.progress || [];
@@ -33,6 +35,10 @@ function createQuestionnaire({
         }
 
         return allProgress;
+    }
+
+    function getRoles() {
+        return questionnaireDefinition?.attributes?.q__roles || {};
     }
 
     function getAnswers() {
@@ -208,12 +214,18 @@ function createQuestionnaire({
         const valueInterpolator = getValueInterpolator(allQuestionnaireAnswers);
 
         if (sectionDefinition.l10n !== undefined) {
+            const jsonExpressionEvaluator = getJsonExpressionEvaluator({
+                ...allQuestionnaireAnswers,
+                attributes: {
+                    q__roles: getRoles()
+                }
+            });
             const valueContextualier = getValueContextualiser(
                 sectionDefinition,
                 allQuestionnaireAnswers
             );
 
-            orderedValueTransformers.push(valueContextualier);
+            orderedValueTransformers.push(jsonExpressionEvaluator, valueContextualier);
         }
 
         if (sectionDefinitionVars !== undefined && allowSummary === true) {
