@@ -526,8 +526,6 @@ const questionnaireDefinition = {
         'p-applicant-british-citizen-or-eu-national',
         'p-applicant-theme-undefined',
         'p-applicant-theme-not-found',
-        // 'p--has-legal-authority',
-        // 'p-applicant-are-you-18-or-over',
         'p--check-your-answers',
         'p-declaraton'
     ],
