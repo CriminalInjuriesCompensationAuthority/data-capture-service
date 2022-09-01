@@ -66,14 +66,23 @@ function createQuestionnaire({
 
         if (taxonomyDefinition !== undefined) {
             if (taxonomyDefinition.l10n !== undefined) {
+                const orderedValueTransformers = [];
                 const allQuestionnaireAnswers = {answers: getAnswers()};
+                const jsonExpressionEvaluator = getJsonExpressionEvaluator({
+                    ...allQuestionnaireAnswers,
+                    attributes: {
+                        q__roles: getRoles()
+                    }
+                });
+
                 const valueContextualier = getValueContextualiser(
                     taxonomyDefinition,
                     allQuestionnaireAnswers
                 );
+                orderedValueTransformers.push(jsonExpressionEvaluator, valueContextualier);
 
                 // TODO: DON'T MUTATE ORIGINAL!
-                mutateObjectValues(taxonomyDefinition, [valueContextualier]);
+                mutateObjectValues(taxonomyDefinition, orderedValueTransformers);
             }
 
             return createTaxonomy({
