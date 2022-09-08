@@ -57,15 +57,20 @@ function createNotifyService(spec) {
     }
 
     async function sendEmail(options) {
-        const messageBus = createMessageBusCaller(spec);
-        return messageBus.post('NotificationQueue', {
-            templateId: options.templateId,
-            emailAddress: options.emailAddress,
-            personalisation: {
-                caseReference: options.personalisation.caseReference
-            },
-            reference: null
-        });
+        try {
+            const messageBus = createMessageBusCaller(spec);
+
+            await messageBus.post('NotificationQueue', {
+                templateId: options.templateId,
+                emailAddress: options.emailAddress,
+                personalisation: {
+                    caseReference: options.personalisation.caseReference
+                },
+                reference: null
+            });
+        } catch (err) {
+            logger.error({code: err.code}, 'EMAIL SEND FAILURE');
+        }
     }
 
     return Object.freeze({

@@ -142,4 +142,29 @@ describe('Notify service', () => {
             expect(smsSendRequest).toEqual(undefined);
         });
     });
+
+    describe('Given an issue with the email send request', () => {
+        it('should log an api error', async () => {
+            const mockLogger = {error: jest.fn()};
+            const invalidUrl = 'https://220499a5-cc54-47a9-96c3-6c136df0db83.gov.uk/does-not-exist';
+            const notifyService = createNotifyService({
+                logger: mockLogger,
+                notifyClient: mockNotifyClient,
+                url: invalidUrl // this gets passed through to the internal message bus caller
+            });
+
+            await notifyService.sendEmail({
+                templateId: '3c847bb8-957a-4bba-9fad-090657bb5c71',
+                email: 'foo@fbd962de-628b-4087-b452-410a36d00fef.gov.uk',
+                personalisation: {
+                    caseReference: DUMMY_CASE_REFERENCE
+                }
+            });
+
+            expect(mockLogger.error).toHaveBeenCalledWith(
+                {code: 'ENOTFOUND'},
+                'EMAIL SEND FAILURE'
+            );
+        });
+    });
 });
