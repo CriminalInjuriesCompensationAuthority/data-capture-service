@@ -8,14 +8,12 @@ const VError = require('verror');
 const createQRouter = require('q-router');
 const uuidv4 = require('uuid/v4');
 const ajvFormatsMobileUk = require('ajv-formats-mobile-uk');
-const JsonTranslator = require('json-translator');
 const templates = require('./templates');
 const createMessageBusCaller = require('../services/message-bus');
 const createNotifyService = require('../services/notify');
 const createSlackService = require('../services/slack');
 const questionnaireResource = require('./resources/questionnaire-resource');
 const createQuestionnaireHelper = require('./questionnaire/questionnaire');
-const replaceJsonPointers = require('../services/replace-json-pointer/index');
 
 const defaults = {};
 defaults.createQuestionnaireDAL = require('./questionnaire-dal');
@@ -131,52 +129,6 @@ function createQuestionnaireService({
         } catch (err) {
             logger.error({err}, 'MESSAGE SENDING FAILED');
             await updateQuestionnaireSubmissionStatus(questionnaireId, 'FAILED');
-        }
-    }
-
-    async function sendConfirmationNotification(questionnaireId) {
-        const sharedJsonTranslator = JsonTranslator();
-        const jsonTranslator = await sharedJsonTranslator;
-        const questionnaire = await getQuestionnaire(questionnaireId);
-        try {
-            const onCompleteTasks = questionnaire.meta.onComplete.tasks;
-
-            Object.keys(onCompleteTasks).forEach(taskName => {
-                const confirmationNotificationConfig = onCompleteTasks[taskName];
-                const replacedJsonPointersConfig = JSON.parse(
-                    replaceJsonPointers(
-                        JSON.stringify(confirmationNotificationConfig),
-                        questionnaire
-                    )
-                );
-                onCompleteTasks[taskName].data = JSON.parse(
-                    jsonTranslator.translate(JSON.stringify(replacedJsonPointersConfig.data), {
-                        vars: replacedJsonPointersConfig.l10n.vars,
-                        translations: replacedJsonPointersConfig.l10n.translations,
-                        data: {
-                            answers: questionnaire.answers
-                        }
-                    })
-                );
-            });
-
-            if (
-                onCompleteTasks.sendEmail.data.emailAddress === '' &&
-                onCompleteTasks.sendSms.data.phoneNumber === ''
-            ) {
-                return false;
-            }
-
-            const notifyService = createNotifyService({logger});
-            if (onCompleteTasks.sendEmail.data.emailAddress !== '') {
-                notifyService.sendEmail(onCompleteTasks.sendEmail.data);
-                return onCompleteTasks.sendEmail.data;
-            }
-            notifyService.sendSms(onCompleteTasks.sendSms.data);
-            return onCompleteTasks.sendSms.data;
-        } catch (err) {
-            logger.error({err}, 'NOTIFICATION SENDING FAILED');
-            return false;
         }
     }
 
@@ -570,6 +522,31 @@ function createQuestionnaireService({
         await db.updateQuestionnaireModifiedDate(questionnaireId);
     }
 
+    // TODO: Move this functionality to q-router
+    async function runOnCompleteActions(questionnaireDefinition) {
+        const questionnaire = createQuestionnaireHelper({
+            questionnaireDefinition
+        });
+        const permittedActions = questionnaire.getPermittedActions();
+        const actionResults = permittedActions.map(action => {
+            if (action.type === 'sendEmail') {
+                const notifyService = createNotifyService({logger});
+
+                return notifyService.sendEmail(action.data);
+            }
+
+            if (action.type === 'sendSms') {
+                const notifyService = createNotifyService({logger});
+
+                return notifyService.sendSms(action.data);
+            }
+
+            return Promise.reject(Error(`Action type "${action.type}" is not supported`));
+        });
+
+        return actionResults;
+    }
+
     return Object.freeze({
         createQuestionnaire,
         createAnswers,
@@ -579,10 +556,10 @@ function createQuestionnaireService({
         validateAllAnswers,
         getAnswers,
         getProgressEntries,
-        sendConfirmationNotification,
         updateQuestionnaireSubmissionStatus,
         updateQuestionnaireModifiedDate,
-        getSessionResource
+        getSessionResource,
+        runOnCompleteActions
     });
 }
 

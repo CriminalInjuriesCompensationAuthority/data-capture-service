@@ -945,4 +945,138 @@ describe('Questionnaire', () => {
             });
         });
     });
+
+    describe('Given an "onComplete" actions definition', () => {
+        it('should return all actions that pass their condition', () => {
+            const questionnaire = createQuestionnaire({
+                questionnaireDefinition: {
+                    meta: {
+                        onComplete: {
+                            actions: [
+                                {
+                                    cond: ['==', 1, 1],
+                                    type: 'actionA'
+                                },
+                                {
+                                    type: 'actionD'
+                                },
+                                {
+                                    cond: ['==', 3, 4],
+                                    type: 'actionC'
+                                },
+                                {
+                                    cond: ['==', 2, 2],
+                                    type: 'actionB'
+                                }
+                            ]
+                        }
+                    }
+                }
+            });
+            const actions = questionnaire.getPermittedActions();
+            const actionTypes = actions.map(action => action.type);
+
+            expect(actionTypes.length).toEqual(3);
+            expect(actionTypes).toEqual(['actionA', 'actionD', 'actionB']);
+        });
+
+        it('should allow action conditions to reference context', () => {
+            const questionnaire = createQuestionnaire({
+                questionnaireDefinition: {
+                    meta: {
+                        onComplete: {
+                            actions: [
+                                {
+                                    cond: ['==', '$.answers.p-page.q-question', 'foo'],
+                                    type: 'actionA'
+                                },
+                                {
+                                    cond: ['==', '$.answers.p-page.q-question', 'bar'],
+                                    type: 'actionB'
+                                },
+                                {
+                                    type: 'actionD'
+                                }
+                            ]
+                        }
+                    },
+                    answers: {
+                        'p-page': {
+                            'q-question': 'bar'
+                        }
+                    }
+                }
+            });
+
+            const actions = questionnaire.getPermittedActions();
+            const actionTypes = actions.map(action => action.type);
+
+            expect(actionTypes.length).toEqual(2);
+            expect(actionTypes).toEqual(['actionB', 'actionD']);
+        });
+
+        it('should allow action data to reference context', () => {
+            const questionnaire = createQuestionnaire({
+                questionnaireDefinition: {
+                    meta: {
+                        onComplete: {
+                            actions: [
+                                {
+                                    cond: ['==', 1, 1],
+                                    type: 'actionA',
+                                    data: {
+                                        foo: '||/answers/p-page/q-question||'
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    answers: {
+                        'p-page': {
+                            'q-question': 'bar'
+                        }
+                    }
+                }
+            });
+            const actions = questionnaire.getPermittedActions();
+
+            expect(actions[0].data).toEqual({
+                foo: 'bar'
+            });
+        });
+
+        it('should allow action data to contain JSON expressions', () => {
+            const questionnaire = createQuestionnaire({
+                questionnaireDefinition: {
+                    meta: {
+                        onComplete: {
+                            actions: [
+                                {
+                                    cond: ['==', 1, 1],
+                                    type: 'actionA',
+                                    data: {
+                                        // prettier-ignore
+                                        bar: ['|cond',
+                                            ['==', '$.answers.p-page.q-question', 'foo'], 'fooValue',
+                                            ['==', '$.answers.p-page.q-question', 'bar'], 'barValue'
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    answers: {
+                        'p-page': {
+                            'q-question': 'bar'
+                        }
+                    }
+                }
+            });
+            const actions = questionnaire.getPermittedActions();
+
+            expect(actions[0].data).toEqual({
+                bar: 'barValue'
+            });
+        });
+    });
 });

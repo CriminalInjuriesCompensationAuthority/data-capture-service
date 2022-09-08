@@ -74,7 +74,13 @@ router
                 req.params.questionnaireId,
                 'COMPLETED'
             );
-            questionnaireService.sendConfirmationNotification(req.params.questionnaireId);
+
+            const questionnireDefinition = await questionnaireService.getQuestionnaire(
+                req.params.questionnaireId
+            );
+
+            // Currently, fire and forget. No await required
+            questionnaireService.runOnCompleteActions(questionnireDefinition);
 
             res.status(201).json(response);
         } catch (err) {
