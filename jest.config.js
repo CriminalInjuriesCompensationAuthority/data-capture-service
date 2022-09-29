@@ -3,7 +3,7 @@
 'use strict';
 
 const config = {
-    testEnvironment: 'node'
+    testTimeout: 20000
 };
 /*! m0-end */
 
