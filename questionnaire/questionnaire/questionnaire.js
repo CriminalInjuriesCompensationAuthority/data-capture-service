@@ -323,26 +323,23 @@ function createQuestionnaire({
         const actions = questionnaireDefinition?.meta?.onComplete?.actions;
 
         if (actions) {
-            const allQuestionnaireAnswers = {answers: getAnswers()};
+            const answersAndRoles = {
+                answers: getAnswers(),
+                attributes: {
+                    q__roles: getRoles()
+                }
+            };
             const permittedActions = actions.filter(action => {
                 if ('cond' in action) {
-                    const isPermittedAction = qExpression.evaluate(
-                        action.cond,
-                        allQuestionnaireAnswers
-                    );
+                    const isPermittedAction = qExpression.evaluate(action.cond, answersAndRoles);
 
                     return isPermittedAction;
                 }
 
                 return true;
             });
-            const valueInterpolator = getValueInterpolator(allQuestionnaireAnswers);
-            const jsonExpressionEvaluator = getJsonExpressionEvaluator({
-                ...allQuestionnaireAnswers,
-                attributes: {
-                    q__roles: getRoles()
-                }
-            });
+            const valueInterpolator = getValueInterpolator(answersAndRoles);
+            const jsonExpressionEvaluator = getJsonExpressionEvaluator(answersAndRoles);
             const resolvedActions = permittedActions.map(permittedAction => {
                 if ('data' in permittedAction) {
                     mutateObjectValues(permittedAction.data, [
