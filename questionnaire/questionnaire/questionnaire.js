@@ -260,7 +260,9 @@ function createQuestionnaire({
         const sectionIdBlacklist = [
             'p-applicant-declaration',
             'p-mainapplicant-declaration-under-12',
-            'p-mainapplicant-declaration-12-and-over'
+            'p-mainapplicant-declaration-12-and-over',
+            'p-rep-declaration-under-12',
+            'p-rep-declaration-12-and-over'
         ];
 
         return sectionIds.filter(sectionId => sectionIdBlacklist.includes(sectionId) === false);

@@ -82,7 +82,9 @@ function createDatasetService({
         const declarationSectionAndQuestionIds = {
             'p-applicant-declaration': 'q-applicant-declaration',
             'p-mainapplicant-declaration-under-12': 'q-mainapplicant-declaration',
-            'p-mainapplicant-declaration-12-and-over': 'q-mainapplicant-declaration'
+            'p-mainapplicant-declaration-12-and-over': 'q-mainapplicant-declaration',
+            'p-rep-declaration-under-12': 'q-rep-declaration',
+            'p-rep-declaration-12-and-over': 'q-rep-declaration'
         };
         const declarationSectionIds = Object.keys(declarationSectionAndQuestionIds);
         const declarationSectionId = progress.find(sectionId =>
