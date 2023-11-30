@@ -76,6 +76,7 @@ function createTaskRunner({
     ) {
         const taskState = {
             id: factoryDefinition.id,
+            type: factoryDefinition.type,
             started: new Date().toISOString(),
             ended: null,
             result: null
@@ -115,12 +116,9 @@ function createTaskRunner({
 
             // eslint-disable-next-line no-param-reassign
             retryCount += 1;
-
             if (retryCount <= retries) {
                 const exponentialDelayInMillieseconds = 10 ** retryCount;
-
                 await wait(exponentialDelayInMillieseconds);
-
                 return run(factoryDefinition, {
                     retries,
                     retryCount
@@ -128,6 +126,8 @@ function createTaskRunner({
             }
 
             context[taskState.id] = taskState;
+            const {logger} = context;
+            logger.error(err);
 
             // eslint-disable-next-line no-throw-literal
             throw {

@@ -2,6 +2,10 @@
 
 const createTaskRunner = require('./index');
 
+const mockLogger = {
+    error: jest.fn()
+};
+
 describe('Task Runner', () => {
     describe('createTaskRunner', () => {
         it('should run a task', async () => {
@@ -70,6 +74,9 @@ describe('Task Runner', () => {
                         simpleTaskFactory: async () => {
                             throw Error('foo');
                         }
+                    },
+                    context: {
+                        logger: mockLogger
                     }
                 });
 
@@ -85,6 +92,8 @@ describe('Task Runner', () => {
             expect(task.id).toEqual('task1');
             expect(task.status).toEqual('failed');
             expect(task.result.message).toEqual('foo');
+            expect(task.type).toEqual('simpleTaskFactory');
+            expect(mockLogger.error).toHaveBeenCalledTimes(1);
         });
 
         it('should retry the task if it fails', async () => {

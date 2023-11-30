@@ -1,5 +1,6 @@
 'use strict';
 
+const VError = require('verror');
 const {
     getIsFatal,
     getIsSplit,
@@ -101,5 +102,24 @@ describe('Generate Case reference', () => {
         });
 
         expect(result).toBe('Successfully updated');
+    });
+
+    it('Should throw an error for db communication failure ', async () => {
+        jest.resetModules();
+        jest.resetAllMocks();
+        // throw error
+        mockDb.mockImplementation(() => ({
+            getReferenceNumber: () => {
+                throw new VError('Failed to generate case reference number');
+            }
+        }));
+        questionnaireFixture.answers.system['case-reference'] = undefined;
+
+        await expect(async () => {
+            await generateReferenceNumber({
+                questionnaire: questionnaireFixture,
+                logger: loggerMock
+            });
+        }).rejects.toThrow();
     });
 });

@@ -15,8 +15,10 @@ const mockSendSqsResponse = require('../../../../../test-fixtures/res/post_submi
 jest.mock('../../../../../../services/sqs');
 
 describe('Post To SQS Task', () => {
+    let sendMock;
     beforeEach(() => {
         jest.resetModules();
+        jest.resetAllMocks();
     });
 
     it('Should create the correct message body.', () => {
@@ -43,9 +45,9 @@ describe('Post To SQS Task', () => {
     });
 
     it('Should error if message fails to send', async () => {
-        mockSqsService.mockImplementation(() => ({
+        sendMock = mockSqsService.mockImplementation(() => ({
             send: () => {
-                'message failed to send';
+                throw new Error('Failed to send message to SQS');
             }
         }));
         const data = {
@@ -53,6 +55,9 @@ describe('Post To SQS Task', () => {
             logger: mockLogger
         };
 
-        await expect(sendSubmissionMessageToSQS(data)).rejects.toThrow(VError);
+        const expectedError = new VError(`Failed to send message to SQS`);
+
+        await expect(sendSubmissionMessageToSQS(data)).rejects.toThrow(expectedError);
+        expect(sendMock).toHaveBeenCalledTimes(1);
     });
 });

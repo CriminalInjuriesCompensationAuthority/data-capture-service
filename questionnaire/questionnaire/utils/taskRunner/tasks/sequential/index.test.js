@@ -3,6 +3,10 @@
 const createTaskRunner = require('../../index');
 const sequential = require('./index');
 
+const mockLogger = {
+    error: jest.fn()
+};
+
 const testHelper = {
     wait: async milliseconds => {
         return new Promise(resolve => {
@@ -68,6 +72,9 @@ describe('task: sequential', () => {
                 simpleTaskFactoryThatThrows: async () => {
                     throw Error('foo');
                 }
+            },
+            context: {
+                logger: mockLogger
             }
         });
 

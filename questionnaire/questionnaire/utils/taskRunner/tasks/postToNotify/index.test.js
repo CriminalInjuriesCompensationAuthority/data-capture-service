@@ -55,7 +55,7 @@ describe('Post to Notify task', () => {
     it('Should send an throw an error if the message fails to send', async () => {
         sendMock = mockSqsService.mockImplementation(() => ({
             send: () => {
-                'Message failed to send';
+                throw new Error('Failed to send message to Notify SQS');
             }
         }));
         const data = {
@@ -63,7 +63,9 @@ describe('Post to Notify task', () => {
             logger: mockLogger
         };
 
-        await expect(sendNotifyMessageToSQS(data)).rejects.toThrow(VError);
+        const expectedError = new VError(`Failed to send message to Notify SQS`);
+        await expect(sendNotifyMessageToSQS(data)).rejects.toThrow(expectedError);
         expect(sendMock).toHaveBeenCalledTimes(1);
+        expect(mockLogger.info).toHaveBeenCalledTimes(1);
     });
 });

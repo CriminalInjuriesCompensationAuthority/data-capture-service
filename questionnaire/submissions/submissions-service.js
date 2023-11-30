@@ -68,6 +68,29 @@ function createSubmissionService({
         return JSON.parse(JSON.stringify(onSubmitTaskDefinition));
     }
 
+    function logError(questionnaireId, err) {
+        const {task} = err;
+        if (task === undefined) {
+            logger.error(
+                `Submission error for questionnaireId ${questionnaireId}, error ${err.message}`
+            );
+            throw err;
+        }
+
+        const failedTasks = [];
+        const errorMessages = [];
+        task.result.forEach(result => {
+            if (result.status === 'failed') {
+                failedTasks.push(result.type);
+                errorMessages.push(result.result.message);
+            }
+        });
+
+        logger.error(
+            `Submission error for questionnaireId ${questionnaireId}, failed tasks ${failedTasks.toString()}, errors ${errorMessages.toString()}`
+        );
+    }
+
     async function submit(questionnaireId) {
         try {
             const questionnaireDefinition = await questionnaireService.getQuestionnaire(
@@ -118,11 +141,7 @@ function createSubmissionService({
                 }
             };
         } catch (err) {
-            const {task} = err;
-
-            if (task === undefined) {
-                throw err;
-            }
+            logError(questionnaireId, err);
 
             await questionnaireService.updateQuestionnaireSubmissionStatus(
                 questionnaireId,
