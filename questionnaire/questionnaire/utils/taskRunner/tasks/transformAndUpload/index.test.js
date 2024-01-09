@@ -24,6 +24,8 @@ describe('Transform and Upload task', () => {
     let result;
 
     beforeEach(() => {
+        jest.resetModules();
+        jest.resetAllMocks();
         result = transformQuestionnaire(questionnaireObj);
     });
 
@@ -107,5 +109,42 @@ describe('Transform and Upload task', () => {
         });
 
         expect(result).toEqual('Success');
+    });
+
+    // TODO test for AWS comm failure
+    it('Should throw an error for unknown AWS communication failure ', async () => {
+        const error = new VError('Failed to retrieve modified date');
+        mockDb.mockImplementation(() => ({
+            getQuestionnaireModifiedDate: () => new Date('July 20, 2023 00:00:00')
+        }));
+
+        mockS3.mockImplementation(() => ({
+            uploadFile: () => {
+                throw error;
+            }
+        }));
+
+        await expect(async () => {
+            await transformAndUpload({
+                questionnaireDef: questionnaireFixture,
+                logger: loggerMock
+            });
+        }).rejects.toThrow(error);
+    });
+
+    it('Should throw an error for db communication failure ', async () => {
+        const error = new VError('Failed to retrieve modified date');
+        mockDb.mockImplementation(() => ({
+            getQuestionnaireModifiedDate: () => {
+                throw error;
+            }
+        }));
+
+        await expect(async () => {
+            await transformAndUpload({
+                questionnaireDef: questionnaireFixture,
+                logger: loggerMock
+            });
+        }).rejects.toThrow(error);
     });
 });

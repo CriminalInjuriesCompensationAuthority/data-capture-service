@@ -1,9 +1,14 @@
 'use strict';
 
+const serializer = require('pino-std-serializers').err;
+
 const defaults = {};
 defaults.createQuestionnaireService = require('../questionnaire-service');
 defaults.createTaskRunner = require('../questionnaire/utils/taskRunner');
-defaults.sequential = require('../questionnaire/utils/taskRunner/tasks/sequential');
+defaults.sequential = require('../questionnaire/utils/taskRunner/tasks/sequential').runTasksSequentially;
+
+const {SequentialTaskError} = require('../questionnaire/utils/taskRunner/tasks/sequential');
+
 // Pull in additional task implementations here
 const {transformAndUpload} = require('../questionnaire/utils/taskRunner/tasks/transformAndUpload');
 const {
@@ -11,6 +16,14 @@ const {
 } = require('../questionnaire/utils/taskRunner/tasks/generateCaseReference');
 const {sendSubmissionMessageToSQS} = require('../questionnaire/utils/taskRunner/tasks/postToSQS');
 const sendNotifyMessageToSQS = require('../questionnaire/utils/taskRunner/tasks/postToNotify');
+
+// not in a submittable state custom error
+class NotSubmittableStateError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'NotSubmittableStateError';
+    }
+}
 
 function createSubmissionService({
     logger,
@@ -75,7 +88,7 @@ function createSubmissionService({
             );
 
             if ((await isSubmittable(questionnaireId, questionnaireDefinition)) === false) {
-                throw Error(
+                throw new NotSubmittableStateError(
                     `Questionnaire with ID "${questionnaireId}" is not in a submittable state`
                 );
             }
@@ -118,9 +131,13 @@ function createSubmissionService({
                 }
             };
         } catch (err) {
-            const {task} = err;
-
-            if (task === undefined) {
+            logger.error(
+                serializer(err),
+                `Submission error for questionnaireId ${questionnaireId}: `
+            );
+            // log and throw is an anti-pattern, leaving this here until we fix global logging
+            // see the errorHandler and check we have tests for possible submission errors
+            if (!(err instanceof SequentialTaskError)) {
                 throw err;
             }
 

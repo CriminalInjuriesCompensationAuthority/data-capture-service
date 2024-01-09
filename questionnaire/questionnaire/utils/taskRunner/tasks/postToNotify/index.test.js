@@ -64,10 +64,8 @@ describe('Post to Notify task', () => {
         };
 
         const expectedError = new VError(`Failed to send message to Notify SQS`);
-
         await expect(sendNotifyMessageToSQS(data)).rejects.toThrow(expectedError);
         expect(sendMock).toHaveBeenCalledTimes(1);
         expect(mockLogger.info).toHaveBeenCalledTimes(1);
-        expect(mockLogger.error).toHaveBeenCalledTimes(1);
     });
 });

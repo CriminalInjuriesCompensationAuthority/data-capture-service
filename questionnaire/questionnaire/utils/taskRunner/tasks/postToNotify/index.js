@@ -47,12 +47,7 @@ async function sendNotifyMessageToSQS({questionnaire, logger}) {
                 }
             }
         })
-    ).catch(error => {
-        logger.error(
-            `Message not sent to Notify SQS for questionnaire with id ${questionnaireId} with error ${error.message}`
-        );
-        throw error;
-    });
+    );
     return sqsResponse;
 }
 

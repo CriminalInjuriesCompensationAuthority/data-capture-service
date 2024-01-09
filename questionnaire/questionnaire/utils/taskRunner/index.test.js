@@ -2,6 +2,10 @@
 
 const createTaskRunner = require('./index');
 
+const mockLogger = {
+    error: jest.fn()
+};
+
 describe('Task Runner', () => {
     describe('createTaskRunner', () => {
         it('should run a task', async () => {
@@ -62,29 +66,24 @@ describe('Task Runner', () => {
         });
 
         it('should return an error if the task fails', async () => {
-            let task;
-
-            try {
-                const taskRunner = createTaskRunner({
-                    taskImplementations: {
-                        simpleTaskFactory: async () => {
-                            throw Error('foo');
-                        }
+            const taskRunner = createTaskRunner({
+                taskImplementations: {
+                    simpleTaskFactory: async () => {
+                        throw Error('foo');
                     }
-                });
+                },
+                context: {
+                    logger: mockLogger
+                }
+            });
 
-                await taskRunner.run({
+            await expect(
+                taskRunner.run({
                     id: 'task1',
                     type: 'simpleTaskFactory',
                     retries: 0
-                });
-            } catch (err) {
-                ({task} = err);
-            }
-
-            expect(task.id).toEqual('task1');
-            expect(task.status).toEqual('failed');
-            expect(task.result.message).toEqual('foo');
+                })
+            ).rejects.toThrow('foo');
         });
 
         it('should retry the task if it fails', async () => {
