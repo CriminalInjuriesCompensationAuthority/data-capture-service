@@ -12,14 +12,16 @@ const metadataCollection = [
         created: '2023-06-08 00:00:00.000000+00',
         modified: '2023-06-08 00:00:00.000000+00',
         expires: '2023-06-08 00:30:00.000000+00',
-        submission_status: 'NOT_STARTED'
+        submission_status: 'NOT_STARTED',
+        analytics_id: 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789123'
     },
     {
         id: validQuestionnaireId2,
         created: '2023-06-08 00:00:00.000000+00',
         modified: '2023-06-08 00:00:00.000000+00',
         expires: '2023-06-08 00:30:00.000000+00',
-        submission_status: 'NOT_STARTED'
+        submission_status: 'NOT_STARTED',
+        analytics_id: 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789321'
     }
 ];
 const metadataByOwnerCollection = [
@@ -28,7 +30,8 @@ const metadataByOwnerCollection = [
         created: '2023-06-08 00:00:00.000000+00',
         modified: '2023-06-08 00:00:00.000000+00',
         expires: '2023-06-08 00:30:00.000000+00',
-        submission_status: 'NOT_STARTED'
+        submission_status: 'NOT_STARTED',
+        analytics_id: 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789123'
     }
 ];
 
@@ -71,7 +74,8 @@ describe('Metadata Service', () => {
                             created: '2023-06-08 00:00:00.000000+00',
                             modified: '2023-06-08 00:00:00.000000+00',
                             expires: '2023-06-08 00:30:00.000000+00',
-                            'submission-status': 'NOT_STARTED'
+                            'submission-status': 'NOT_STARTED',
+                            'analytics-id': 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789123'
                         }
                     },
                     {
@@ -82,7 +86,8 @@ describe('Metadata Service', () => {
                             created: '2023-06-08 00:00:00.000000+00',
                             modified: '2023-06-08 00:00:00.000000+00',
                             expires: '2023-06-08 00:30:00.000000+00',
-                            'submission-status': 'NOT_STARTED'
+                            'submission-status': 'NOT_STARTED',
+                            'analytics-id': 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789321'
                         }
                     }
                 ];
@@ -140,7 +145,8 @@ describe('Metadata Service', () => {
                             created: '2023-06-08 00:00:00.000000+00',
                             modified: '2023-06-08 00:00:00.000000+00',
                             expires: '2023-06-08 00:30:00.000000+00',
-                            'submission-status': 'NOT_STARTED'
+                            'submission-status': 'NOT_STARTED',
+                            'analytics-id': 'urn:uuid:f81d4fae-7dec-11d0-a765-123456789123'
                         }
                     }
                 ];

@@ -276,7 +276,7 @@ function questionnaireDAL(spec) {
         let result;
         try {
             result = await db.query(
-                `SELECT id, created, modified, expires, submission_status FROM questionnaire WHERE questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $1`,
+                `SELECT id, created, modified, expires, submission_status, questionnaire -> 'answers' -> 'system' ->> 'analytics-id' AS "analytics_id" FROM questionnaire WHERE questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $1`,
                 [ownerId]
             );
         } catch (err) {
@@ -290,7 +290,7 @@ function questionnaireDAL(spec) {
         let result;
         try {
             result = await db.query(
-                `SELECT id, created, modified, expires, submission_status FROM questionnaire WHERE id = $1 AND questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $2`,
+                `SELECT id, created, modified, expires, submission_status, questionnaire -> 'answers' -> 'system' ->> 'analytics-id' AS "analytics_id" FROM questionnaire WHERE id = $1 AND questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $2`,
                 [questionnaireId, ownerId]
             );
         } catch (err) {

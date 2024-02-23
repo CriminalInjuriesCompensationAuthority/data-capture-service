@@ -32,7 +32,8 @@ function createMetadataService({
                     created: data.created,
                     modified: data.modified,
                     expires: data.expires,
-                    'submission-status': data.submission_status
+                    'submission-status': data.submission_status,
+                    'analytics-id': data.analytics_id
                 }
             };
         });
@@ -61,7 +62,8 @@ function createMetadataService({
                     created: data.created,
                     modified: data.modified,
                     'submission-status': data.submission_status,
-                    expires: data.expires
+                    expires: data.expires,
+                    'analytics-id': data.analytics_id
                 }
             };
         });
