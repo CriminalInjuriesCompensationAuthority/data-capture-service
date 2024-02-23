@@ -73,6 +73,9 @@
                                         },
                                         "origin": {
                                             "channel": "web"
+                                        },
+                                        "analytics": {
+                                            "id": "urn:uuid:f81d4fae-7dec-11d0-a765-123456781234"
                                         }
                                     }
                                 }

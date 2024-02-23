@@ -372,6 +372,34 @@ describe('Openapi version 2023-05-17 validation', () => {
                 );
             });
         });
+
+        describe('Requests with analytics data MUST include an id', () => {
+            it('should return status code 400 if id is NOT included in the analytics data', async () => {
+                const response = await request(app)
+                    .post('/api/questionnaires')
+                    .set('Authorization', `Bearer ${token}`)
+                    .set('Content-Type', 'application/vnd.api+json')
+                    .set('Dcs-Api-Version', '2023-05-17')
+                    .send({
+                        data: {
+                            type: 'questionnaires',
+                            attributes: {
+                                templateName: 'sexual-assault',
+                                owner: {
+                                    id: 'urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6',
+                                    isAuthenticated: true
+                                },
+                                analytics: {}
+                            }
+                        }
+                    });
+                expect(response.body).toHaveProperty('errors');
+                expect(response.body.errors[0].status).toEqual(400);
+                expect(response.body.errors[0].detail).toEqual(
+                    "should have required property 'id'"
+                );
+            });
+        });
     });
 
     describe('GET /questionnaires/{questionnaireId}/progress-entries', () => {
