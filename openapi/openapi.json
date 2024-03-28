@@ -118,6 +118,20 @@
                                                                 "pattern": "^[a-z][a-z0-9]{0,19}(?:-[a-z0-9]{1,20}){0,20}$"
                                                             }
                                                         }
+                                                    },
+                                                    "analytics": {
+                                                        "type": "object",
+                                                        "additionalProperties": false,
+                                                        "required": ["id"],
+                                                        "properties": {
+                                                            "id": {
+                                                                "title": "Analytics Id",
+                                                                "type": "string",
+                                                                "format": "uri",
+                                                                "maxLength": 64,
+                                                                "pattern": "^urn:uuid:"
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -136,6 +150,9 @@
                                         },
                                         "origin": {
                                             "channel": "web"
+                                        },
+                                        "analytics": {
+                                            "id": "urn:uuid:f81d4fae-7dec-11d0-a765-123456781234"
                                         }
                                     }
                                 }
@@ -1875,7 +1892,8 @@
                                                                                     "created",
                                                                                     "modified",
                                                                                     "submission-status",
-                                                                                    "expires"
+                                                                                    "expires",
+                                                                                    "analytics-id"
                                                                                 ],
                                                                                 "properties": {
                                                                                     "questionnaire-id": {
@@ -1905,6 +1923,13 @@
                                                                                         "title": "Timestamp",
                                                                                         "type": "string",
                                                                                         "format": "date-time"
+                                                                                    },
+                                                                                    "analytics-id": {
+                                                                                        "title": "Analytics Id",
+                                                                                        "type": "string",
+                                                                                        "format": "uri",
+                                                                                        "maxLength": 64,
+                                                                                        "pattern": "^urn:uuid:"
                                                                                     }
                                                                                 }
                                                                             }
@@ -2243,7 +2268,8 @@
                                                                                     "created",
                                                                                     "modified",
                                                                                     "submission-status",
-                                                                                    "expires"
+                                                                                    "expires",
+                                                                                    "analytics-id"
                                                                                 ],
                                                                                 "properties": {
                                                                                     "questionnaire-id": {
@@ -2273,6 +2299,13 @@
                                                                                         "title": "Timestamp",
                                                                                         "type": "string",
                                                                                         "format": "date-time"
+                                                                                    },
+                                                                                    "analytics-id": {
+                                                                                        "title": "Analytics Id",
+                                                                                        "type": "string",
+                                                                                        "format": "uri",
+                                                                                        "maxLength": 64,
+                                                                                        "pattern": "^urn:uuid:"
                                                                                     }
                                                                                 }
                                                                             }

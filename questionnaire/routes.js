@@ -28,7 +28,7 @@ router.route('/').post(permissions('create:questionnaires'), async (req, res, ne
             throw err;
         }
 
-        const {templateName, owner, origin} = req.body.data.attributes;
+        const {templateName, owner, origin, analytics} = req.body.data.attributes;
 
         const questionnaireService = createQuestionnaireService({
             logger: req.log,
@@ -38,7 +38,8 @@ router.route('/').post(permissions('create:questionnaires'), async (req, res, ne
         const response = await questionnaireService.createQuestionnaire(
             templateName,
             owner,
-            origin
+            origin,
+            analytics
         );
 
         res.status(201).json(response);

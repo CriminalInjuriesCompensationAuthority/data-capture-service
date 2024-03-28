@@ -312,7 +312,7 @@ describe('questionnaire data access layer', () => {
 
     describe('getMetadataByOwner', () => {
         const query =
-            "SELECT id, created, modified, expires, submission_status FROM questionnaire WHERE questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $1";
+            "SELECT id, created, modified, expires, submission_status, questionnaire -> 'answers' -> 'system' ->> 'analytics-id' AS \"analytics_id\" FROM questionnaire WHERE questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $1";
         it('Should run a get metadata query and filter by owner', async () => {
             const questionnaireDAL = createQuestionnaireDAL({logger: jest.fn(), ownerId});
             await questionnaireDAL.getMetadataByOwner();
@@ -333,7 +333,7 @@ describe('questionnaire data access layer', () => {
 
     describe('getQuestionnaireMetadataByOwner', () => {
         const query =
-            "SELECT id, created, modified, expires, submission_status FROM questionnaire WHERE id = $1 AND questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $2";
+            "SELECT id, created, modified, expires, submission_status, questionnaire -> 'answers' -> 'system' ->> 'analytics-id' AS \"analytics_id\" FROM questionnaire WHERE id = $1 AND questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $2";
         it('Should run a get metadata query and filter by questionnaireId and owner', async () => {
             const questionnaireId = DB_QUERY_SUCCESS_QUESTIONNAIRE_ID;
             const questionnaireDAL = createQuestionnaireDAL({logger: jest.fn(), ownerId});

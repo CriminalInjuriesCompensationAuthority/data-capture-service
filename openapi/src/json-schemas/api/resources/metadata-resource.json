@@ -16,7 +16,8 @@
                                 "created",
                                 "modified",
                                 "submission-status",
-                                "expires"
+                                "expires",
+                                "analytics-id"
                             ],
                             "properties": {
                                 "questionnaire-id": {
@@ -33,6 +34,9 @@
                                 },
                                 "expires": {
                                     "$ref": "../../models/definitions/timestamp.json"
+                                },
+                                "analytics-id": {
+                                    "$ref": "../../models/definitions/analytics-id.json"
                                 }
                             }
                         }
