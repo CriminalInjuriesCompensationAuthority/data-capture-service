@@ -1,6 +1,5 @@
 'use strict';
 
-/*! m0-start */
 const config = {
     extends: ['airbnb-base', 'prettier', 'plugin:jest/recommended'],
     env: {
@@ -25,10 +24,7 @@ const config = {
     },
     plugins: ['prettier']
 };
-/*! m0-end */
 
 config.rules['no-param-reassign'] = ['error', {props: false}];
 
-/*! m0-start */
 module.exports = config;
-/*! m0-end */

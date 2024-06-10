@@ -5,13 +5,14 @@
 const Ajv = require('ajv');
 const AjvErrors = require('ajv-errors');
 const VError = require('verror');
-const createQRouter = require('q-router');
+const router = require('q-router');
 const uuidv4 = require('uuid/v4');
 const ajvFormatsMobileUk = require('ajv-formats-mobile-uk');
 const templates = require('./templates');
 const questionnaireResource = require('./resources/questionnaire-resource');
 const createQuestionnaireHelper = require('./questionnaire/questionnaire');
 const isQuestionnaireCompatible = require('./utils/isQuestionnaireVersionCompatible');
+const createTaskListService = require('./task-list/task-list-service');
 
 const defaults = {};
 defaults.createQuestionnaireDAL = require('./questionnaire-dal');
@@ -49,6 +50,13 @@ function createQuestionnaireService({
 
     async function updateExpiryForAuthenticatedOwner(questionnaireId, owner) {
         await db.updateExpiryForAuthenticatedOwner(questionnaireId, owner);
+    }
+
+    function supportsTaskList(questionnaireDefinition) {
+        if (questionnaireDefinition.routes.type === 'parallel') {
+            return true;
+        }
+        return false;
     }
 
     async function createQuestionnaire(templateName, ownerData, originData, externalData) {
@@ -99,7 +107,7 @@ function createQuestionnaireService({
         }
 
         return {
-            data: questionnaireResource({questionnaire})
+            data: questionnaireResource({questionnaire}, supportsTaskList(questionnaire))
         };
     }
 
@@ -206,7 +214,7 @@ function createQuestionnaireService({
             const questionnaireDefinition = await getQuestionnaire(questionnaireId);
 
             // 2 - is the section allowed to be posted to e.g. is it in their progress
-            const qRouter = createQRouter(questionnaireDefinition);
+            const qRouter = router(questionnaireDefinition);
             const sectionDetails = getSection(sectionId, qRouter);
 
             // 3 - Section is available. Validate the answers against it
@@ -238,7 +246,6 @@ function createQuestionnaireService({
             // 4 - If we're here all is good
             // Pass the answers to the router which will update the context (questionnaire) with these answers.
             let answeredQuestionnaire;
-
             if (sectionDetails.id === 'owner') {
                 const currentSection = qRouter.current();
                 currentSection.context.answers[sectionDetails.id] = coercedAnswers;
@@ -341,9 +348,35 @@ function createQuestionnaireService({
         };
     }
 
+    function getSectionRouteBySectionId(questionnaireDefinition, sectionId) {
+        const questionnaire = createQuestionnaireHelper({questionnaireDefinition});
+        const taskListService = createTaskListService({questionnaireDefinition});
+
+        const section = questionnaire.getSection(sectionId);
+        if (taskListService.isTaskListSchema({sectionSchema: section.getSchema()})) {
+            return {};
+        }
+
+        const {states} = questionnaireDefinition.routes;
+
+        if (supportsTaskList(questionnaireDefinition)) {
+            const tasks = states;
+            const taskIds = Object.keys(tasks);
+            for (let i = 0; i < taskIds.length; i += 1) {
+                if (sectionId in tasks[taskIds[i]].states) {
+                    return tasks[taskIds[i]].states[sectionId];
+                }
+            }
+        } else if (sectionId in states) {
+            return states[sectionId];
+        }
+
+        throw new VError(`Section "${sectionId}" not found`);
+    }
+
     async function buildMetaBlock(questionnaire, sectionId) {
         // TODO: move this meta on to the appropriate section resource
-        const sectionType = questionnaire.routes.states[sectionId].type;
+        const sectionType = getSectionRouteBySectionId(questionnaire, sectionId).type;
         const isFinalType = sectionType && sectionType === 'final';
         return {
             summary: questionnaire.routes.summary,
@@ -404,7 +437,8 @@ function createQuestionnaireService({
             };
         }
         // 2 - get router
-        const qRouter = createQRouter(questionnaire);
+        const qRouter = router(questionnaire);
+
         // 3 - filter or paginate progress entries if required
         // Currently this only supports queries that return a single progress entry
         if (query) {
@@ -451,6 +485,7 @@ function createQuestionnaireService({
 
             // Is the progress entry available
             if (section) {
+                const taskListService = createTaskListService();
                 if (isQuestionnaireModified) {
                     // Store the updated questionnaire object
                     await db.updateQuestionnaireByOwner(questionnaireId, section.context);
@@ -459,12 +494,20 @@ function createQuestionnaireService({
                 sectionId = section.id;
 
                 // Create the progress entry compound document
-                const previousProgressEntryLink =
-                    section.id === section.context.routes.initial
-                        ? questionnaire.routes.referrer
-                        : `${process.env.DCS_URL}/api/questionnaires/${
-                              questionnaire.id
-                          }/progress-entries?filter[sectionId]=${qRouter.previous(sectionId).id}`;
+                let previousProgressEntryLink;
+                if (
+                    section.id === section.context.routes.initial ||
+                    section.id === section.context.currentSectionId // task list
+                ) {
+                    previousProgressEntryLink = questionnaire.routes.referrer;
+                    // TODO: pass in the sectionSchema, not the sectionId.
+                } else if (taskListService.isTaskListSchema({sectionId: section.id})) {
+                    previousProgressEntryLink = undefined;
+                } else {
+                    previousProgressEntryLink = `${process.env.DCS_URL}/api/questionnaires/${
+                        questionnaire.id
+                    }/progress-entries?filter[sectionId]=${qRouter.previous(sectionId).id}`;
+                }
 
                 compoundDocument.data = [buildProgressEntryResource(sectionId)];
                 // Include related resources

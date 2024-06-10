@@ -1,8 +1,15 @@
 'use strict';
 
-function questionnaireResource(spec) {
+function questionnaireResource(spec, supportsTaskList = true) {
     const {questionnaire} = spec;
     const {id, type, version, routes} = questionnaire;
+    let initial;
+
+    if (supportsTaskList) {
+        initial = questionnaire.currentSectionId;
+    } else {
+        initial = routes.states.initial;
+    }
 
     return Object.freeze({
         type: 'questionnaires',
@@ -12,7 +19,7 @@ function questionnaireResource(spec) {
             type,
             version,
             routes: {
-                initial: routes.initial
+                initial
             }
         }
     });
