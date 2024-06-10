@@ -267,13 +267,37 @@ function createQuestionnaireService({
         return answerResource;
     }
 
+    function buildTaskList(sectionSchema, questionnaireDefinition) {
+        const schema = structuredClone(sectionSchema);
+        schema.properties['task-list'].properties.taskListInfo.sections.forEach(section => {
+            section.tasks.forEach(task => {
+                if (task.id in questionnaireDefinition.taskStatuses) {
+                    task.status = questionnaireDefinition.taskStatuses[task.id];
+                }
+                const stateIndex = questionnaireDefinition.routes.states.findIndex(
+                    state => state.id === task.id
+                );
+                task.href = `/apply/${questionnaireDefinition.routes.states[
+                    stateIndex
+                ].initial.replace(/^p-*/, '')}`;
+            });
+        });
+        return schema;
+    }
+
     function buildSectionResource(sectionId, questionnaireDefinition) {
         const questionnaire = createQuestionnaireHelper({questionnaireDefinition});
         const section = questionnaire.getSection(sectionId);
+        let sectionSchema = section.getSchema();
+
+        if (sectionSchema.properties?.['task-list']?.properties?.taskListInfo?.sections) {
+            sectionSchema = buildTaskList(sectionSchema, questionnaireDefinition);
+        }
+
         const sectionResource = {
             type: 'sections',
             id: sectionId,
-            attributes: section.getSchema()
+            attributes: sectionSchema
         };
 
         // Add any answer relationships
@@ -343,8 +367,15 @@ function createQuestionnaireService({
 
     async function buildMetaBlock(questionnaire, sectionId) {
         // TODO: move this meta on to the appropriate section resource
-        const sectionType = questionnaire.routes.states[sectionId].type;
-        const isFinalType = sectionType && sectionType === 'final';
+        const task = Array.isArray(questionnaire.routes.states)
+            ? questionnaire.routes.states.find(taskState => sectionId in taskState.states)
+            : Object.keys(questionnaire.routes.states).find(
+                  taskState => sectionId in questionnaire.routes.states[taskState].states
+              );
+        const sectionType = Array.isArray(questionnaire.routes.states)
+            ? task.states[sectionId].type
+            : questionnaire.routes.states[task].states[sectionId].type;
+        const isFinalType = sectionType === 'final';
         return {
             summary: questionnaire.routes.summary,
             confirmation: questionnaire.routes.confirmation,
@@ -373,6 +404,10 @@ function createQuestionnaireService({
             );
         }
         return sessionResource;
+    }
+
+    function getInitial(routes) {
+        return Array.isArray(routes.states) ? routes.states[0].initial : routes.initial;
     }
 
     async function getProgressEntries(questionnaireId, query) {
@@ -459,12 +494,16 @@ function createQuestionnaireService({
                 sectionId = section.id;
 
                 // Create the progress entry compound document
-                const previousProgressEntryLink =
-                    section.id === section.context.routes.initial
-                        ? questionnaire.routes.referrer
-                        : `${process.env.DCS_URL}/api/questionnaires/${
-                              questionnaire.id
-                          }/progress-entries?filter[sectionId]=${qRouter.previous(sectionId).id}`;
+                let previousProgressEntryLink;
+                if (section.id === getInitial(section.context.routes)) {
+                    previousProgressEntryLink = questionnaire.routes.referrer;
+                } else if (section.id === 'p-task-list') {
+                    previousProgressEntryLink = undefined;
+                } else {
+                    previousProgressEntryLink = `${process.env.DCS_URL}/api/questionnaires/${
+                        questionnaire.id
+                    }/progress-entries?filter[sectionId]=${qRouter.previous(sectionId).id}`;
+                }
 
                 compoundDocument.data = [buildProgressEntryResource(sectionId)];
                 // Include related resources
@@ -499,7 +538,6 @@ function createQuestionnaireService({
                 };
 
                 compoundDocument.meta = await buildMetaBlock(questionnaire, sectionId);
-
                 return compoundDocument;
             }
 

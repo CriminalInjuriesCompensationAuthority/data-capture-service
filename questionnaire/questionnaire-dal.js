@@ -179,7 +179,6 @@ function questionnaireDAL(spec) {
 
     async function updateQuestionnaireModifiedDateByOwner(questionnaireId) {
         let result;
-
         try {
             result = await db.query(
                 "UPDATE questionnaire SET modified = current_timestamp, expires = (CASE WHEN questionnaire -> 'answers' -> 'owner' ->> 'is-authenticated' = 'true' THEN expires WHEN questionnaire -> 'answers' -> 'owner' ->> 'is-authenticated' = 'false' THEN current_timestamp + INTERVAL '30 minutes' END) WHERE id = $1 AND questionnaire -> 'answers' -> 'owner' ->> 'owner-id' = $2",
