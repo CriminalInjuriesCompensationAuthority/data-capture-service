@@ -5,7 +5,7 @@
 const Ajv = require('ajv');
 const AjvErrors = require('ajv-errors');
 const VError = require('verror');
-const createQRouter = require('q-router');
+const router = require('q-router');
 const uuidv4 = require('uuid/v4');
 const ajvFormatsMobileUk = require('ajv-formats-mobile-uk');
 const templates = require('./templates');
@@ -53,7 +53,7 @@ function createQuestionnaireService({
     }
 
     function supportsTaskList(questionnaireDefinition) {
-        if (Array.isArray(questionnaireDefinition.routes.states)) {
+        if (questionnaireDefinition.routes.type === 'parallel') {
             return true;
         }
         return false;
@@ -214,7 +214,7 @@ function createQuestionnaireService({
             const questionnaireDefinition = await getQuestionnaire(questionnaireId);
 
             // 2 - is the section allowed to be posted to e.g. is it in their progress
-            const qRouter = createQRouter(questionnaireDefinition);
+            const qRouter = router(questionnaireDefinition);
             const sectionDetails = getSection(sectionId, qRouter);
 
             // 3 - Section is available. Validate the answers against it
@@ -246,16 +246,24 @@ function createQuestionnaireService({
             // 4 - If we're here all is good
             // Pass the answers to the router which will update the context (questionnaire) with these answers.
             let answeredQuestionnaire;
-
+            // task statuses information.
+            let value;
             if (sectionDetails.id === 'owner') {
                 const currentSection = qRouter.current();
                 currentSection.context.answers[sectionDetails.id] = coercedAnswers;
                 answeredQuestionnaire = currentSection.context;
+                value = currentSection.value;
             } else {
                 const nextSection = qRouter.next(coercedAnswers, sectionDetails.id);
                 answeredQuestionnaire = nextSection.context;
+                value = nextSection.value;
             }
-
+            if (!('task-list' in answeredQuestionnaire)) {
+                answeredQuestionnaire['task-list'] = {};
+            }
+            answeredQuestionnaire['task-list'] = {
+                taskStatuses: value
+            };
             // Store the updated questionnaire object
             await db.updateQuestionnaireByOwner(questionnaireId, answeredQuestionnaire);
 
@@ -360,11 +368,12 @@ function createQuestionnaireService({
 
         const {states} = questionnaireDefinition.routes;
 
-        if (Array.isArray(states)) {
+        if (supportsTaskList(questionnaireDefinition)) {
             const tasks = states;
-            for (let i = 0; i < tasks.length; i += 1) {
-                if (sectionId in tasks[i].states) {
-                    return tasks[i].states[sectionId];
+            const taskIds = Object.keys(tasks);
+            for (let i = 0; i < taskIds.length; i += 1) {
+                if (sectionId in tasks[taskIds[i]].routes.states) {
+                    return tasks[taskIds[i]].routes.states[sectionId];
                 }
             }
         } else if (sectionId in states) {
@@ -437,7 +446,8 @@ function createQuestionnaireService({
             };
         }
         // 2 - get router
-        const qRouter = createQRouter(questionnaire);
+        const qRouter = router(questionnaire);
+
         // 3 - filter or paginate progress entries if required
         // Currently this only supports queries that return a single progress entry
         if (query) {
@@ -494,7 +504,10 @@ function createQuestionnaireService({
 
                 // Create the progress entry compound document
                 let previousProgressEntryLink;
-                if (section.id === section.context.routes.initial) {
+                if (
+                    section.id === section.context.routes.initial ||
+                    section.id === section.context.currentSectionId // task list
+                ) {
                     previousProgressEntryLink = questionnaire.routes.referrer;
                 } else if (taskListService.isTaskListSchema({sectionId: section.id})) {
                     previousProgressEntryLink = undefined;

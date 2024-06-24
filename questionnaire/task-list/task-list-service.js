@@ -9,14 +9,14 @@ function createTaskListService() {
             }
         }
 
-        // TODO: get schema from sectionId and interogate the shape instead of the IDs value.
+        // TODO: get schema from sectionId and interrogate the shape instead of the IDs value.
         if (sectionId) {
             if (sectionId === 'p-task-list') {
                 return true;
             }
         }
 
-        // // asumed to be a state from the router...
+        // // assumed to be a state from the router...
         // const state = schemaDefinition;
 
         // if (state.id === 'p-task-list') {
@@ -30,10 +30,7 @@ function createTaskListService() {
     }
 
     function getInitialPageIdOfTask(taskId, questionnaireDefinition) {
-        const taskDefinition = questionnaireDefinition.routes.states.find(state => {
-            return state.id === taskId;
-        });
-        return taskDefinition.initial;
+        return questionnaireDefinition.routes.states[taskId].routes.initial;
     }
 
     function decoratePageId(pageId) {
@@ -43,12 +40,17 @@ function createTaskListService() {
         return pageId.replace(/^p-/, '');
     }
 
+    function getTaskStatus(taskId, questionnaireDefinition) {
+        return questionnaireDefinition['task-list'].taskStatuses?.[`${taskId}__completion-status`];
+    }
+
     function addDataToTaskDefinitions(questionnaireDefinition, taskListSectionsDefinitions) {
         taskListSectionsDefinitions.forEach(taskListSectionDefinition => {
             taskListSectionDefinition.tasks.forEach(task => {
                 task.href = decoratePageId(
                     getInitialPageIdOfTask(task.id, questionnaireDefinition)
                 );
+                task.status = getTaskStatus(task.id, questionnaireDefinition);
             });
         });
     }

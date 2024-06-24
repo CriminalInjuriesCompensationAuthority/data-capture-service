@@ -6,7 +6,7 @@ function questionnaireResource(spec, supportsTaskList = true) {
     let initial;
 
     if (supportsTaskList) {
-        initial = routes.states.filter(state => state.id === routes.initial)[0].initial;
+        initial = questionnaire.currentSectionId;
     } else {
         initial = routes.states.initial;
     }
